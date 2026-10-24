@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1200" height="1500" viewBox="0 0 1200 1500">
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071323"/><stop offset=".54" stop-color="#141925"/><stop offset="1" stop-color="#291a24"/></linearGradient>
+ <radialGradient id="amber"><stop stop-color="#E8A34A" stop-opacity=".6"/><stop offset="1" stop-color="#E8A34A" stop-opacity="0"/></radialGradient>
+ <radialGradient id="blue"><stop stop-color="#5B93C9" stop-opacity=".5"/><stop offset="1" stop-color="#5B93C9" stop-opacity="0"/></radialGradient>
+ <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFE4AC"/><stop offset="1" stop-color="#E9A24D"/></linearGradient>
+ <linearGradient id="phone" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#244467"/><stop offset="1" stop-color="#080F1D"/></linearGradient>
+ <filter id="blur"><feGaussianBlur stdDeviation="24"/></filter>
+ <filter id="shadow"><feDropShadow dx="0" dy="16" stdDeviation="20" flood-opacity=".45"/></filter>
+ <pattern id="noise" width="55" height="55" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.4" fill="#F7D9A6" opacity=".12"/></pattern>
+</defs>
+<rect width="1200" height="1500" fill="url(#bg)"/><rect width="1200" height="1500" fill="url(#noise)"/>
+<circle cx="885" cy="880" r="460" fill="url(#amber)" filter="url(#blur)"/><circle cx="235" cy="820" r="420" fill="url(#blue)" filter="url(#blur)"/>
+<rect x="57" y="57" width="1086" height="1386" rx="38" fill="none" stroke="#D2A76A" stroke-width="2" stroke-opacity=".25"/>
+<text x="92" y="122" font-family="DejaVu Sans,sans-serif" font-size="27" letter-spacing="5" fill="#E0D7CD">MONEY PSYCHOLOGY | NO BS</text>
+<line x1="92" y1="151" x2="1108" y2="151" stroke="#D2B486" stroke-width="2" opacity=".5"/>
+<text x="91" y="264" font-family="DejaVu Sans,sans-serif" font-size="79" font-weight="700" fill="#F6F3F0">Ты не транжира.</text>
+<text x="91" y="379" font-family="DejaVu Sans,sans-serif" font-size="93" font-weight="700" fill="url(#gold)">Ты истощён.</text>
+<text x="98" y="441" font-family="DejaVu Sans,sans-serif" font-size="30" fill="#CBD0D8">Почему деньги утекают, когда мозг устал</text>
+<g opacity=".64" fill="none" stroke="#E3B87A"><ellipse cx="625" cy="905" rx="454" ry="268" stroke-width="2" transform="rotate(-15 625 905)"/><ellipse cx="608" cy="927" rx="409" ry="302" stroke-width="1.5" transform="rotate(12 608 927)"/></g>
+<g filter="url(#shadow)">
+<rect x="149" y="744" rx="26" width="310" height="171" fill="#13273D" stroke="#799BB7" stroke-width="2" transform="rotate(-12 149 744)"/>
+<text x="190" y="799" font-family="DejaVu Sans,sans-serif" font-size="23" fill="#DDE5E8" transform="rotate(-12 190 799)">TOO MANY</text>
+<text x="185" y="841" font-family="DejaVu Sans,sans-serif" font-size="23" fill="#DDE5E8" transform="rotate(-12 185 841)">DECISIONS</text>
+<path d="M184 883h193" stroke="#A5C6DF" stroke-width="7" opacity=".6" transform="rotate(-12 184 883)"/>
+<rect x="837" y="700" width="225" height="131" rx="20" fill="#3D2E38" stroke="#F2BA75" stroke-width="2" transform="rotate(9 837 700)"/>
+<text x="858" y="761" font-family="DejaVu Sans,sans-serif" font-size="38" font-weight="700" fill="#FCE0AE" transform="rotate(9 858 761)">−2 490 ₽</text>
+<text x="864" y="802" font-family="DejaVu Sans,sans-serif" font-size="18" fill="#E7DAD0" transform="rotate(9 864 802)">IMPULSE BUY</text>
+</g>
+<g filter="url(#shadow)">
+<ellipse cx="600" cy="1212" rx="390" ry="143" fill="#101623" />
+<path d="M314 1187 Q354 981 474 948 Q558 904 624 945 Q713 915 815 1046 Q869 1110 882 1250H294Z" fill="#5A5660"/>
+<path d="M434 1230Q459 997 561 1025Q718 1010 776 1254" fill="none" stroke="#8E8290" opacity=".35" stroke-width="24"/>
+<ellipse cx="605" cy="839" rx="157" ry="196" fill="#221A20"/>
+<ellipse cx="598" cy="841" rx="106" ry="144" fill="#B98977"/>
+<path d="M478 797 Q482 660 581 675 Q708 644 734 812 Q670 758 638 776 Q558 750 478 797Z" fill="#221A20"/>
+<path d="M531 842q16 -10 31 0M634 843q13 -9 28 0" stroke="#553936" stroke-width="7" fill="none" stroke-linecap="round"/>
+<path d="M559 898q39 13 73 0" stroke="#85544F" stroke-width="5" fill="none" stroke-linecap="round"/>
+<path d="M470 1000 Q516 955 543 1012 Q580 1060 584 1118" fill="none" stroke="#AF7C6E" stroke-width="40" stroke-linecap="round"/>
+<rect x="563" y="1021" rx="23" width="166" height="249" fill="url(#phone)" stroke="#E8B678" stroke-width="5" transform="rotate(-12 563 1021)"/>
+<rect x="591" y="1091" rx="18" width="112" height="110" fill="#D9873A" opacity=".93" transform="rotate(-12 591 1091)"/>
+<path d="M618 1144h65m-61 -24h20l8 38h28l11 -33h-37" fill="none" stroke="#FFE5BC" stroke-width="5" transform="rotate(-12 618 1144)"/>
+</g>
+<g fill="none" stroke="#F8CF90" stroke-width="3" opacity=".9"><circle cx="945" cy="958" r="51"/><path d="M945 927v38l22 12"/><circle cx="261" cy="1059" r="42"/><path d="M246 1060l10 10 23 -26"/><circle cx="940" cy="1154" r="35"/><path d="M925 1154h30m-15 -15v30"/></g>
+<line x1="95" y1="1331" x2="1108" y2="1331" stroke="#D2B486" opacity=".5" stroke-width="2"/>
+<text x="96" y="1385" font-family="DejaVu Sans,sans-serif" font-size="25" letter-spacing="2" fill="#E2D3BF">НЕ СИЛА ВОЛИ. А СИСТЕМА.</text>
+<text x="1090" y="1385" text-anchor="end" font-family="DejaVu Sans,sans-serif" font-size="22" fill="#A4AFBE">@psy_money1</text>
+</svg>
