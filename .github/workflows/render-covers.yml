@@ -4,6 +4,7 @@ on:
     branches: [main]
     paths:
       - 'sources/*.svg'
+      - 'sources/**/*.svg'
       - '.github/workflows/render-covers.yml'
   workflow_dispatch:
 
