@@ -6,13 +6,13 @@ on:
       - 'telegram/**'
       - 'editorial/asset-ledger.json'
       - 'scripts/verify_asset_ledger.py'
-      - '.github/workflows/asset-integrity.yml'
+      - '.github/workflows/**'
   pull_request:
     paths:
       - 'telegram/**'
       - 'editorial/asset-ledger.json'
       - 'scripts/verify_asset_ledger.py'
-      - '.github/workflows/asset-integrity.yml'
+      - '.github/workflows/**'
   workflow_dispatch:
 permissions:
   contents: read
