@@ -110,7 +110,8 @@
         "date_utc": "2026-11-01T06:01:17Z",
         "message": "Add original 2026-11-02 SVB maturity mismatch editorial cover"
       },
-      "editorial_pixel_review": "PASS: directly viewed 1120x1400 JPEG; hourglasses match maturity-risk metaphor, no text/unsupported figures; separate original/user approval remains UNVERIFIED"
+      "editorial_pixel_review": "PASS: directly viewed 1120x1400 JPEG; hourglasses match maturity-risk metaphor, no text/unsupported figures; separate original/user approval remains UNVERIFIED",
+      "user_approval_evidence": "NOT_DOCUMENTED; current JPEG pixel QA passed, exact pre-upload original identity unverified"
     },
     {
       "date_moscow": "2026-11-03",
@@ -122,7 +123,9 @@
       "github_size_bytes": 188613,
       "visual_review": "unverified",
       "original_source_sha": "unavailable",
-      "provenance_note": "GitHub SHA/size and Zernio URL cross-referenced; original ChatGPT image identity and pixel-level approval not proven."
+      "provenance_note": "GitHub SHA/size and Zernio URL cross-referenced; original ChatGPT image identity and pixel-level approval not proven.",
+      "editorial_pixel_review": "PASS: directly viewed 1000x1250 JPEG; Kenyan market seller using mobile phone, no on-image text/claims, matches M-PESA subject; not a source photo of study participant",
+      "user_approval_evidence": "NOT_DOCUMENTED; original source bytes not recovered"
     },
     {
       "date_moscow": "2026-11-04",
@@ -134,7 +137,9 @@
       "github_size_bytes": 154251,
       "visual_review": "approved",
       "original_source_sha": "sha256:88c05da16c02a90a65e2e7af153ce4b091d12db87a589e387f299bcf8a6c1742",
-      "provenance_note": "Original ChatGPT image generated in this conversation, visually reviewed before JPEG conversion; SHA computed on final JPEG and checked against created Git blob; Zernio exact media URL verified. Telegram-delivered bytes unverified."
+      "provenance_note": "Original ChatGPT image generated in this conversation, visually reviewed before JPEG conversion; SHA computed on final JPEG and checked against created Git blob; Zernio exact media URL verified. Telegram-delivered bytes unverified.",
+      "editorial_pixel_review": "PASS: directly viewed 900x1125 JPEG; person chooses between warm/cold office scenes, no on-image numbers, directly fits job-offer opportunity cost",
+      "user_approval_evidence": "NOT_DOCUMENTED; existing visual_review=approved is prior EDITORIAL acceptance, not user consent"
     }
   ]
 }
