@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "channel": "@psy_money1",
+  "note": "Timestamped per-post analytics only; metrics must be null unless platform sync_status is synced. Distinguish 24h vs 48h age cohorts.",
+  "snapshots": []
+}
