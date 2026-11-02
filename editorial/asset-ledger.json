@@ -121,7 +121,7 @@
       "github_blob_sha": "20bf18a57c5ab914b6e9f51edaf98b7b24a1ed07",
       "github_size_bytes": 154251,
       "visual_review": "approved",
-      "original_source_sha": "20bf18a57c5ab914b6e9f51edaf98b7b24a1ed07",
+      "original_source_sha": "sha256:88c05da16c02a90a65e2e7af153ce4b091d12db87a589e387f299bcf8a6c1742",
       "provenance_note": "Original ChatGPT image generated in this conversation, visually reviewed before JPEG conversion; SHA computed on final JPEG and checked against created Git blob; Zernio exact media URL verified. Telegram-delivered bytes unverified."
     }
   ]
