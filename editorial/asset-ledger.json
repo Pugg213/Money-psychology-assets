@@ -157,6 +157,57 @@
       "editorial_pixel_review": "PASS: original ChatGPT generated 1122x1402 PNG inspected; JPEG 1100x1375 retains original photo of warehouse goods, papers, invoice folder, empty document tray, no actual text/figures, no vector/dashboard placeholder; concept matches receivables-vs-cash story",
       "user_approval_evidence": "SPECIFIC ARTWORK NOT EXPLICITLY APPROVED BY USER; assistant editorial check only",
       "provenance_note": "Source PNG generated in this ChatGPT conversation; SHA256 computed from mounted PNG; JPEG converted at 1100x1375 RGB and its SHA256 and Git blob SHA confirmed; Zernio exact media_url validated and scheduled; Telegram delivered bytes not yet available."
+    },
+    {
+      "date_moscow": "2026-11-06",
+      "zernio_post_id": "6ae84cd8e3c3c6b5286cac41",
+      "zernio_status": "scheduled",
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-06-index-tracking-precision-original.jpg",
+      "github_path": "telegram/2026-11/2026-11-06-index-tracking-precision-original.jpg",
+      "github_blob_sha": "0b47f53b753c657dbf1131ee3f27de6245cc2591",
+      "github_size_bytes": 212646,
+      "visual_review": "approved",
+      "original_source_sha": "sha256:b07d08826d289181421f0334e0be1dfd58201e3fd1480f9d67e192537c03cd94",
+      "jpeg_sha256": "c233768d2913ad6a2fcc29acbb65c05f10b00d62d15171fe77a0e73981444df5",
+      "source_file_ref": "file_0000000050c082108245d7208401e02e",
+      "generation_id": "d7482a70-7054-42da-bf41-529bb33e3a10",
+      "editorial_pixel_review": "PASS: original ChatGPT PNG visually reviewed; preserved scene into JPEG 950x1187; Cinematic macro of two visually similar but mechanically nonidentical watch movements; no words or numbers; communicates the nuanced difference between ostensibly identical index funds.",
+      "user_approval_evidence": "SPECIFIC IMAGE NOT EXPLICITLY APPROVED BY USER; editorial acceptance only",
+      "provenance_note": "Original image was generated in this chat and source PNG SHA256 obtained from its mounted bytes. JPEG binary converted from that original, Git blob SHA and size verified. Exact live Zernio post/URL/time checked. Telegram delivered bytes not yet independently known."
+    },
+    {
+      "date_moscow": "2026-11-07",
+      "zernio_post_id": "6ae84ce4e3c3c6b5286cac9d",
+      "zernio_status": "scheduled",
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-07-productivity-factory-original.jpg",
+      "github_path": "telegram/2026-11/2026-11-07-productivity-factory-original.jpg",
+      "github_blob_sha": "7b61695a98cfa37ee174da52ca32cfb963be6044",
+      "github_size_bytes": 203416,
+      "visual_review": "approved",
+      "original_source_sha": "sha256:d6ebda12d8b78f0b447a27cee278d070d5bbc185417af07672276288fdd3d449",
+      "jpeg_sha256": "e077924ad7af19975eb1e64cf5428837e6511bb96de31915845c9058b2dd4001",
+      "source_file_ref": "file_00000000d288824689738e67473b89a9",
+      "generation_id": "13e80092-9b0c-4535-a165-5d7e8cbdcd5d",
+      "editorial_pixel_review": "PASS: original ChatGPT PNG visually reviewed; preserved scene into JPEG 950x1187; Documentary factory with CNC robots, operator, moving steel parts; no text/quantities or misleading wage claims; distinct from other 7-day images.",
+      "user_approval_evidence": "SPECIFIC IMAGE NOT EXPLICITLY APPROVED BY USER; editorial acceptance only",
+      "provenance_note": "Original image was generated in this chat and source PNG SHA256 obtained from its mounted bytes. JPEG binary converted from that original, Git blob SHA and size verified. Exact live Zernio post/URL/time checked. Telegram delivered bytes not yet independently known."
+    },
+    {
+      "date_moscow": "2026-11-08",
+      "zernio_post_id": "6ae84cece3c3c6b5286cacba",
+      "zernio_status": "scheduled",
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-08-childcare-work-choices-original.jpg",
+      "github_path": "telegram/2026-11/2026-11-08-childcare-work-choices-original.jpg",
+      "github_blob_sha": "44349d55273f970d293d7564c5ffb798589b502b",
+      "github_size_bytes": 220853,
+      "visual_review": "approved",
+      "original_source_sha": "sha256:02e18d99962dc2fac67d6a35346a7d978db174257b727b2892ce5c8f2e6ebf9a",
+      "jpeg_sha256": "5b521e86a521f4b7bf4ff65068239e0ff5118f08a12ee6881fe67f2122bb0875",
+      "source_file_ref": "file_000000000f5c81f4862f0f7610858d38",
+      "generation_id": "13e05da6-723b-4a92-9f5d-9db83a87a0b6",
+      "editorial_pixel_review": "PASS: original ChatGPT PNG visually reviewed; preserved scene into JPEG 950x1187; Warm documentary morning scene: father holding child near daycare and city bus, clearly relates to childcare/work constraints; no text or numeric claims.",
+      "user_approval_evidence": "SPECIFIC IMAGE NOT EXPLICITLY APPROVED BY USER; editorial acceptance only",
+      "provenance_note": "Original image was generated in this chat and source PNG SHA256 obtained from its mounted bytes. JPEG binary converted from that original, Git blob SHA and size verified. Exact live Zernio post/URL/time checked. Telegram delivered bytes not yet independently known."
     }
   ]
 }
