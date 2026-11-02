@@ -1,0 +1,28 @@
+name: Verify Money Psychology original JPG identity
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'telegram/**'
+      - 'editorial/asset-ledger.json'
+      - 'scripts/verify_asset_ledger.py'
+      - '.github/workflows/asset-integrity.yml'
+  pull_request:
+    paths:
+      - 'telegram/**'
+      - 'editorial/asset-ledger.json'
+      - 'scripts/verify_asset_ledger.py'
+      - '.github/workflows/asset-integrity.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  asset-integrity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify registered JPEGs (read only; never regenerate)
+        run: python scripts/verify_asset_ledger.py
