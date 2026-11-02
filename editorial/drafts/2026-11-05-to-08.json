@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "channel": "@psy_money1",
-  "notes": "Unscheduled drafts only. Must create and visually inspect NEW original JPEG, verify Git blob SHA and exact public URL, then Zernio validate and schedule without duplicate. Do not use fake Zernio dashboard images or any SVG fallback.",
+  "notes": "Nov 5 published to scheduled queue with verified original JPEG, ledger and Zernio. Nov 6–8 remain UNSCHEDULED pending unique quality-reviewed original JPEG; do not reuse images or use mock dashboards.",
   "drafts": [
     {
       "date": "2026-11-05",
@@ -11,11 +11,13 @@
       "image_brief": "Unique 4:5 premium documentary editorial still-life: a real warehouse with packed goods and a paper invoice folder in foreground; tangible trade credit vs cash timing. No text, numbers, vector illustration or interface.",
       "content": "Заказ выполнен. Выручка есть. В пятницу нечем платить поставщику.\n\nУсловная компания отгрузила товар на 1,2 млн ₽ с оплатой через 60 дней. Себестоимость партии — 800 тысяч. Валовая прибыль на бумаге — 400 тысяч ₽ до зарплат, аренды и налогов. Но клиент ещё не перевёл деньги, а поставщик требует оплату сейчас.\n\nВ отчёте о прибыли продажа уже учтена. На банковском счёте поступления пока нет. В стандарте IAS 7 поэтому отдельно рассматривают движение денег: при косвенном методе прибыль корректируют, в частности, на изменения дебиторской задолженности.\n\nДля растущего бизнеса это неприятный парадокс: больше заказов с отсрочкой способны одновременно увеличить прибыль и потребность в оборотных деньгах. Проверять нужно не только маржу, но и даты двух платежей: от клиента и поставщику.\n\nИсточник: IFRS, IAS 7 — https://www.ifrs.org/issued-standards/list-of-standards/ias-7-statement-of-cash-flows/",
       "content_length": 898,
-      "status": "DRAFT_ONLY_IMAGE_MISSING_NOT_SCHEDULED",
-      "image_status": "REJECTED_GENERATIONS_MOCK_ZERNIO_DASHBOARD",
+      "status": "SCHEDULED",
+      "image_status": "ORIGINAL_CHATGPT_IMAGE_VERIFIED_GITHUB",
       "source_checked_date": "2026-11-02",
-      "zernio_post_id": null,
-      "media_url": null
+      "zernio_post_id": "6ae84ace3fad85c92f2454e0",
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-05-profit-cashflow-original.jpg",
+      "git_blob_sha": "c5e04ae28e8a6defccf96c5e6534ee2bf0e50ec5",
+      "scheduled_utc": "2026-11-05T09:00:00.000Z"
     },
     {
       "date": "2026-11-06",
