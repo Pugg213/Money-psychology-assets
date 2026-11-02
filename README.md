@@ -10,7 +10,7 @@ Public original media for [@psy_money1](https://t.me/psy_money1). This repositor
 - `scripts/verify_asset_ledger.py`: read-only binary integrity checks.
 - `.github/workflows/asset-integrity.yml`: read-only CI; never produces or overwrites images.
 
-**Important:** Git blob SHA, file size, JPEG dimensions and successful CI establish *file identity* in GitHub, **not** a match to the user's approved ChatGPT artwork, actual bytes delivered by Telegram, or agreement between claims on a cover and the source paper. The `visual_review` and `original_source_sha` fields must remain `unverified` / `unavailable` until evidence exists. Never label metadata verification as visual approval.
+**Three distinct checks (never conflate):** (1) Git blob SHA, bytes, dimensions and CI verify *exact file identity only*; (2) `editorial_pixel_review` records a human/assistant viewing the actual JPEG pixels and comparing its topic, numbers, text and claims with the final caption; (3) `original_source_sha` and `user_approval_evidence` separately record proof of pre-upload source identity and explicit artwork approval. An editorial `PASS` is NOT user approval or proof of identical pre-upload original. If approval evidence is absent, preserve `UNVERIFIED` provenance even when pixels look good. Never substitute an SVG fallback.
 
 ## Fail-closed preparation / release workflow
 
