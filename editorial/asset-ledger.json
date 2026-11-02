@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "channel": "@psy_money1",
+  "generated_on": "2026-11-02",
+  "note": "A Git blob SHA verifies repository content identity, not original artwork provenance, Telegram delivery bytes, or scientific correspondence of image text.",
+  "entries": [
+    {
+      "date_moscow": "2026-10-26",
+      "zernio_post_id": "6adc6ccd60e6c6ad01e17a86",
+      "zernio_status": "published",
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-10/2026-10-26-premium-v6.jpg",
+      "github_path": "telegram/2026-10/2026-10-26-premium-v6.jpg",
+      "github_blob_sha": "41481a83269abaf204344bb3eaad4288c5d23f76",
+      "github_size_bytes": 186937,
+      "visual_review": "unverified",
+      "original_source_sha": "unavailable",
+      "provenance_note": "GitHub SHA/size and Zernio URL cross-referenced; original ChatGPT image identity and pixel-level approval not proven."
+    },
+    {
+      "date_moscow": "2026-10-27",
+      "zernio_post_id": "6adc6cd411207184eccd5c77",
+      "zernio_status": "published",
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-10/2026-10-27-premium-v6.jpg",
+      "github_path": "telegram/2026-10/2026-10-27-premium-v6.jpg",
+      "github_blob_sha": "ac574a5024b5fb8baf12d00f3914a80aec32ef83",
+      "github_size_bytes": 225166,
+      "visual_review": "unverified",
+      "original_source_sha": "unavailable",
+      "provenance_note": "GitHub SHA/size and Zernio URL cross-referenced; original ChatGPT image identity and pixel-level approval not proven."
+    },
+    {
+      "date_moscow": "2026-10-28",
+      "zernio_post_id": "6adc6cd611207184eccd5c83",
+      "zernio_status": "published",
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-10/2026-10-28-rested-vs-tired-original.jpg",
+      "github_path": "telegram/2026-10/2026-10-28-rested-vs-tired-original.jpg",
+      "github_blob_sha": "e7caa26c1fea18daadf720f8b2aca1acd5172956",
+      "github_size_bytes": 187229,
+      "visual_review": "unverified",
+      "original_source_sha": "unavailable",
+      "provenance_note": "GitHub SHA/size and Zernio URL cross-referenced; original ChatGPT image identity and pixel-level approval not proven."
+    },
+    {
+      "date_moscow": "2026-10-29",
+      "zernio_post_id": "6adc6cd811207184eccd5c87",
+      "zernio_status": "published",
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-10/2026-10-29-original-editorial.jpg",
+      "github_path": "telegram/2026-10/2026-10-29-original-editorial.jpg",
+      "github_blob_sha": "ba6e332c144539fed46a3a04b558b35c229c86cb",
+      "github_size_bytes": 152135,
+      "visual_review": "unverified",
+      "original_source_sha": "unavailable",
+      "provenance_note": "GitHub SHA/size and Zernio URL cross-referenced; original ChatGPT image identity and pixel-level approval not proven."
+    },
+    {
+      "date_moscow": "2026-10-30",
+      "zernio_post_id": "6adc6cde11207184eccd5c97",
+      "zernio_status": "published",
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-10/2026-10-30-premium-v2.jpg",
+      "github_path": "telegram/2026-10/2026-10-30-premium-v2.jpg",
+      "github_blob_sha": "2af000cdf1488d6a69c05ada993e4fe24eea1adf",
+      "github_size_bytes": 446657,
+      "visual_review": "unverified",
+      "original_source_sha": "unavailable",
+      "provenance_note": "GitHub SHA/size and Zernio URL cross-referenced; original ChatGPT image identity and pixel-level approval not proven."
+    },
+    {
+      "date_moscow": "2026-10-31",
+      "zernio_post_id": "6adc6d391399370ecdb7e354",
+      "zernio_status": "published",
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-10/2026-10-31-original-editorial.jpg",
+      "github_path": "telegram/2026-10/2026-10-31-original-editorial.jpg",
+      "github_blob_sha": "913437dba77952c7b53f436dc4a76d329a895ed0",
+      "github_size_bytes": 159645,
+      "visual_review": "unverified",
+      "original_source_sha": "unavailable",
+      "provenance_note": "GitHub SHA/size and Zernio URL cross-referenced; original ChatGPT image identity and pixel-level approval not proven."
+    },
+    {
+      "date_moscow": "2026-11-01",
+      "zernio_post_id": "6ae5848e5fd509e83a85d422",
+      "zernio_status": "published",
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-01-unemployment-labour-market-original.jpg",
+      "github_path": "telegram/2026-11/2026-11-01-unemployment-labour-market-original.jpg",
+      "github_blob_sha": "c0997f81e7b231764b2b4b22a184b6d5cbd40da4",
+      "github_size_bytes": 212588,
+      "visual_review": "unverified",
+      "original_source_sha": "unavailable",
+      "provenance_note": "GitHub SHA/size and Zernio URL cross-referenced; original ChatGPT image identity and pixel-level approval not proven."
+    },
+    {
+      "date_moscow": "2026-11-02",
+      "zernio_post_id": "6ae6d5cf2ff9ae840092177b",
+      "zernio_status": "scheduled",
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-02-svb-maturity-mismatch-original.jpg",
+      "github_path": "telegram/2026-11/2026-11-02-svb-maturity-mismatch-original.jpg",
+      "github_blob_sha": "1fa3815b59efb5d3a21f8e56c36fff4dd23438b4",
+      "github_size_bytes": 246263,
+      "visual_review": "unverified",
+      "original_source_sha": "unavailable",
+      "provenance_note": "GitHub SHA/size and Zernio URL cross-referenced; original ChatGPT image identity and pixel-level approval not proven."
+    },
+    {
+      "date_moscow": "2026-11-03",
+      "zernio_post_id": "6ae5b3c1219129d079e181c1",
+      "zernio_status": "scheduled",
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-03-mpesa-kenya-editorial-original.jpg",
+      "github_path": "telegram/2026-11/2026-11-03-mpesa-kenya-editorial-original.jpg",
+      "github_blob_sha": "98655a41b31926fdad3c8bddc2ef3812fb75190a",
+      "github_size_bytes": 188613,
+      "visual_review": "unverified",
+      "original_source_sha": "unavailable",
+      "provenance_note": "GitHub SHA/size and Zernio URL cross-referenced; original ChatGPT image identity and pixel-level approval not proven."
+    }
+  ]
+}
