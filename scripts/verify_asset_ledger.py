@@ -14,8 +14,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 LEDGER = ROOT / "editorial" / "asset-ledger.json"
 PREFIX = "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/"
-MIN_WIDTH = 800
-MIN_HEIGHT = 800
+MIN_WIDTH = 900
+MIN_HEIGHT = 900
 
 
 def jpeg_dimensions(payload):
