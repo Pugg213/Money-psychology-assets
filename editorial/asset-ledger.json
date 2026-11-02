@@ -109,7 +109,8 @@
         "sha": "b6b52f9bafae5543b799f8a2ef067ec1ce364431",
         "date_utc": "2026-11-01T06:01:17Z",
         "message": "Add original 2026-11-02 SVB maturity mismatch editorial cover"
-      }
+      },
+      "editorial_pixel_review": "PASS: directly viewed 1120x1400 JPEG; hourglasses match maturity-risk metaphor, no text/unsupported figures; separate original/user approval remains UNVERIFIED"
     },
     {
       "date_moscow": "2026-11-03",
