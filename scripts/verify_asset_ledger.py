@@ -100,6 +100,13 @@ def validate(data):
         print(f"{day}: {path} blob={blob_sha[:12]} status={item.get('visual_review')}")
     if list((ROOT / "sources").rglob("*.svg")):
         errors.append("SVG source files reintroduced; reject fallback workflow")
+    workflow_paths = list((ROOT / ".github" / "workflows").glob("*.yml"))
+    allowed = {"asset-integrity.yml"}
+    for candidate in workflow_paths:
+        if candidate.name not in allowed:
+            errors.append(f"unapproved workflow could regenerate media: {candidate.name}")
+    if (ROOT / "scripts" / "generate_weekly_covers.py").exists():
+        errors.append("obsolete cover generator has been reintroduced")
     if errors:
         for error in errors:
             print("FAIL:", error, file=sys.stderr)
