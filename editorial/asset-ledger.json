@@ -111,6 +111,18 @@
       "visual_review": "unverified",
       "original_source_sha": "unavailable",
       "provenance_note": "GitHub SHA/size and Zernio URL cross-referenced; original ChatGPT image identity and pixel-level approval not proven."
+    },
+    {
+      "date_moscow": "2026-11-04",
+      "zernio_post_id": "6ae83f2a4c001ff994184ad5",
+      "zernio_status": "scheduled",
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-04-career-offer-crossroads-original.jpg",
+      "github_path": "telegram/2026-11/2026-11-04-career-offer-crossroads-original.jpg",
+      "github_blob_sha": "20bf18a57c5ab914b6e9f51edaf98b7b24a1ed07",
+      "github_size_bytes": 154251,
+      "visual_review": "approved",
+      "original_source_sha": "20bf18a57c5ab914b6e9f51edaf98b7b24a1ed07",
+      "provenance_note": "Original ChatGPT image generated in this conversation, visually reviewed before JPEG conversion; SHA computed on final JPEG and checked against created Git blob; Zernio exact media URL verified. Telegram-delivered bytes unverified."
     }
   ]
 }
