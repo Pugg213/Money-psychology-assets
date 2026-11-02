@@ -1,0 +1,20 @@
+{
+  "channel": "@psy_money1",
+  "date": "2026-11-02",
+  "post_id": "6ae6d5cf2ff9ae840092177b",
+  "image_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-02-svb-maturity-mismatch-original.jpg",
+  "github_blob_sha": "1fa3815b59efb5d3a21f8e56c36fff4dd23438b4",
+  "pixel_review": {
+    "result": "PASS",
+    "dimensions": [
+      1120,
+      1400
+    ],
+    "visual_content": "Two gold hourglasses, realistic glass and sand, no text or figures",
+    "caption_fit": "Timing mismatch metaphor fits SVB article; no stronger causal claims"
+  },
+  "original_provenance": "UNVERIFIED",
+  "user_approval": "NOT DOCUMENTED",
+  "meaning": "Pixel QA pass does not prove original ImageGen identity or user approval",
+  "publication": "Unchanged"
+}
