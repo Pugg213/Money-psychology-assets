@@ -2,5 +2,26 @@
   "schema_version": 1,
   "channel": "@psy_money1",
   "note": "Timestamped per-post analytics only; metrics must be null unless platform sync_status is synced. Distinguish 24h vs 48h age cohorts.",
-  "snapshots": []
+  "snapshots": [
+    {
+      "fetched_at": "2026-11-02T09:30:35.215Z",
+      "post_id": "6ae5848e5fd509e83a85d422",
+      "published_at": "2026-11-01T09:03:01.154Z",
+      "age_hours": 24.459461,
+      "age_bucket": "24h",
+      "sync_status": "pending",
+      "platform_sync_status": "pending",
+      "metrics": null
+    },
+    {
+      "fetched_at": "2026-11-02T09:30:35.215Z",
+      "post_id": "6adc6d391399370ecdb7e354",
+      "published_at": "2026-10-31T09:03:31.162Z",
+      "age_hours": 48.451126,
+      "age_bucket": "48h",
+      "sync_status": "pending",
+      "platform_sync_status": "pending",
+      "metrics": null
+    }
+  ]
 }
