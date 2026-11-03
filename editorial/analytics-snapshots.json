@@ -22,6 +22,26 @@
       "sync_status": "pending",
       "platform_sync_status": "pending",
       "metrics": null
+    },
+    {
+      "fetched_at": "2026-11-03T09:34:25.061Z",
+      "post_id": "6ae6d5cf2ff9ae840092177b",
+      "published_at": "2026-11-02T09:03:00.305Z",
+      "age_hours": 24.523543,
+      "age_bucket": "24h",
+      "sync_status": "pending",
+      "platform_sync_status": "pending",
+      "metrics": null
+    },
+    {
+      "fetched_at": "2026-11-03T09:34:25.061Z",
+      "post_id": "6ae5848e5fd509e83a85d422",
+      "published_at": "2026-11-01T09:03:01.154Z",
+      "age_hours": 48.523308,
+      "age_bucket": "48h",
+      "sync_status": "pending",
+      "platform_sync_status": "pending",
+      "metrics": null
     }
   ]
 }
