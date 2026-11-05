@@ -1,6 +1,7 @@
 import {createHmac,timingSafeEqual} from 'node:crypto';
 import {extensions,isExtension,executeTool} from '../lib/extensions.js';
 import {audienceTools,isAudienceTool,executeAudienceTool} from '../lib/audience-tools.js';
+import {businessTools,isBusinessTool,executeBusinessTool} from '../lib/business-tools.js';
 import {legacyFetch,relay} from '../lib/legacy.js';
 const BASE='https://money-psy-telegram-mcp.vercel.app';
 const RESOURCE=BASE+'/mcp';
@@ -75,16 +76,17 @@ export default async function handler(req,res){
    for(const item of j.result.tools)if(item?.name)byName.set(item.name,item);
    for(const item of extensions)if(!byName.has(item.name))byName.set(item.name,item);
    for(const item of audienceTools)if(!byName.has(item.name))byName.set(item.name,item);
+   for(const item of businessTools)if(!byName.has(item.name))byName.set(item.name,item);
    j.result.tools=Array.from(byName.values());
    return respond(req,res,j);
   }catch(e){return respond(req,res,{jsonrpc:'2.0',id:payload?.id,error:{code:-32603,message:'Tool discovery unavailable: '+String(e).slice(0,180)}},502);}
  }
- if(payload?.method==='tools/call' && (isExtension(name)||isAudienceTool(name))){
-  if(!auth.scopes.has('telegram:write') && !(extensions.find(x=>x.name===name)||audienceTools.find(x=>x.name===name))?.annotations?.readOnlyHint){
+ if(payload?.method==='tools/call' && (isExtension(name)||isAudienceTool(name)||isBusinessTool(name))){
+  if(!auth.scopes.has('telegram:write') && !(extensions.find(x=>x.name===name)||audienceTools.find(x=>x.name===name)||businessTools.find(x=>x.name===name))?.annotations?.readOnlyHint){
    return respond(req,res,{jsonrpc:'2.0',id:payload.id,error:{code:-32003,message:'insufficient_scope'}},403);
   }
   try{
-   const result=isAudienceTool(name)?await executeAudienceTool(name,payload.params.arguments||{}):await executeTool(name,payload.params.arguments||{});
+   const result=isBusinessTool(name)?await executeBusinessTool(name,payload.params.arguments||{}):isAudienceTool(name)?await executeAudienceTool(name,payload.params.arguments||{}):await executeTool(name,payload.params.arguments||{});
    return respond(req,res,{jsonrpc:'2.0',id:payload.id,result:{content:[{type:'text',text:JSON.stringify(result)}],isError:false}});
   }catch(e){
    // Secrets must never enter model-visible error messages.
