@@ -40,7 +40,19 @@ export function createBusinessStore(sdk=null){
   return {files,hasMore};
  }
  return {
-  async saveConnection(c){await write(connPath(c.id),c);},
+  async saveConnection(c){
+   await write(connPath(c.id),c);
+   await write(ROOT+'owner-connections/'+c.owner_id+'/'+hashConnection(c.id)+'.json',{
+    business_connection_id:c.id,owner_id:c.owner_id,is_enabled:c.is_enabled,
+    rights:c.rights,updated_at:c.updated_at
+   });
+  },
+  async connections(ownerId,{limit=50}={}){
+   if(!numericId(ownerId))throw Error('invalid_owner_id');
+   const s=await scan(ROOT+'owner-connections/'+ownerId+'/',Math.min(100,Math.max(1,limit)));
+   const rows=[];for(const f of s.files){const item=await read(f.pathname);if(item?.owner_id===ownerId)rows.push(item);}
+   return {connections:rows,partial:s.hasMore};
+  },
   async connection(id){return read(connPath(id));},
   async saveMessage(e,{storeText=false}={}){
    const path=msgPath(e.connectionId,e.chatId,e.messageId);
