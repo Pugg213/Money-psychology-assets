@@ -31,3 +31,25 @@ This feature extends the existing `@MyGptSparks_bot` and **does not replace** th
 - Prior to actual Telegram connection there can be no live Business end-to-end verification. Tests use mocks and never send messages to real people.
 
 Reference: https://core.telegram.org/bots/api and https://core.telegram.org/bots/features
+
+## Compatibility with cached ChatGPT tools
+
+Some already installed App-backed ChatGPT plugins retain a previous set of named MCP tool descriptors even when the remote server has been upgraded. Opening a new chat does not necessarily refresh the App-owned descriptor snapshot.
+
+The existing `bot_api_call` tool can now route **only explicitly registered Business MCP tool names** through the identical server-side `executeBusinessTool` handlers. The normal `bot_api_call` method allowlist, channel scope, and its prohibition on generic `business_connection_id` arguments remain unchanged for Telegram Bot API methods.
+
+Read-only example:
+```json
+{"method":"business_connections","params":{}}
+```
+Then, for one verified `business_connection_id`:
+```json
+{"method":"business_chats","params":{"business_connection_id":"<actual verified ID>"}}
+```
+The connection identifier must originate from the authenticated `business_connections` result, never be guessed.
+
+An actual write requires both `params.confirm=true` and top-level `confirm_dangerous=true`, as well as the normal MCP `telegram:write` permission and every check enforced by the Business handler. No outgoing messages are sent during read-only diagnostics:
+```json
+{"method":"business_send_message","params":{"business_connection_id":"<actual verified ID>","chat_id":123456789,"text":"Example only","confirm":true},"confirm_dangerous":true}
+```
+This compatibility mechanism is intended for older ChatGPT App tool manifests; native Business commands remain the preferred route whenever ChatGPT makes them available.
