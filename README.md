@@ -1,34 +1,31 @@
-# Money Psychology | No BS — editorial assets and safeguards
+# Money Psychology | No BS — Telegram editorial system
 
-Public original media for [@psy_money1](https://t.me/psy_money1). This repository stores **images and integrity metadata**, not a replacement for Zernio's live publication status.
+Telegram channel: [@psy_money1](https://t.me/psy_money1). **Active publication architecture: GitHub editorial queue + Money Psy Telegram MCP.**
 
-## Canonical records
+## Single source of truth
 
-- `telegram/YYYY-MM/*.jpg`: unique JPG files, one immutable filename per approved post.
-- `editorial/asset-ledger.json`: exact planned Moscow date, Zernio post ID, media URL, Git blob SHA-1 and byte size.
-- `editorial/analytics-snapshots.json`: timestamped API snapshots, including explicit pending/unavailable statuses (not invented zeros).
-- `scripts/verify_asset_ledger.py`: read-only binary integrity checks.
-- `.github/workflows/asset-integrity.yml`: read-only CI; never produces or overwrites images.
+- `editorial/rich-telegram-queue.json` — **the only active publication queue**; one item per Moscow date, with full Markdown article, original JPEG URL, photo caption, schedule, status and confirmed Telegram message IDs after sending.
+- `editorial/articles/YYYY-MM-DD.md` — readable previews of editorial articles. These are **not** a second live queue.
+- `telegram/YYYY-MM/*.jpg` — original public editorial JPEG artwork. Preserve immutable original assets and filenames.
+- `editorial/asset-ledger.json` — source-independent JPEG identity metadata (Git SHA, size, paths, image review/provenance). **Not a publishing queue.**
+- `scripts/verify_asset_ledger.py` + `.github/workflows/asset-integrity.yml` — read-only JPEG integrity verification. These scripts **never publish posts**.
 
-**Three distinct checks (never conflate):** (1) Git blob SHA, bytes, dimensions and CI verify *exact file identity only*; (2) `editorial_pixel_review` records a human/assistant viewing the actual JPEG pixels and comparing its topic, numbers, text and claims with the final caption; (3) `original_source_sha` and `user_approval_evidence` separately record proof of pre-upload source identity and explicit artwork approval. An editorial `PASS` is NOT user approval or proof of identical pre-upload original. If approval evidence is absent, preserve `UNVERIFIED` provenance even when pixels look good. Never substitute an SVG fallback.
+## One-publisher workflow
 
-## Fail-closed preparation / release workflow
+1. **09:00 Moscow — editorial preparation.** Research primary evidence, select a distinct theme and write a useful, substantial Russian article. Validate every number, caveat and link. Use canonical editorial gate: six criteria (originality, evidence, depth, human voice, usefulness, cover fit), >=10/12 with no zero.
+2. Generate and visually inspect a **unique original JPEG**. Check exact committed blob and editorial correspondence. No placeholder, SVG or stock-image fallback.
+3. Add only one complete `state="queued"` entry for a calendar date, at 12:00 `Europe/Moscow`. Store a strong Markdown Rich Message, exact HTTPS cover, <=1024-character photo caption and <=32768 UTF-8-byte rich content. Preserve approved earlier entries.
+4. **11:00 Moscow — read-only preflight.** Verify evidence, arithmetic, image identity, content length, queue uniqueness and schedule. No delivery.
+5. **12:00 Moscow — the only publisher: Money Psy Telegram MCP.** First atomically claim one `queued` entry using the current GitHub blob SHA (`state="sending"`); only after successful claim, make **one** `publish_cover_then_article` call. The resulting editorial release consists of a photo and **one rich article replying to that photo**. Never retry an ambiguous or partial call: duplicate prevention is more important than an automatic fallback.
+6. On confirmed full success, persist `state="published"` and the actual Telegram message IDs in the same GitHub queue. On ambiguous response use `partial_or_uncertain`; on explicit failure use `failed_without_retry`. Never claim publication based on scheduling or an unverified response.
+7. **12:30 Moscow — read-only postflight.** Inspect persisted MCP delivery results; report actual failures, missing IDs or incomplete delivery without automatically republishing. Audit the next day queue.
+8. **Weekly editorial review** for factual correctness, variety, original covers, stable delivery and real reader value. Missing/unavailable metrics are not zeros.
 
-1. Check live Zernio account by exact username `psy_money1`, inspect 14 previous posts and upcoming 7 Moscow dates, avoid daily duplicates.
-2. Enforce >=5 distinct themes per rolling seven posts; shopping, discounts, subscriptions and marketplaces together <=1 per seven.
-3. Check sources, denominators, causal scope, hypothetical examples and numerical calculations. Apply six-dimensional editor score: at least 10/12, none zero.
-4. Generate and visually inspect a **new original editorial JPEG** with meaningful content. Prohibit SVG/CairoSVG, low-detail template, recycled artwork or fallback generated after transfer failure. If original source is lost, stop and report.
-5. Compute Git blob SHA-1 from actual JPEG bytes; commit a new uniquely named JPG, check repository SHA/size and real public HTTPS URL. Verify caption numbers/scientific claim against actual image pixels.
-6. Validate exact caption+URL via Zernio, schedule **one** record for **12:00 Europe/Moscow**; read back ID, account, scheduled time, exact content and URL, then add ledger entry. Scheduling never means published.
-7. At ~12:30 Moscow check Telegram target published and `t.me/` URL. Record failures without automatic retry or duplicate.
-8. For post analytics, store `fetched_at`, `age_hours`, `sync_status`; **only** `synced` counts are numerical observations. Never interpret pending zeros as measured zeros. Compare same-age 24/48h snapshots only.
-9. Weekly audit must check missing days, duplication, exact 12:00 versus delayed release, originality, evidence and cross-chat changes. No changes to unrelated channels or conversations.
+## Safeguards
 
-Two older GitHub Actions which regenerated covers from an old image/SVG, plus their generator and SVG sources, were removed on 2 November 2026. Never restore them as a fallback. The current GitHub Actions job is integrity-only.
-
-## Known limitations
-
-- The Zernio API schedules a target timestamp; it cannot guarantee Telegram actually publishes at exactly 12:00:00.
-- Asset integrity CI cannot inspect image semantics or prove user approval.
-- Automation may fail to fill seven days if unique, source-checked artwork cannot be verified: **quality takes priority over quota**.
-- Do not rewrite a published post or change scheduled date/media based on a different chat's context without confirming the exact Zernio ID.
+- The GitHub queue is **the only source of planned posts**; never add a parallel scheduler, fallback publisher or second Telegram-bot pipeline.
+- Published Telegram messages and original JPEG files must not be deleted during a tool migration.
+- Keep Markdown tables and formatting only when they genuinely help. Rich rendering in Telegram must be verified from an actual delivered article; static Markdown checks do not prove Telegram rendering.
+- A Git SHA and byte length prove file identity, **not** visual quality, the authenticity of original source or user approval. Track these separately.
+- If the editor cannot verify claims, image pixels, publication rights or unique delivery, **fail closed**: report a concrete blocker and do not silently downgrade quality.
+- This repository preserves Git commit history for auditability; obsolete draft snapshots and old scheduling configuration are not part of the active architecture.
