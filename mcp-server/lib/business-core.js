@@ -38,7 +38,7 @@ export function businessEvent(u){
  if(d){
   if(d.chat?.type!=='private'||!numericId(d.chat?.id)||typeof d.business_connection_id!=='string'
     ||!Array.isArray(d.message_ids))return null;
-  return {kind:'deleted',connectionId:d.business_connection_id,chatId:d.chat.id,
+  return {kind:'deleted',connectionId:d.business_connection_id,chatId:d.chat.id,updateId:u.update_id,
    messageIds:d.message_ids.filter(x=>Number.isSafeInteger(x)&&x>0).slice(0,100)};
  }
  return null;
