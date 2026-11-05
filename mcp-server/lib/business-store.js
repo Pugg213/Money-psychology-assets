@@ -54,8 +54,10 @@ export function createBusinessStore(sdk=null){
     observed_at:previous?.observed_at||now,updated_at:now
    });
    // Chat index is metadata only and is never publicly accessible.
+   const priorChat=await read(chatPath(e.connectionId,e.chatId));
    await write(chatPath(e.connectionId,e.chatId),{
-    chat_id:e.chatId,label:e.chatLabel||'',last_event_at:now
+    chat_id:e.chatId,label:e.chatLabel||priorChat?.label||'',last_event_at:now,
+    last_incoming_at:e.incoming?now:priorChat?.last_incoming_at||null
    });
    return {stored:true,duplicate:false};
   },
@@ -66,6 +68,7 @@ export function createBusinessStore(sdk=null){
    return {removed_from_local_store:paths.length};
   },
   async getMessage(connectionId,chatId,messageId){return read(msgPath(connectionId,chatId,messageId));},
+  async chat(connectionId,chatId){return read(chatPath(connectionId,chatId));},
   async chats(connectionId,{limit=100}={}){
    const s=await scan(ROOT+'chats/'+hashConnection(connectionId)+'/',Math.min(200,Math.max(1,limit)));
    const chats=[];
