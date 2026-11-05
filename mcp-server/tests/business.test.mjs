@@ -155,3 +155,50 @@ test('later stale event never shortens the 24-hour response window',async()=>{
  await f.svc.handle(older);
  assert.equal((await f.store.chat(raw.id,456)).last_incoming_at,saved);
 });
+
+test('disabling Business updates retains channel feedback subscriptions',async()=>{
+ const calls=[],endpoint='https://money-psy-telegram-mcp.vercel.app/api/updates';
+ const telegramApi=async(method,p)=>{
+  calls.push({method,p});
+  if(method==='getWebhookInfo')return {url:endpoint,allowed_updates:['channel_post','message','business_connection','business_message']};
+  if(method==='setWebhook')return true;
+  throw Error('unexpected_method_'+method);
+ };
+ const previous=process.env.TELEGRAM_BOT_TOKEN;
+ process.env.TELEGRAM_BOT_TOKEN='123456:AbCdEfGhIjKlMnOpQrStUvWxYz012345';
+ try{
+  const result=await executeBusinessTool('disable_business_updates',{confirm:true},{telegramApi});
+  assert.equal(result.reader_feedback_preserved,true);
+  assert.equal(result.allowed_updates.includes('channel_post'),true);
+  assert.equal(result.allowed_updates.includes('business_message'),false);
+  assert.equal(calls.some(x=>x.method==='deleteWebhook'),false);
+  assert.equal(calls.find(x=>x.method==='setWebhook').p.drop_pending_updates,false);
+ }finally{
+  if(previous===undefined)delete process.env.TELEGRAM_BOT_TOKEN;
+  else process.env.TELEGRAM_BOT_TOKEN=previous;
+ }
+});
+test('disabling reader feedback keeps Business webhook if owner allowlist exists',async()=>{
+ const {createAudienceService}=await import('../lib/audience-service.js');
+ const botToken='123456:AbCdEfGhIjKlMnOpQrStUvWxYz012345';
+ const prev=process.env.TELEGRAM_BUSINESS_OWNER_IDS;
+ process.env.TELEGRAM_BUSINESS_OWNER_IDS='123';
+ const calls=[],telegramApi=async(method,p)=>{
+  calls.push({method,p});
+  if(method==='getWebhookInfo')return {url:'https://money-psy-telegram-mcp.vercel.app/api/updates'};
+  if(method==='setWebhook')return true;
+  throw Error('unexpected_method_'+method);
+ };
+ try{
+  const service=createAudienceService({telegramApi,botToken,store:{}});
+  const result=await service.disable({confirm:true});
+  assert.equal(result.business_preserved,true);
+  assert.equal(calls.some(x=>x.method==='deleteWebhook'),false);
+  const p=calls.find(x=>x.method==='setWebhook').p;
+  assert.equal(p.allowed_updates.includes('business_message'),true);
+  assert.equal(p.allowed_updates.includes('channel_post'),false);
+ }finally{
+  if(prev===undefined)delete process.env.TELEGRAM_BUSINESS_OWNER_IDS;
+  else process.env.TELEGRAM_BUSINESS_OWNER_IDS=prev;
+ }
+});
