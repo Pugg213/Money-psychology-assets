@@ -1,5 +1,6 @@
 import { Buffer } from 'node:buffer';
 import {audienceTools} from './audience-tools.js';
+import {businessTools} from './business-tools.js';
 
 const CHANNEL = process.env.TELEGRAM_CHAT_ID || '@psy_money1';
 const norm = (s) => String(s).trim().toLowerCase();
@@ -130,7 +131,7 @@ async function tg(method,params={},confirmed=false,clientFetch=fetch){
   }finally{clearTimeout(timer);}
 }
 const toolList=[
- P('get_capabilities','Read-only: list verified method groups, security rules and limits of this channel-bound MCP.',{},[],true),
+ P('get_capabilities','Read-only: inspect channel-only generic methods and separately permissioned opt-in Telegram Business MCP tools.',{},[],true),
  P('validate_rich_message','Read-only: preflight Telegram rich Markdown/HTML without sending anything.',
    {content:str,format:{type:'string',enum:['markdown','html']},caption:str},['content','format'],true),
  P('get_channel_overview','Read-only: get bot identity, channel details, member count and own administrator rights.',{},[],true),
@@ -215,11 +216,21 @@ function summaryResult(method,result){
 export async function executeTool(name,args={},clientFetch=fetch){
  const api=(method,params,confirmed)=>tg(method,params,confirmed,clientFetch);
  switch(name){
-  case 'get_capabilities':return {version:'2.1.0',channel:CHANNEL,methods,typed_tools:[...toolList.map(t=>t.name),...audienceTools.map(t=>t.name)],
-    rules:['All channel-scoped by default','No stored user session','No personal Telegram account access',
-      'No message-history retrieval or native post-view analytics through Bot API',
-      'Mutations require telegram:write OAuth scope','Explicit confirm for destructive actions',
-      'Payments, generic webhook mutation, getUpdates and logout disabled; dedicated guarded enable_reader_feedback can activate inbound updates with approval']};
+  case 'get_capabilities':return {version:'2.2.0',channel:CHANNEL,methods,
+    typed_tools:[...toolList.map(t=>t.name),...audienceTools.map(t=>t.name),...businessTools.map(t=>t.name)],
+    business:{
+     available:true,requires_explicit_activation:true,
+     owner_allowlist_configured:!!String(process.env.TELEGRAM_BUSINESS_OWNER_IDS||'').trim(),
+     text_storage_enabled:process.env.TELEGRAM_BUSINESS_STORE_TEXT==='true',
+     webhook_commands:['enable_business_updates','disable_business_updates'],
+     note:'Dedicated business_* tools require explicit Telegram Business connection, live rights, owner allowlist and observed private chats; generic bot_api_call remains channel-only.'
+    },
+    rules:['Channel-scoped generic Bot API method allowlist and separate opt-in Business tools',
+      'No unrestricted Telegram user session or access to arbitrary chat histories',
+      'No native post-view analytics through Bot API',
+      'Mutations require telegram:write OAuth scope; destructive and Business actions require explicit confirmation, but send_* publication tools execute immediately',
+      'Payments, generic webhook mutation, getUpdates and logout disabled',
+      'Business read/mark/delete/profile operations have additional live rights checks']};
   case 'validate_rich_message':return validateRich(args.content,args.format,args.caption);
   case 'get_channel_overview':{
    const me=await api('getMe');
