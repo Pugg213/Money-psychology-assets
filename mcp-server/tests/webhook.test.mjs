@@ -5,6 +5,7 @@ import {createAudienceService} from '../lib/audience-service.js';
 import {webhookToken} from '../lib/audience-core.js';
 
 const secret='123456:AbCdEfGhIjKlMnOpQrStUvWxYz012345';
+process.env.TELEGRAM_BOT_TOKEN=secret;
 function res(){return {statusCode:200,headers:{},payload:null,
  status(n){this.statusCode=n;return this;},setHeader(k,v){this.headers[k]=v;return this;},
  json(x){this.payload=x;return this;},end(x){this.payload=x;return this;}};}
