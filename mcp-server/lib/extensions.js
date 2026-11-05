@@ -16,7 +16,7 @@ const methods = Object.freeze({
  'getMe','getChat','getChatMember','getChatMemberCount','getChatAdministrators','getWebhookInfo',
  'getMyCommands','getMyName','getMyDescription','getMyShortDescription','getChatMenuButton',
  'getUserProfilePhotos','getFile','getAvailableGifts','getMyStarBalance','getStarTransactions',
- 'getChatGifts','getChatMemberTags','getChatBoosts','getUserChatBoosts',
+ 'getChatGifts','getUserChatBoosts','getUserProfileAudios','getMyDefaultAdministratorRights',
  'getForumTopicIconStickers','getStickerSet','getCustomEmojiStickers',
  'getGameHighScores','getBusinessConnection'
  ],
@@ -34,7 +34,9 @@ const methods = Object.freeze({
  'createChatInviteLink','editChatInviteLink','revokeChatInviteLink',
  'approveChatJoinRequest','declineChatJoinRequest','banChatMember','unbanChatMember',
  'restrictChatMember','promoteChatMember','setChatAdministratorCustomTitle',
- 'setChatPermissions','setChatStickerSet','deleteChatStickerSet',
+ 'setChatPermissions','setChatStickerSet','deleteChatStickerSet','setChatMemberTag',
+ 'banChatSenderChat','unbanChatSenderChat','exportChatInviteLink','editGeneralForumTopic',
+ 'answerCallbackQuery','setMyProfilePhoto','removeMyProfilePhoto','sendGame','setGameScore',
  'setMyCommands','deleteMyCommands','setMyName','setMyDescription',
  'setMyShortDescription','setChatMenuButton','setMyDefaultAdministratorRights',
  'createForumTopic','editForumTopic','closeForumTopic','reopenForumTopic',
@@ -44,12 +46,28 @@ const methods = Object.freeze({
  ],
  special:[
  'setWebhook','deleteWebhook','getUpdates','logOut','close',
- 'sendInvoice','createInvoiceLink','sendPaidMedia','sendGift','sendGifts','transferBusinessAccountStars',
- 'refundStarPayment','refundPayment','withdrawStarBalance',
+ 'getUserPersonalChatMessages','getManagedBotToken','replaceManagedBotToken',
+ 'getManagedBotAccessSettings','setManagedBotAccessSettings','setUserEmojiStatus',
+ 'createChatSubscriptionInviteLink','editChatSubscriptionInviteLink',
+ 'answerChatJoinRequestQuery','sendChatJoinRequestWebApp','leaveChat',
+ 'giftPremiumSubscription','verifyUser','verifyChat','removeUserVerification','removeChatVerification',
+ 'readBusinessMessage','deleteBusinessMessages','getBusinessAccountStarBalance',
+ 'getBusinessAccountGifts','getUserGifts','repostStory','answerGuestQuery','answerWebAppQuery',
+ 'savePreparedInlineMessage','savePreparedKeyboardButton',
+ 'editMessageLiveLocation','stopMessageLiveLocation','editMessageChecklist',
+ 'editEphemeralMessageText','editEphemeralMessageMedia','editEphemeralMessageCaption',
+ 'editEphemeralMessageReplyMarkup','approveSuggestedPost','declineSuggestedPost','deleteEphemeralMessage',
+ 'uploadStickerFile','createNewStickerSet','addStickerToSet','setStickerPositionInSet',
+ 'deleteStickerFromSet','replaceStickerInSet','setStickerEmojiList','setStickerKeywords',
+ 'setStickerMaskPosition','setStickerSetTitle','setStickerSetThumbnail',
+ 'setCustomEmojiStickerSetThumbnail','deleteStickerSet','answerInlineQuery',
+ 'editUserStarSubscription','setPassportDataErrors',
+ 'sendInvoice','createInvoiceLink','sendPaidMedia','sendGift','transferBusinessAccountStars',
+ 'refundStarPayment',
  'transferGift','upgradeGift','convertGiftToStars','sendMessageDraft',
  'sendRichMessageDraft','setBusinessAccountName','setBusinessAccountBio',
  'setBusinessAccountUsername','setBusinessAccountProfilePhoto','removeBusinessAccountProfilePhoto',
- 'setBusinessAccountGiftSettings','deleteBusinessAccountMessages','postStory',
+ 'setBusinessAccountGiftSettings','postStory',
  'editStory','deleteStory','answerPreCheckoutQuery','answerShippingQuery'
  ]
 });
@@ -57,7 +75,9 @@ const risky = new Set([
  'deleteMessage','deleteMessages','unpinAllChatMessages','banChatMember','restrictChatMember',
  'promoteChatMember','setChatPermissions','setChatTitle','setChatDescription','setChatPhoto','deleteChatPhoto',
  'revokeChatInviteLink','deleteForumTopic','deleteChatStickerSet','stopPoll',
- 'setMyCommands','deleteMyCommands','setMyDefaultAdministratorRights','deleteAllMessageReactions'
+ 'setMyCommands','deleteMyCommands','setMyDefaultAdministratorRights','deleteAllMessageReactions',
+ 'exportChatInviteLink','banChatSenderChat','unbanChatSenderChat','setChatMemberTag',
+ 'setMyProfilePhoto','removeMyProfilePhoto'
 ]);
 const permits = new Map(Object.entries(methods).flatMap(([group,names])=>names.map(m=>[m,group])));
 const clamp = (value,min,max)=>Math.max(min,Math.min(max,value));
