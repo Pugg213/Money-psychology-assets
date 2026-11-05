@@ -36,7 +36,7 @@ export function createBusinessService({telegramApi=botRequest,store=createBusine
   try{conn=await verified(e.connectionId,{known:false});}
   catch(err){if(String(err.message).includes('business_owner_not_authorized'))return {accepted:true,ignored:true};throw err;}
   if(!conn.is_enabled)return {accepted:true,ignored:true,reason:'disabled'};
-  if(e.kind==='deleted')return {accepted:true,kind:'deleted',...(await store.deleteMessages(e.connectionId,e.chatId,e.messageIds))};
+  if(e.kind==='deleted')return {accepted:true,kind:'deleted',...(await store.deleteMessages(e.connectionId,e.chatId,e.messageIds,{updateId:e.updateId}))};
   e.incoming=e.senderId!==null&&e.senderId!==conn.owner_id;
   const saved=await store.saveMessage(e,{storeText});
   return {accepted:true,kind:e.kind,...saved,content_saved:storeText};
