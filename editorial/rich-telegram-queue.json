@@ -30,7 +30,11 @@
           "ILO statement 2026-10-12",
           "OECD Education at a Glance 2026"
         ],
-        "status": "revised_pending_render_test"
+        "status": "text_review_passed_no_live_render_validation",
+        "math_check": "passed 2026-11-05",
+        "markdown_static_check": "passed 2026-11-05",
+        "primary_sources": "IFRS/SEC/Vanguard/ILO/OECD verified in current turn",
+        "live_telegram_render": "not_tested"
       }
     },
     {
@@ -57,7 +61,11 @@
           "ILO statement 2026-10-12",
           "OECD Education at a Glance 2026"
         ],
-        "status": "revised_pending_render_test"
+        "status": "text_review_passed_no_live_render_validation",
+        "math_check": "passed 2026-11-05",
+        "markdown_static_check": "passed 2026-11-05",
+        "primary_sources": "IFRS/SEC/Vanguard/ILO/OECD verified in current turn",
+        "live_telegram_render": "not_tested"
       }
     },
     {
@@ -84,7 +92,11 @@
           "ILO statement 2026-10-12",
           "OECD Education at a Glance 2026"
         ],
-        "status": "revised_pending_render_test"
+        "status": "text_review_passed_no_live_render_validation",
+        "math_check": "passed 2026-11-05",
+        "markdown_static_check": "passed 2026-11-05",
+        "primary_sources": "IFRS/SEC/Vanguard/ILO/OECD verified in current turn",
+        "live_telegram_render": "not_tested"
       }
     },
     {
@@ -111,7 +123,11 @@
           "ILO statement 2026-10-12",
           "OECD Education at a Glance 2026"
         ],
-        "status": "revised_pending_render_test"
+        "status": "text_review_passed_no_live_render_validation",
+        "math_check": "passed 2026-11-05",
+        "markdown_static_check": "passed 2026-11-05",
+        "primary_sources": "IFRS/SEC/Vanguard/ILO/OECD verified in current turn",
+        "live_telegram_render": "not_tested"
       }
     }
   ],
