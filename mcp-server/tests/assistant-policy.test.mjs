@@ -1,0 +1,13 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {authorizeAssistantUpdate,parseIds} from '../lib/assistant-policy.js';
+const make=(chatType='private',text='hello')=>({update_id:12,message:{message_id:34,chat:{id:123,type:chatType},from:{id:123,is_bot:false},text}});
+const config={ownerIds:parseIds('123'),chatIds:parseIds('-100222'),botUsername:'MyGptSparks_bot'};
+test('owner private message allowed',()=>assert.equal(authorizeAssistantUpdate(make(),config).allowed,true));
+test('unknown sender rejected',()=>assert.equal(authorizeAssistantUpdate(make(),{...config,ownerIds:parseIds('99')}).reason,'sender_not_authorized'));
+test('group must be explicitly allowed',()=>{const u=make('supergroup','@MyGptSparks_bot hello');u.message.chat.id=-100999;assert.equal(authorizeAssistantUpdate(u,config).reason,'chat_not_authorized');});
+test('group must address bot',()=>{const u=make('supergroup','hello');u.message.chat.id=-100222;assert.equal(authorizeAssistantUpdate(u,config).reason,'not_addressed');});
+test('group mention allowed',()=>{const u=make('supergroup','@MyGptSparks_bot hello');u.message.chat.id=-100222;assert.equal(authorizeAssistantUpdate(u,config).allowed,true);});
+test('channel posts not accepted',()=>assert.equal(authorizeAssistantUpdate({update_id:12,channel_post:{}},config).allowed,false));
+test('bot sender rejected',()=>{const u=make();u.message.from.is_bot=true;assert.equal(authorizeAssistantUpdate(u,config).reason,'bot_sender');});
+test('oversize rejected',()=>assert.equal(authorizeAssistantUpdate(make('private','x'.repeat(4001)),config).reason,'message_too_long'));
