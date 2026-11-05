@@ -65,6 +65,13 @@ export default async function handler(req,res){
  try{payload=readRpc(req);}catch{return res.status(400).json({error:'invalid_json'});}
  if(Array.isArray(payload))return relay(req,res,'/api/mcp');
  const name=payload?.params?.name;
+ const argumentsObject=payload?.params?.arguments||{};
+ // Compatibility with ChatGPT App connections whose tool descriptors predate Business v2.2.
+ // Only already registered Business MCP commands are forwarded; regular Bot API calls
+ // continue through the unchanged chat allowlist and method-security validator.
+ const businessCompatibility=payload?.method==='tools/call'&&name==='bot_api_call'
+   &&typeof argumentsObject.method==='string'&&isBusinessTool(argumentsObject.method);
+ const effectiveName=businessCompatibility?argumentsObject.method:name;
  if(payload?.method==='tools/list'){
   try{
    const old=await legacyFetch(req,'/api/mcp');
@@ -82,11 +89,20 @@ export default async function handler(req,res){
   }catch(e){return respond(req,res,{jsonrpc:'2.0',id:payload?.id,error:{code:-32603,message:'Tool discovery unavailable: '+String(e).slice(0,180)}},502);}
  }
  if(payload?.method==='tools/call' && (isExtension(name)||isAudienceTool(name)||isBusinessTool(name))){
-  if(!auth.scopes.has('telegram:write') && !(extensions.find(x=>x.name===name)||audienceTools.find(x=>x.name===name)||businessTools.find(x=>x.name===name))?.annotations?.readOnlyHint){
+  const toolDefinition=extensions.find(x=>x.name===effectiveName)||
+    audienceTools.find(x=>x.name===effectiveName)||
+    businessTools.find(x=>x.name===effectiveName);
+  if(!auth.scopes.has('telegram:write') && !toolDefinition?.annotations?.readOnlyHint){
    return respond(req,res,{jsonrpc:'2.0',id:payload.id,error:{code:-32003,message:'insufficient_scope'}},403);
   }
   try{
-   const result=isBusinessTool(name)?await executeBusinessTool(name,payload.params.arguments||{}):isAudienceTool(name)?await executeAudienceTool(name,payload.params.arguments||{}):await executeTool(name,payload.params.arguments||{});
+   if(businessCompatibility&&!toolDefinition?.annotations?.readOnlyHint&&argumentsObject.confirm_dangerous!==true)
+    throw Error('business_compatibility_write_requires_confirm_dangerous');
+   const result=businessCompatibility
+    ?await executeBusinessTool(effectiveName,argumentsObject.params||{})
+    :isBusinessTool(name)?await executeBusinessTool(name,argumentsObject)
+    :isAudienceTool(name)?await executeAudienceTool(name,argumentsObject)
+    :await executeTool(name,argumentsObject);
    return respond(req,res,{jsonrpc:'2.0',id:payload.id,result:{content:[{type:'text',text:JSON.stringify(result)}],isError:false}});
   }catch(e){
    // Secrets must never enter model-visible error messages.
