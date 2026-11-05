@@ -42,4 +42,4 @@ jobs:
       - run: npm install --ignore-scripts --no-audit --no-fund
       - run: node --check api/mcp.js && node --check api/updates.js
       - run: node --check lib/business-core.js && node --check lib/business-store.js && node --check lib/business-service.js && node --check lib/business-tools.js
-      - run: node --test tests/business.test.mjs tests/audience.test.mjs tests/smoke.test.mjs
+      - run: node --test tests/business.test.mjs tests/business-compat.test.mjs tests/audience.test.mjs tests/smoke.test.mjs
