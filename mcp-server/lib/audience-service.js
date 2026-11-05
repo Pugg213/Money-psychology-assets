@@ -18,7 +18,8 @@ export async function botRequest(method,params={},clientFetch=fetch){
  }finally{clearTimeout(timer);}
 }
 const cleanBase=(s)=>String(s||DEFAULT_BASE).replace(/\/+$/,'');
-export function createAudienceService({telegramApi=botRequest,store=createAudienceStore(),botToken=process.env.TELEGRAM_BOT_TOKEN,baseUrl=DEFAULT_BASE}={}){
+export function createAudienceService({telegramApi=botRequest,store=null,botToken=process.env.TELEGRAM_BOT_TOKEN,baseUrl=DEFAULT_BASE}={}){
+ const audienceStore=store||createAudienceStore();
  const endpoint=cleanBase(baseUrl)+'/api/updates';
  async function context(){
   const chat=await telegramApi('getChat',{chat_id:CHANNEL});
@@ -41,10 +42,7 @@ export function createAudienceService({telegramApi=botRequest,store=createAudien
  async function enable({confirm=false}={}){
   if(confirm!==true)throw Error('confirmation_required');
   if(!botToken)throw Error('telegram_token_not_configured');
-  if(!process.env.BLOB_READ_WRITE_TOKEN && store?.isConfigured!==true){
-   // Allow injected test store for integration tests. Deployment uses BLOB_READ_WRITE_TOKEN.
-   if(!('record' in (store||{})))throw Error('storage_not_configured');
-  }
+  if(!process.env.BLOB_READ_WRITE_TOKEN && !store)throw Error('storage_not_configured');
   const info=await telegramApi('getWebhookInfo');
   if(info.url && info.url!==endpoint)throw Error('existing_webhook_owned_elsewhere: '+info.url);
   await telegramApi('setWebhook',{url:endpoint,secret_token:webhookToken(botToken),allowed_updates:UPDATE_TYPES,
@@ -64,7 +62,7 @@ export function createAudienceService({telegramApi=botRequest,store=createAudien
   const event=normalizeEvent(update,ctx);
   if(!event)return {accepted:true,ignored:true};
   // No Telegram message is sent to the channel; all callbacks use ephemeral answers.
-  const stored=await store.record(event);
+  const stored=await audienceStore.record(event);
   let callback_acknowledged=false;
   if(update.callback_query?.id){
    try{
@@ -84,14 +82,14 @@ export function createAudienceService({telegramApi=botRequest,store=createAudien
   if(!/^20\d{2}-(0[1-9]|1[0-2])$/.test(m))throw Error('invalid_month');
   const p=post_key??null;
   if(p!==null&&!/^20\d{6}$/.test(p))throw Error('invalid_post_key');
-  const data=await store.readRecent({prefix:'events/'+m+'/',limit:Math.min(200,Math.max(1,limit))});
+  const data=await audienceStore.readRecent({prefix:'events/'+m+'/',limit:Math.min(200,Math.max(1,limit))});
   const events=(data.events||[]).filter(x=>!p||x.post_key===p||String(x.post_message_id)===p);
   return {month:m,channel:CHANNEL,report:aggregateAudience(events),
    checked_events:events.length,sample_truncated:!!data.hasMore,retention_notice:'Only updates delivered after webhook activation can be analyzed.'};
  }
  async function topics({month,limit=150}={}){
   const m=month||new Date().toISOString().slice(0,7);
-  const data=await store.readRecent({prefix:'events/'+m+'/',limit:Math.min(200,Math.max(1,limit))});
+  const data=await audienceStore.readRecent({prefix:'events/'+m+'/',limit:Math.min(200,Math.max(1,limit))});
   return {month:m,topic_ideas:topicIdeas(data.events),verified_research:false,
    source:'Captured reader questions, heuristic topic categorization; verify sources and editorial novelty before publishing.'};
  }
