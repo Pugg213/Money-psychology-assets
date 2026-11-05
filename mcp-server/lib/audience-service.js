@@ -1,6 +1,7 @@
 import {webhookToken,normalizeEvent,aggregateAudience,topicIdeas,feedbackKeyboard} from './audience-core.js';
 import {createAudienceStore} from './audience-store.js';
-import {BUSINESS_UPDATES,ownerIds} from './business-core.js';
+import {createBusinessStore} from './business-store.js';
+import {BUSINESS_UPDATES,ownerIds,validateConnection} from './business-core.js';
 
 const DEFAULT_BASE='https://money-psy-telegram-mcp.vercel.app';
 const CHANNEL=process.env.TELEGRAM_CHAT_ID||'@psy_money1';
@@ -20,17 +21,48 @@ export async function botRequest(method,params={},clientFetch=fetch){
  }finally{clearTimeout(timer);}
 }
 const cleanBase=(s)=>String(s||DEFAULT_BASE).replace(/\/+$/,'');
-export function createAudienceService({telegramApi=botRequest,store=null,botToken=process.env.TELEGRAM_BOT_TOKEN,baseUrl=DEFAULT_BASE}={}){
+export function createAudienceService({telegramApi=botRequest,store=null,botToken=process.env.TELEGRAM_BOT_TOKEN,baseUrl=DEFAULT_BASE,businessStore=null}={}){
  const audienceStore=store||createAudienceStore();
+ const diagnosticBusinessStore=businessStore||createBusinessStore();
  const endpoint=cleanBase(baseUrl)+'/api/updates';
  async function context(){
   const chat=await telegramApi('getChat',{chat_id:CHANNEL});
   if(!chat||!Number.isSafeInteger(chat.id))throw Error('channel_identity_unverified');
   return {channelId:chat.id,discussionId:chat.linked_chat_id??null,secret:botToken};
  }
+ async function businessDiagnostic(){
+  const owners=ownerIds();
+  if(!owners.size)return {state:'owner_not_configured',stored_connection_records:0};
+  if(!process.env.BLOB_READ_WRITE_TOKEN&&!businessStore)return {state:'private_storage_not_configured'};
+  try{
+   let saved=0,liveEnabled=0,liveDisabled=0,liveUnverified=0,partial=false;
+   for(const owner of owners){
+    const found=await diagnosticBusinessStore.connections(Number(owner),{limit:50});
+    partial=partial||found.partial===true;
+    for(const entry of found.connections||[]){
+     if(!owners.has(String(entry.owner_id)))continue;
+     saved++;
+     if(typeof entry.business_connection_id!=='string') {liveUnverified++;continue;}
+     try{
+      const raw=await telegramApi('getBusinessConnection',{
+       business_connection_id:entry.business_connection_id
+      });
+      const checked=validateConnection(raw,owners);
+      if(checked.is_enabled)liveEnabled++;
+      else liveDisabled++;
+     }catch{liveUnverified++;}
+    }
+   }
+   return {state:liveEnabled>0?'verified_connected':liveUnverified>0?'verification_incomplete':'no_active_connection',
+    stored_connection_records:saved,live_enabled_connections:liveEnabled,live_disabled_connections:liveDisabled,
+    live_unverified_connections:liveUnverified,partial,
+    checked_using:'Telegram getBusinessConnection for connection IDs received through the owner-allowlisted webhook',
+    note:'No message bodies, other chat IDs, or Business connection tokens are returned.'};
+  }catch{return {state:'storage_unavailable',note:'Business connection status could not be verified.'};}
+ }
  async function status(){
-  const [web,chat]=await Promise.all([
-   telegramApi('getWebhookInfo'),telegramApi('getChat',{chat_id:CHANNEL})
+  const [web,chat,business]=await Promise.all([
+   telegramApi('getWebhookInfo'),telegramApi('getChat',{chat_id:CHANNEL}),businessDiagnostic()
   ]);
   return {webhook_installed:web.url===endpoint,existing_webhook:web.url||null,
    safe_to_enable:!web.url||web.url===endpoint,
@@ -38,6 +70,7 @@ export function createAudienceService({telegramApi=botRequest,store=null,botToke
    discussion_group_linked:!!chat.linked_chat_id,
    discussion_group_id:chat.linked_chat_id||null,
    storage_configured:!!process.env.BLOB_READ_WRITE_TOKEN,
+   business_connection_diagnostic:business,
    reader_events_enabled:web.url===endpoint&&(
     !Array.isArray(web.allowed_updates)||web.allowed_updates.length===0||
     web.allowed_updates.some(x=>['callback_query','channel_post','message','poll','message_reaction_count'].includes(x))),
