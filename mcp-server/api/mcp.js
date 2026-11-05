@@ -51,7 +51,7 @@ function parseLegacyReply(raw){
  for(const line of lines){try{const parsed=JSON.parse(line.slice(5).trim());if(parsed.result)return parsed;}catch{}}
  return null;
 }
-export default async function handler(req,res){
+export default async function handler(req,res,{businessExecutor=executeBusinessTool}={}){
  res.setHeader('Cache-Control','no-store');
  if(req.method==='OPTIONS'){res.setHeader('Allow','GET, POST, OPTIONS');return res.status(204).end();}
  if(!process.env.TELEGRAM_BOT_TOKEN)return res.status(503).json({error:'bot_not_configured'});
@@ -99,8 +99,8 @@ export default async function handler(req,res){
    if(businessCompatibility&&!toolDefinition?.annotations?.readOnlyHint&&argumentsObject.confirm_dangerous!==true)
     throw Error('business_compatibility_write_requires_confirm_dangerous');
    const result=businessCompatibility
-    ?await executeBusinessTool(effectiveName,argumentsObject.params||{})
-    :isBusinessTool(name)?await executeBusinessTool(name,argumentsObject)
+    ?await businessExecutor(effectiveName,argumentsObject.params||{})
+    :isBusinessTool(name)?await businessExecutor(name,argumentsObject)
     :isAudienceTool(name)?await executeAudienceTool(name,argumentsObject)
     :await executeTool(name,argumentsObject);
    return respond(req,res,{jsonrpc:'2.0',id:payload.id,result:{content:[{type:'text',text:JSON.stringify(result)}],isError:false}});
