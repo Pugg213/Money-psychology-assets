@@ -202,3 +202,15 @@ test('disabling reader feedback keeps Business webhook if owner allowlist exists
   else process.env.TELEGRAM_BUSINESS_OWNER_IDS=prev;
  }
 });
+
+test('capability discovery advertises Business tools separately from channel-only generic gateway',async()=>{
+ const {executeTool}=await import('../lib/extensions.js');
+ const capabilities=await executeTool('get_capabilities');
+ assert.equal(capabilities.version,'2.2.0');
+ assert.equal(capabilities.business.available,true);
+ assert.equal(capabilities.business.requires_explicit_activation,true);
+ assert.ok(capabilities.typed_tools.includes('business_status'));
+ assert.ok(capabilities.typed_tools.includes('business_send_message'));
+ assert.ok(capabilities.typed_tools.includes('disable_business_updates'));
+ assert.ok(capabilities.rules.some(x=>x.includes('channel')));
+});
