@@ -133,3 +133,25 @@ test('Business tools include read-only metadata and separate write actions',()=>
  assert.equal(businessTools.find(x=>x.name==='business_messages').annotations.readOnlyHint,true);
  assert.equal(businessTools.find(x=>x.name==='business_send_message').annotations.readOnlyHint,undefined);
 });
+test('deleted message cannot be restored by a delayed webhook replay',async()=>{
+ const f=fixture();
+ await f.svc.handle(msg(21,'private message'));
+ await f.svc.handle({update_id:999,deleted_business_messages:{
+  business_connection_id:raw.id,chat:{id:456,type:'private'},message_ids:[21]}});
+ const before=await f.store.getMessage(raw.id,456,21);
+ assert.equal(before.deleted,true);
+ assert.equal(before.text,null);
+ const replay=await f.svc.handle(msg(21,'private message'));
+ assert.equal(replay.stored,false);
+ assert.equal((await f.svc.messages(raw.id,456)).messages.length,0);
+});
+test('later stale event never shortens the 24-hour response window',async()=>{
+ const f=fixture();
+ await f.svc.handle(msg(40,'recent'));
+ const saved=(await f.store.chat(raw.id,456)).last_incoming_at;
+ const older=msg(41,'old delayed update');
+ older.update_id=941;
+ older.business_message.date=Math.floor(Date.now()/1000)-3600;
+ await f.svc.handle(older);
+ assert.equal((await f.store.chat(raw.id,456)).last_incoming_at,saved);
+});
