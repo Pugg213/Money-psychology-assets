@@ -212,5 +212,5 @@ test('capability discovery advertises Business tools separately from channel-onl
  assert.ok(capabilities.typed_tools.includes('business_status'));
  assert.ok(capabilities.typed_tools.includes('business_send_message'));
  assert.ok(capabilities.typed_tools.includes('disable_business_updates'));
- assert.ok(capabilities.rules.some(x=>/channel/i.test(x)));
+ assert.ok(capabilities.rules.some(x=>/channel-scoped generic bot api/i.test(x)));
 });
