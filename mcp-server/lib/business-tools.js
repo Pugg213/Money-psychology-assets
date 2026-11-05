@@ -40,7 +40,7 @@ export async function executeBusinessTool(name,a={},s=createBusinessService()){
    return {owner_allowlist_configured:ownerIds().size>0,private_store_configured:!!process.env.BLOB_READ_WRITE_TOKEN,
     text_capture_enabled:process.env.TELEGRAM_BUSINESS_STORE_TEXT==='true',
     webhook_owned:w.url==='https://money-psy-telegram-mcp.vercel.app/api/updates',
-    business_events_subscribed:!!w.url&&(
+    business_events_subscribed:w.url==='https://money-psy-telegram-mcp.vercel.app/api/updates'&&(
       !Array.isArray(w.allowed_updates)||w.allowed_updates.length===0||BUSINESS_UPDATES.every(x=>allowed.includes(x))),
     allowed_updates:allowed,botfather_business_mode_required:true,
     note:'Connected Telegram Business accounts and enabled rights are required; old private chat history cannot be fetched.'};
