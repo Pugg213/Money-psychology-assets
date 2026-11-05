@@ -26,7 +26,8 @@ export const businessTools=[
  C('business_profile','Update business account name, bio or username with matching Telegram rights and explicit confirmation.',{...id,action:{type:'string',enum:['name','bio','username']},first_name:str,last_name:str,bio:str,username:str,confirm:yes},['business_connection_id','action','confirm']),
  C('business_gifts','Read-only: business Stars balance or gifts when can_view_gifts_and_stars is allowed. No transfers.',{...id,kind:{type:'string',enum:['balance','gifts']},limit:{type:'integer',minimum:1,maximum:50}},['business_connection_id'],true),
  C('business_forget_chat','Remove locally stored messages and metadata for one Business chat; does NOT delete anything from Telegram.',{...chat,confirm:yes},['business_connection_id','chat_id','confirm']),
- C('enable_business_updates','Install/refresh this server webhook to include Business updates. Preserves existing reader feedback, refuses foreign webhook and never discards pending updates.',{confirm:yes},['confirm'])
+ C('enable_business_updates','Install/refresh this server webhook to include Business updates. Preserves existing reader feedback, refuses foreign webhook and never discards pending updates.',{confirm:yes},['confirm']),
+ C('disable_business_updates','Unsubscribe Telegram Business event types without disabling the Money Psychology reader-feedback webhook or discarding pending updates.',{confirm:yes},['confirm'])
 ];
 const names=new Set(businessTools.map(x=>x.name));
 export const isBusinessTool=(name)=>names.has(name);
@@ -141,6 +142,22 @@ export async function executeBusinessTool(name,a={},s=createBusinessService()){
    await telegram('setWebhook',{url:endpoint,secret_token:webhookToken(process.env.TELEGRAM_BOT_TOKEN),
     allowed_updates,drop_pending_updates:false,max_connections:1});
    return {enabled:true,url:endpoint,allowed_updates,pending_updates_preserved:true};
+  }
+  case 'disable_business_updates':{
+   confirmed(a.confirm);
+   const endpoint='https://money-psy-telegram-mcp.vercel.app/api/updates';
+   const w=await telegram('getWebhookInfo');
+   need(w.url===endpoint,'webhook_not_owned_by_this_service');
+   const source=Array.isArray(w.allowed_updates)&&w.allowed_updates.length
+    ?w.allowed_updates:UPDATE_TYPES;
+   const remaining=source.filter(x=>!BUSINESS_UPDATES.includes(x));
+   if(remaining.length){
+    await telegram('setWebhook',{url:endpoint,secret_token:webhookToken(process.env.TELEGRAM_BOT_TOKEN),
+     allowed_updates:remaining,drop_pending_updates:false,max_connections:4});
+    return {enabled:false,reader_feedback_preserved:true,allowed_updates:remaining,drop_pending_updates:false};
+   }
+   await telegram('deleteWebhook',{drop_pending_updates:false});
+   return {enabled:false,reader_feedback_preserved:false,webhook_deleted:true,drop_pending_updates:false};
   }
   default:throw Error('unknown_business_tool');
  }
