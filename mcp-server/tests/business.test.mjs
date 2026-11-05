@@ -44,7 +44,7 @@ function fixture({rights=raw.rights,text=true}={}){
  return {sdk,store,calls,svc};
 }
 const msg=(id=11,text='Hello')=>({update_id:50+id,business_message:{
- business_connection_id:raw.id,message_id:id,date:1790000000,
+ business_connection_id:raw.id,message_id:id,date:Math.floor(Date.now()/1000),
  chat:{id:456,type:'private',first_name:'Alice'},from:{id:456},text
 }});
 test('owner allowlist and event normalization reject unauthorized owners',()=>{
