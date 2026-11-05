@@ -1,4 +1,5 @@
 import { Buffer } from 'node:buffer';
+import {audienceTools} from './audience-tools.js';
 
 const CHANNEL = process.env.TELEGRAM_CHAT_ID || '@psy_money1';
 const norm = (s) => String(s).trim().toLowerCase();
@@ -214,11 +215,11 @@ function summaryResult(method,result){
 export async function executeTool(name,args={},clientFetch=fetch){
  const api=(method,params,confirmed)=>tg(method,params,confirmed,clientFetch);
  switch(name){
-  case 'get_capabilities':return {version:'2.0.0',channel:CHANNEL,methods,typed_tools:toolList.map(t=>t.name),
+  case 'get_capabilities':return {version:'2.1.0',channel:CHANNEL,methods,typed_tools:[...toolList.map(t=>t.name),...audienceTools.map(t=>t.name)],
     rules:['All channel-scoped by default','No stored user session','No personal Telegram account access',
       'No message-history retrieval or native post-view analytics through Bot API',
       'Mutations require telegram:write OAuth scope','Explicit confirm for destructive actions',
-      'Payments, webhook mutation, getUpdates and logout deliberately disabled']};
+      'Payments, generic webhook mutation, getUpdates and logout disabled; dedicated guarded enable_reader_feedback can activate inbound updates with approval']};
   case 'validate_rich_message':return validateRich(args.content,args.format,args.caption);
   case 'get_channel_overview':{
    const me=await api('getMe');
