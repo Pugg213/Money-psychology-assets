@@ -1,6 +1,7 @@
 import {timingSafeEqual} from 'node:crypto';
 import {botRequest} from '../lib/audience-service.js';
 import {createAudienceStore} from '../lib/audience-store.js';
+import {createBusinessStore} from '../lib/business-store.js';
 
 const safeEqual=(a,b)=>{const x=Buffer.from(String(a||'')),y=Buffer.from(String(b||''));return x.length===y.length&&timingSafeEqual(x,y);};
 export default async function handler(req,res,{
@@ -20,8 +21,15 @@ export default async function handler(req,res,{
   const cutoff=new Date(now.getTime()-70*24*3600*1000).toISOString().slice(0,10);
   let retention;
   try{retention=await store.purgeBefore(cutoff,{maxDelete:80});}catch{retention={error:'retention_cleanup_failed',retry_next_run:true};}
+  let business_retention={enabled:false};
+  if(process.env.TELEGRAM_BUSINESS_OWNER_IDS){
+   try{
+    const cut=new Date(now.getTime()-30*24*3600*1000).toISOString().slice(0,10);
+    business_retention={enabled:true,...await createBusinessStore().purgeOld({cutoff:cut,maxDelete:80})};
+   }catch{business_retention={enabled:true,error:'business_retention_failed',retry_next_run:true};}
+  }
   return res.status(200).json({ok:true,member_count,recorded:recorded.stored===true,
-   duplicate:recorded.duplicate===true,retention,not_post_views:true});
+   duplicate:recorded.duplicate===true,retention,business_retention,not_post_views:true});
  }catch(err){
   return res.status(503).json({ok:false,error:'snapshot_failed'});
  }
