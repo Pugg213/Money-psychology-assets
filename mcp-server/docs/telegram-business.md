@@ -26,7 +26,7 @@ This feature extends the existing `@MyGptSparks_bot` and **does not replace** th
 - Bot API cannot enumerate all existing private chats, retrieve the account's complete message history or subscribed channels, or access arbitrary chats outside the Business connection.
 - The 24-hour reply rule is enforced both by local recent-incoming timestamp and by Telegram.
 - Incoming updates may be retried. The private message store records the latest update ID and replaces the local representation for edits; concurrent webhook processing is limited to one connection for serial ingestion. It is not an exactly-once transactional event ledger.
-- Telegram delete events purge locally stored text for the specified message IDs; disconnecting the bot does not automatically erase retained storage. `business_forget_chat(confirm:true)` deletes up to 1000 messages per call and indicates if additional passes are needed.
+- Telegram delete events redact locally stored message text for the specified message IDs and leave small private tombstones to block replayed webhook messages. Disconnecting the bot does not automatically erase retained storage. `business_forget_chat(confirm:true)` deletes up to 1000 messages per call and indicates if additional passes are needed.
 - The existing authenticated daily cron purges up to 80 Business message blobs older than 30 days on each run when owner IDs are configured. Large stores may need repeated cleanup runs; chat metadata and connection records are not automatically deleted. Treat this as bounded **best-effort** retention, not a guaranteed 30-day deletion SLA.
 - Prior to actual Telegram connection there can be no live Business end-to-end verification. Tests use mocks and never send messages to real people.
 
