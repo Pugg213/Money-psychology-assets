@@ -57,6 +57,7 @@ export function createBusinessStore(sdk=null){
   async saveMessage(e,{storeText=false}={}){
    const path=msgPath(e.connectionId,e.chatId,e.messageId);
    const previous=await read(path);
+   if(previous?.deleted)return {stored:false,duplicate:true,reason:'locally_deleted'};
    if(previous&&Number.isSafeInteger(previous.update_id)&&previous.update_id>=e.updateId)return {stored:false,duplicate:true};
    const now=new Date().toISOString();
    await write(path,{
@@ -67,17 +68,27 @@ export function createBusinessStore(sdk=null){
    });
    // Chat index is metadata only and is never publicly accessible.
    const priorChat=await read(chatPath(e.connectionId,e.chatId));
+   const stamp=e.incoming&&Number.isSafeInteger(e.timestamp)&&e.timestamp>0&&e.timestamp<4102444800
+    ?new Date(e.timestamp*1000).toISOString():null;
+   const lastIncoming=[priorChat?.last_incoming_at,stamp].filter(Boolean).sort().at(-1)||null;
    await write(chatPath(e.connectionId,e.chatId),{
     chat_id:e.chatId,label:e.chatLabel||priorChat?.label||'',last_event_at:now,
-    last_incoming_at:e.incoming&&Number.isSafeInteger(e.timestamp)?new Date(e.timestamp*1000).toISOString():priorChat?.last_incoming_at||null
+    last_incoming_at:lastIncoming
    });
    return {stored:true,duplicate:false};
   },
-  async deleteMessages(connectionId,chatId,ids){
-   const a=await api();
-   const paths=ids.map(id=>msgPath(connectionId,chatId,id));
-   if(paths.length)await a.del(paths);
-   return {removed_from_local_store:paths.length};
+  async deleteMessages(connectionId,chatId,ids,{updateId=null}={}){
+   // Redact content immediately, leaving small tombstones to block replayed webhook messages.
+   const now=new Date().toISOString();
+   for(const id of ids){
+    const path=msgPath(connectionId,chatId,id);
+    const prev=await read(path);
+    await write(path,{connection_id:connectionId,chat_id:chatId,message_id:id,
+     deleted:true,text:null,media_type:null,sender_id:null,telegram_date:null,
+     update_id:Number.isSafeInteger(updateId)?updateId:prev?.update_id??null,
+     observed_at:prev?.observed_at||now,updated_at:now});
+   }
+   return {content_redacted:ids.length,tombstones:ids.length};
   },
   async getMessage(connectionId,chatId,messageId){return read(msgPath(connectionId,chatId,messageId));},
   async chat(connectionId,chatId){return read(chatPath(connectionId,chatId));},
@@ -96,7 +107,7 @@ export function createBusinessStore(sdk=null){
    const docs=[];
    for(const f of s.files){
     const m=await read(f.pathname);
-    if(m&&m.chat_id===chatId&&(!query||String(m.text||'').toLowerCase().includes(query.toLowerCase())))docs.push(m);
+    if(m&&!m.deleted&&m.chat_id===chatId&&(!query||String(m.text||'').toLowerCase().includes(query.toLowerCase())))docs.push(m);
    }
    docs.sort((a,b)=>b.message_id-a.message_id);
    return {messages:docs.slice(0,Math.min(100,Math.max(1,limit))),partial:s.hasMore,
