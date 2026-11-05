@@ -1,9 +1,11 @@
 import {webhookToken,normalizeEvent,aggregateAudience,topicIdeas,feedbackKeyboard} from './audience-core.js';
 import {createAudienceStore} from './audience-store.js';
+import {BUSINESS_UPDATES,ownerIds} from './business-core.js';
 
 const DEFAULT_BASE='https://money-psy-telegram-mcp.vercel.app';
 const CHANNEL=process.env.TELEGRAM_CHAT_ID||'@psy_money1';
-export const UPDATE_TYPES=['callback_query','channel_post','message','poll','message_reaction_count'];
+export const UPDATE_TYPES=['callback_query','channel_post','message','poll','message_reaction_count',
+ 'business_connection','business_message','edited_business_message','deleted_business_messages'];
 
 export async function botRequest(method,params={},clientFetch=fetch){
  const token=process.env.TELEGRAM_BOT_TOKEN;
@@ -36,6 +38,9 @@ export function createAudienceService({telegramApi=botRequest,store=null,botToke
    discussion_group_linked:!!chat.linked_chat_id,
    discussion_group_id:chat.linked_chat_id||null,
    storage_configured:!!process.env.BLOB_READ_WRITE_TOKEN,
+   reader_events_enabled:web.url===endpoint&&(
+    !Array.isArray(web.allowed_updates)||web.allowed_updates.length===0||
+    web.allowed_updates.some(x=>['callback_query','channel_post','message','poll','message_reaction_count'].includes(x))),
    channel:CHANNEL,allowed_updates:web.allowed_updates||null,
    note:'Webhook is a single global configuration per Telegram bot. Never overwrite a foreign endpoint.'};
  }
@@ -54,6 +59,13 @@ export function createAudienceService({telegramApi=botRequest,store=null,botToke
   if(confirm!==true)throw Error('confirmation_required');
   const info=await telegramApi('getWebhookInfo');
   if(info.url!==endpoint)throw Error('webhook_not_owned_by_this_service');
+  if(ownerIds().size>0){
+   // A Business integration shares the single Telegram webhook with reader feedback.
+   // Disable reader events without revoking Business capture.
+   await telegramApi('setWebhook',{url:endpoint,secret_token:webhookToken(botToken),
+    allowed_updates:BUSINESS_UPDATES,drop_pending_updates:false,max_connections:1});
+   return {enabled:false,business_preserved:true,drop_pending_updates:false};
+  }
   await telegramApi('deleteWebhook',{drop_pending_updates:false});
   return {enabled:false,drop_pending_updates:false};
  }

@@ -1,6 +1,8 @@
 import {verifyWebhookToken} from '../lib/audience-core.js';
 import {createAudienceService} from '../lib/audience-service.js';
-export default async function handler(req,res,{service=createAudienceService()}={}){
+import {createBusinessService} from '../lib/business-service.js';
+import {isBusinessUpdate} from '../lib/business-core.js';
+export default async function handler(req,res,{service=createAudienceService(),businessService=createBusinessService()}={}){
  res.setHeader('Cache-Control','no-store');
  res.setHeader('X-Content-Type-Options','nosniff');
  if(req.method!=='POST')return res.status(405).json({ok:false,error:'method_not_allowed'});
@@ -16,7 +18,7 @@ export default async function handler(req,res,{service=createAudienceService()}=
   if(!data||typeof data!=='object'||Array.isArray(data)||!Number.isSafeInteger(data.update_id))throw Error('bad_update');
  }catch{return res.status(400).json({ok:false,error:'invalid_update'});}
  try{
-  const result=await service.handle(data);
+  const result=isBusinessUpdate(data)?await businessService.handle(data):await service.handle(data);
   return res.status(200).json({ok:true,...result});
  }catch(err){
   // Telegram retries non-2xx webhook responses. Never acknowledge a write that failed.

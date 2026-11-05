@@ -50,3 +50,9 @@ Code is deployed independently of enabling Telegram inbound updates.
 - Vercel Hobby Blob has finite monthly quotas; reports are samples capped at 200 events per call and indicate truncation. Automatic deletion may need additional passes on high volume.
 
 Verification: Node test runner passed 30/30 simulated unit tests; preview health returned HTTP 200, GET webhook returned 405, OAuth discovery returned 200. No real reader webhook delivery, Telegram button click or private Blob ingestion has yet been verified.
+
+## v2.2 — Telegram Business MCP (opt-in)
+
+Telegram Business support is implemented as a separate owner-allowlisted module. It provides 15 scoped MCP tools, Business event capture via the existing verified webhook, private Blob-backed observed-chat records, and permission-checked messages, read markers, deletion, basic profile edits and read-only gifts/Stars. The existing channel publishing and reader-feedback routes remain supported. No business chat is connected and no automatic AI response is activated by deployment alone.
+
+**Activation and security:** [docs/telegram-business.md](docs/telegram-business.md). Configure `TELEGRAM_BUSINESS_OWNER_IDS`, enable Business Mode through BotFather, opt into Business events, and connect the bot in Telegram Business settings. Message text is **not stored by default**. Disconnecting or changing chat selection does not automatically erase previously stored content; use the explicit local forget operation if needed. No arbitrary personal Telegram history can be fetched through Bot API.

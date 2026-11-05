@@ -7,12 +7,14 @@ on:
       - 'editorial/asset-ledger.json'
       - 'scripts/verify_asset_ledger.py'
       - '.github/workflows/**'
+      - 'mcp-server/**'
   pull_request:
     paths:
       - 'telegram/**'
       - 'editorial/asset-ledger.json'
       - 'scripts/verify_asset_ledger.py'
       - '.github/workflows/**'
+      - 'mcp-server/**'
   workflow_dispatch:
 permissions:
   contents: read
@@ -26,3 +28,18 @@ jobs:
           python-version: '3.12'
       - name: Verify registered JPEGs (read only; never regenerate)
         run: python scripts/verify_asset_ledger.py
+
+  telegram-mcp-regression:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mcp-server
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --ignore-scripts --no-audit --no-fund
+      - run: node --check api/mcp.js && node --check api/updates.js
+      - run: node --check lib/business-core.js && node --check lib/business-store.js && node --check lib/business-service.js && node --check lib/business-tools.js
+      - run: node --test tests/business.test.mjs tests/audience.test.mjs tests/smoke.test.mjs
