@@ -69,7 +69,7 @@ export function createBusinessStore(sdk=null){
    const priorChat=await read(chatPath(e.connectionId,e.chatId));
    await write(chatPath(e.connectionId,e.chatId),{
     chat_id:e.chatId,label:e.chatLabel||priorChat?.label||'',last_event_at:now,
-    last_incoming_at:e.incoming?now:priorChat?.last_incoming_at||null
+    last_incoming_at:e.incoming&&Number.isSafeInteger(e.timestamp)?new Date(e.timestamp*1000).toISOString():priorChat?.last_incoming_at||null
    });
    return {stored:true,duplicate:false};
   },
