@@ -223,7 +223,16 @@ export async function executeTool(name,args={},clientFetch=fetch){
      owner_allowlist_configured:!!String(process.env.TELEGRAM_BUSINESS_OWNER_IDS||'').trim(),
      text_storage_enabled:process.env.TELEGRAM_BUSINESS_STORE_TEXT==='true',
      webhook_commands:['enable_business_updates','disable_business_updates'],
-     note:'Dedicated business_* tools require explicit Telegram Business connection, live rights, owner allowlist and observed private chats; generic bot_api_call remains channel-only.'
+     note:'Dedicated business_* tools require explicit Telegram Business connection, live rights, owner allowlist and observed private chats. Generic Bot API methods remain channel-only; cached ChatGPT app clients may use the strictly named compatibility commands below.',
+     cached_chatgpt_tool_compatibility:{
+      tool:'bot_api_call',
+      read_example:{method:'business_connections',params:{}},
+      chat_example:{method:'business_chats',params:{business_connection_id:'<verified connection ID>'}},
+      write_example:{method:'business_send_message',
+       params:{business_connection_id:'<verified connection ID>',chat_id:123456789,text:'Example only',confirm:true},
+       confirm_dangerous:true},
+      note:'Named compatibility commands are routed through the same guarded Business MCP handlers. Writes require both params.confirm=true and confirm_dangerous=true. No arbitrary Telegram API Business bypass is enabled.'
+     }
     },
     rules:['Channel-scoped generic Bot API method allowlist and separate opt-in Business tools',
       'No unrestricted Telegram user session or access to arbitrary chat histories',
