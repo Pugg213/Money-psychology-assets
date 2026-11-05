@@ -214,3 +214,56 @@ test('capability discovery advertises Business tools separately from channel-onl
  assert.ok(capabilities.typed_tools.includes('disable_business_updates'));
  assert.ok(capabilities.rules.some(x=>/channel-scoped generic bot api/i.test(x)));
 });
+
+test('authenticated status checks live Business connection without revealing chat or token details',async()=>{
+ const {createAudienceService}=await import('../lib/audience-service.js');
+ const old=process.env.TELEGRAM_BUSINESS_OWNER_IDS;
+ process.env.TELEGRAM_BUSINESS_OWNER_IDS='123';
+ try{
+  const calls=[];
+  const telegramApi=async(method,params)=>{
+   calls.push(method);
+   if(method==='getWebhookInfo')return {url:'https://money-psy-telegram-mcp.vercel.app/api/updates',allowed_updates:['business_connection']};
+   if(method==='getChat')return {id:-10012,linked_chat_id:-10013};
+   if(method==='getBusinessConnection'){
+    assert.equal(params.business_connection_id,raw.id);
+    return raw;
+   }
+   throw Error('unexpected method');
+  };
+  const businessStore={connections:async(owner)=>{
+   assert.equal(owner,123);
+   return {connections:[{owner_id:123,business_connection_id:raw.id}],partial:false};
+  }};
+  const status=await createAudienceService({telegramApi,businessStore}).status();
+  assert.equal(status.business_connection_diagnostic.state,'verified_connected');
+  assert.equal(status.business_connection_diagnostic.live_enabled_connections,1);
+  assert.equal(status.business_connection_diagnostic.stored_connection_records,1);
+  assert.equal(JSON.stringify(status).includes(raw.id),false);
+  assert.equal(JSON.stringify(status).includes('chat_id'),false);
+  assert.ok(calls.includes('getBusinessConnection'));
+ }finally{
+  if(old===undefined)delete process.env.TELEGRAM_BUSINESS_OWNER_IDS;
+  else process.env.TELEGRAM_BUSINESS_OWNER_IDS=old;
+ }
+});
+test('business connection status fails closed when Telegram cannot verify live state',async()=>{
+ const {createAudienceService}=await import('../lib/audience-service.js');
+ const old=process.env.TELEGRAM_BUSINESS_OWNER_IDS;
+ process.env.TELEGRAM_BUSINESS_OWNER_IDS='123';
+ try{
+  const telegramApi=async(method)=>{
+   if(method==='getWebhookInfo')return {url:'https://money-psy-telegram-mcp.vercel.app/api/updates'};
+   if(method==='getChat')return {id:-10012};
+   if(method==='getBusinessConnection')throw Error('revoked');
+  };
+  const businessStore={connections:async()=>({connections:[{owner_id:123,business_connection_id:raw.id}],partial:false})};
+  const status=await createAudienceService({telegramApi,businessStore}).status();
+  assert.equal(status.business_connection_diagnostic.state,'verification_incomplete');
+  assert.equal(status.business_connection_diagnostic.live_enabled_connections,0);
+  assert.equal(status.business_connection_diagnostic.live_unverified_connections,1);
+ }finally{
+  if(old===undefined)delete process.env.TELEGRAM_BUSINESS_OWNER_IDS;
+  else process.env.TELEGRAM_BUSINESS_OWNER_IDS=old;
+ }
+});
