@@ -228,7 +228,7 @@ export async function executeTool(name,args={},clientFetch=fetch){
     rules:['Channel-scoped generic Bot API method allowlist and separate opt-in Business tools',
       'No unrestricted Telegram user session or access to arbitrary chat histories',
       'No native post-view analytics through Bot API',
-      'Mutations require telegram:write OAuth scope and explicit confirmations',
+      'Mutations require telegram:write OAuth scope; destructive and Business actions require explicit confirmation, but send_* publication tools execute immediately',
       'Payments, generic webhook mutation, getUpdates and logout disabled',
       'Business read/mark/delete/profile operations have additional live rights checks']};
   case 'validate_rich_message':return validateRich(args.content,args.format,args.caption);
