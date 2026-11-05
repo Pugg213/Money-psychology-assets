@@ -3,7 +3,7 @@
 
 Checks binary identity against Git blob SHA-1, exact expected raw URL,
 JPEG structure/dimensions, unique images and dates. Cannot validate visual
-quality, scientific claims, Telegram-delivered bytes or Zernio live state.
+quality, scientific claims, Telegram-delivered bytes or live publication state.
 """
 import hashlib
 import json
@@ -52,9 +52,9 @@ def jpeg_dimensions(payload):
 
 def validate(data):
     errors = []
-    if data.get("channel") != "@psy_money1" or data.get("schema_version") != 1:
+    if data.get("channel") != "@psy_money1" or data.get("schema_version") not in (1, 2):
         errors.append("unexpected ledger schema/channel")
-    seen_dates, seen_urls, seen_ids = set(), set(), set()
+    seen_dates, seen_urls = set(), set()
     rows = data.get("entries", [])
     if not rows:
         errors.append("empty ledger")
@@ -62,7 +62,6 @@ def validate(data):
         day = item.get("date_moscow", "")
         path = item.get("github_path", "")
         url = item.get("media_url", "")
-        post_id = item.get("zernio_post_id", "")
         if not re.fullmatch(r"20\d\d-\d\d-\d\d", day):
             errors.append(f"{day}: invalid date")
         if day in seen_dates:
@@ -71,9 +70,6 @@ def validate(data):
         if url in seen_urls:
             errors.append(f"{day}: reused media URL")
         seen_urls.add(url)
-        if not post_id or post_id in seen_ids:
-            errors.append(f"{day}: missing/duplicate Zernio post ID")
-        seen_ids.add(post_id)
         if not path.startswith("telegram/") or not path.endswith(".jpg") or ".." in Path(path).parts:
             errors.append(f"{day}: disallowed path {path!r}")
             continue
