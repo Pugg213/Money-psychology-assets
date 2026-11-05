@@ -101,6 +101,9 @@ test('legacy list preserved and new methods appended, without exposing bot token
   assert.equal(res.statusCode,200);
   assert.equal(data.result.tools[0].name,'check_access');
   assert.ok(data.result.tools.some(t=>t.name==='send_rich_message'));
+  assert.ok(data.result.tools.some(t=>t.name==='get_reader_feedback'));
+  assert.ok(data.result.tools.some(t=>t.name==='enable_reader_feedback'));
+  assert.equal(data.result.tools.find(t=>t.name==='get_reader_feedback').annotations.readOnlyHint,true);
   assert.ok(!res.body.includes(process.env.TELEGRAM_BOT_TOKEN));
  }finally{globalThis.fetch=old;}
 });
