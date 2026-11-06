@@ -1,4 +1,5 @@
 import { Buffer } from 'node:buffer';
+import {validateToolArgs} from './tool-schema.js';
 import {audienceTools} from './audience-tools.js';
 import {businessTools} from './business-tools.js';
 
@@ -180,25 +181,6 @@ function validateCommon(method,p){
 function validateBlocks(blocks){
  if(!Array.isArray(blocks)||blocks.length<1||blocks.length>500||blocks.some(x=>!x||typeof x!=='object'||Array.isArray(x)||typeof x.type!=='string'||!x.type))throw Error('invalid_rich_blocks');
 }
-function validateArgs(value,definition,path='arguments',depth=0){
- if(depth>20)throw Error('arguments_too_deep');
- const fail=()=>{throw Error('invalid_arguments: '+path);};
- if(definition.type==='object'){
-  if(!value||typeof value!=='object'||Array.isArray(value))fail();
-  for(const key of definition.required||[])if(!Object.hasOwn(value,key))fail();
-  for(const [key,item] of Object.entries(value)){
-   const spec=definition.properties?.[key];
-   if(!spec){if(definition.additionalProperties===false)fail();continue;}
-   validateArgs(item,spec,path+'.'+key,depth+1);
-  }
- }else if(definition.type==='array'){
-  if(!Array.isArray(value))fail();
-  for(const [i,item] of value.entries())validateArgs(item,definition.items||{},path+'['+i+']',depth+1);
- }else if(definition.type==='integer'){
-  if(!Number.isSafeInteger(value)||definition.minimum!==undefined&&value<definition.minimum||definition.maximum!==undefined&&value>definition.maximum)fail();
- }else if(definition.type&&typeof value!==definition.type)fail();
- if(definition.enum&&!definition.enum.includes(value))fail();
-}
 function validatePoll(p){
  textValue(p.question,'poll_question',300,1);
  if(!Array.isArray(p.options)||p.options.length<1||p.options.length>12||p.options.some(x=>!x||typeof x!=='object'||typeof x.text!=='string'||!x.text||x.text.length>100))throw Error('invalid_poll_options');
@@ -342,10 +324,10 @@ function summaryResult(method,result,chat=CHANNEL){
 export async function executeTool(name,args={},clientFetch=fetch){
  const definition=toolList.find(x=>x.name===name);
  if(!definition)throw Error('unknown_extension_tool: '+name);
- validateArgs(args,definition.inputSchema);
+ validateToolArgs(definition,args);
  const api=(method,params,confirmed)=>tg(method,params,confirmed,clientFetch);
  switch(name){
-  case 'get_capabilities':return {version:'2.5.0',channel:CHANNEL,methods,
+  case 'get_capabilities':return {version:'2.5.1',channel:CHANNEL,methods,
     method_policy:{read: 'Bot/profile reads and configured-chat reads only; no arbitrary histories',publish:'Configured-chat mutations',
      manage:'Configured-chat or bot-setting mutations; confirmation required for high-impact management',special:'Disabled generic methods; Business operations use guarded dedicated tools',
      disabled_reason:{getBusinessConnection:'Use owner-checked business_connection_info',sendChecklist:'Business-only method is not available in the channel gateway',

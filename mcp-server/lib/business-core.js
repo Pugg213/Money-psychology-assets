@@ -45,4 +45,3 @@ export function businessEvent(u){
  }
  return null;
 }
-export const businessChatAllowed=(connection,chatId)=>connection?.is_enabled&&numericId(chatId);

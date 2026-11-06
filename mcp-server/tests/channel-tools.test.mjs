@@ -115,7 +115,7 @@ test('typed arguments reject wrong types, unknown fields, invalid IDs and destru
  const f=client();
  for(const [name,args] of [['edit_caption',{message_id:0,caption:'X'}],['send_media',{type:'photo',url:'https://example.org/a.jpg',silent:'false'}],
   ['get_member_count',{extra:true}],['send_album',{media:[null,null]}],['get_bot_stars',{limit:0}],['edit_buttons',{message_id:1,rows:null}]])
-  await assert.rejects(()=>executeTool(name,args,f.fetch),/invalid_arguments/);
+  await assert.rejects(()=>executeTool(name,args,f.fetch),/invalid_tool_arguments/);
  for(const [name,args] of [['delete_channel_message',{message_id:1,confirm:false}],['set_channel_description',{description:'X',confirm:false}],
   ['revoke_invite_link',{invite_link:'https://t.me/+a',confirm:false}]])
   await assert.rejects(()=>executeTool(name,args,f.fetch),/explicit_confirmation_required/);

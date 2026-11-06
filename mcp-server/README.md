@@ -1,4 +1,4 @@
-# Money Psy Telegram MCP — Superbot v2.5.0
+# Money Psy Telegram MCP — Superbot v2.5.1
 
 **Production:** https://money-psy-telegram-mcp.vercel.app/mcp
 **Bot:** @MyGptSparks_bot
@@ -29,7 +29,9 @@ Low-level bot_api_call supports an allowlist of standard Bot API read, send, edi
 
 Node.js syntax checks and 10 mocked unit tests passed in a Vercel sandbox. Vercel preview and production deployments became READY. OAuth discovery, health and the old ChatGPT check_access were checked again after deployment; the bot remained an administrator with post/edit rights. New MCP tools were not yet shown in the existing chat session's cached tool list and live sends were deliberately not performed. Do not claim real end-to-end publication validation for the new tools.
 
-Current regression command: `node --test tests/*.test.mjs`. Version 2.5.0 passed 271 local tests on 2026-11-06, including mock execution and dispatch/scope checks for all 60 named functions. Live read checks and real mutations are different evidence; the audit records this distinction.
+Maintenance 2.5.1 removes the unused legacy relay, its five obsolete tests and a stale skill copy, and shares one argument-validator implementation. All 60 tool names and the existing App connection are preserved.
+
+Current regression command: `node --test tests/*.test.mjs`. Version 2.5.1 passed 266 local tests on 2026-11-06, including mock execution and dispatch/scope checks for all 60 named functions. Live read checks and real mutations are different evidence; the audit records this distinction.
 
 ## Limits
 
