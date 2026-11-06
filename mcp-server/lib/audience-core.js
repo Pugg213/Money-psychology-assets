@@ -46,7 +46,7 @@ export function summarizeComment(input){
  return {text:redacted,is_question,topics,classification:'heuristic_not_ai'};
 }
 export function normalizeEvent(update,{channelId,discussionId,secret}){
- if(!update||!Number.isSafeInteger(update.update_id)||!secret)return null;
+ if(!update||!Number.isSafeInteger(update.update_id)||update.update_id<0||!secret)return null;
  const id=update.update_id,observed_at=new Date().toISOString();
  const c=update.callback_query;
  if(c){
@@ -59,7 +59,9 @@ export function normalizeEvent(update,{channelId,discussionId,secret}){
  if(m && String(m.chat?.id)===String(discussionId) && Number.isSafeInteger(m.from?.id) && !m.from.is_bot){
   const f=m.reply_to_message;
   const origin=f?.forward_origin;
-  if(!f || !(f.is_automatic_forward || (origin?.type==='channel'&&String(origin.chat?.id)===String(channelId))))return null;
+  const sourceVerified=origin?.type==='channel'&&String(origin.chat?.id)===String(channelId)||
+   !origin&&String(f?.forward_from_chat?.id)===String(channelId);
+  if(!f||!sourceVerified)return null;
   const txt=summarizeComment(m.text||m.caption||'');
   if(!txt.text)return null;
   return {type:'discussion_comment',update_id:id,post_message_id:origin?.message_id??f.forward_from_message_id??null,
@@ -84,23 +86,30 @@ export function normalizeEvent(update,{channelId,discussionId,secret}){
    reactions:(r.reactions||[]).slice(0,20).map(x=>({emoji:x.type?.emoji||x.type?.type||'other',count:Math.max(0,Number(x.total_count)||0)})),
    observed_at};
  }
- const p=update.poll;
- if(p?.id && Array.isArray(p.options))return {type:'poll_snapshot',update_id:id,poll_hash:createHash('sha256').update(p.id).digest('hex').slice(0,20),
-  votes:p.options.map((o,i)=>({index:i,count:Number(o.voter_count)||0})),observed_at};
+ // A standalone Poll update contains no chat identity. Do not misattribute polls
+ // from another bot context to this channel without a stored scoped association.
  return null;
 }
 export function aggregateAudience(events=[]){
- const filtered=Array.isArray(events)?events:[];
+ const filtered=Array.isArray(events)?events.filter(x=>x&&typeof x==='object'&&!Array.isArray(x)):[];
  const comments=filtered.filter(x=>x.type==='discussion_comment');
  const votes=filtered.filter(x=>x.type==='feedback_vote');
  const feedback_votes={useful:0,more:0,less:0};
  for(const v of votes)if(Object.hasOwn(feedback_votes,v.choice))feedback_votes[v.choice]++;
  const topics={};
- for(const c of comments)for(const k of c.topics||[])topics[k]=(topics[k]||0)+1;
+ for(const c of comments)for(const k of Array.isArray(c.topics)?c.topics:[])topics[k]=(topics[k]||0)+1;
+ const reactions=new Map();
+ for(const r of filtered.filter(x=>x.type==='reaction_count'&&Number.isSafeInteger(x.message_id))){
+  const before=reactions.get(r.message_id);
+  const time=x=>Number(x.date)||Date.parse(x.observed_at)||0;
+  if(!before||time(r)>=time(before))reactions.set(r.message_id,r);
+ }
  const questions=comments.filter(c=>c.is_question).slice(-10).map(c=>({text:c.text,topics:c.topics,post_message_id:c.post_message_id}));
  return {total_comments:comments.length,feedback_votes,topic_mentions:Object.entries(topics).sort((a,b)=>b[1]-a[1]).map(([topic,count])=>({topic,count})),questions,
    channel_delivery_events:filtered.filter(x=>x.type==='channel_delivery').length,
-   latest_reaction_snapshots:filtered.filter(x=>x.type==='reaction_count').length,
+   latest_reaction_snapshots:reactions.size,
+   reactions:[...reactions.values()].map(x=>({message_id:x.message_id,date:x.date,
+    reactions:Array.isArray(x.reactions)?x.reactions:[]})),
    views_available:false,methodology:'Counts are collected only while webhook is enabled, from authorized updates; topics are heuristic, not AI; not all comments or reactions may be delivered.'};
 }
 export function topicIdeas(events=[]){

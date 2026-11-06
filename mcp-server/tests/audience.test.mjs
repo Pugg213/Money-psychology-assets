@@ -37,7 +37,7 @@ test('foreign callback and unrelated group message are rejected',()=>{
  assert.equal(normalizeEvent({update_id:13,message:{chat:{id:-100999},message_id:3,from:{id:2},text:'my private message'}},ctx),null);
 });
 
-test('comment text redacts contacts, strips private names and maps useful questions',()=>{
+test('comment text redacts contacts, omits sender profile and maps useful questions',()=>{
  const c=summarizeComment('Почему комиссии такие высокие? Напишите me@site.ru и +7 999 123 45 67!');
  assert.match(c.text,/\[контакт\]/);
  assert.ok(!c.text.includes('me@site.ru'));
@@ -52,6 +52,13 @@ test('comment text redacts contacts, strips private names and maps useful questi
  assert.equal(event.type,'discussion_comment');
  assert.equal(event.post_message_id,32);
  assert.ok(!JSON.stringify(event).includes('private'));
+});
+test('automatic forwards cannot misattribute another channel or an unverified origin',()=>{
+ const context={channelId,discussionId,secret};
+ const update=origin=>({update_id:20,message:{chat:{id:discussionId},message_id:1,from:{id:22},text:'Why?',
+  reply_to_message:{is_automatic_forward:true,...(origin?{forward_origin:origin}:{})}}});
+ assert.equal(normalizeEvent(update({type:'channel',chat:{id:-100999},message_id:32}),context),null);
+ assert.equal(normalizeEvent(update(null),context),null);
 });
 
 test('channel post has only metadata, not entire author text',()=>{
@@ -97,7 +104,7 @@ test('private immutable events are idempotent, storage missing fails closed',asy
    async del(paths){for(const p of [].concat(paths))db.delete(p);}
  };
  const store=createAudienceStore(adapter);
- const event={type:'feedback_vote',update_id:444,post_key:'20261107',choice:'more',actor_hash:'abc',observed_at:'2026-11-05T09:00:00Z'};
+ const event={type:'feedback_vote',update_id:444,post_key:'20261107',choice:'more',actor_hash:'a'.repeat(24),observed_at:'2026-11-05T09:00:00Z'};
  assert.equal((await store.record(event)).stored,true);
  assert.equal((await store.record(event)).duplicate,true);
  const r=await store.readRecent({prefix:'events/2026-11/',limit:20});

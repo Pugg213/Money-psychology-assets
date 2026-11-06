@@ -4,13 +4,12 @@ function isDuplicate(err){
 }
 function pathFor(event){
  if(!event||typeof event!=='object'||typeof event.type!=='string')throw Error('invalid_event');
+ if(!['feedback_vote','subscriber_snapshot','discussion_comment','channel_delivery','reaction_count','poll_snapshot'].includes(event.type))throw Error('invalid_event_type');
+ if(typeof event.observed_at!=='string'||!Number.isFinite(Date.parse(event.observed_at)))throw Error('invalid_event_date');
  const d=event.observed_at?.slice(0,7)||new Date().toISOString().slice(0,7);
  if(!/^\d{4}-\d{2}$/.test(d))throw Error('invalid_event_date');
  if(event.type==='feedback_vote'){
-  if(!/^20\d{6}$/.test(event.post_key||'')||!/^[a-f0-9]{24}$/.test(event.actor_hash||'')) {
-   // Allow mock actor identifiers in tests, but never path injection.
-   if(!/^[a-zA-Z0-9_-]{2,64}$/.test(event.actor_hash||''))throw Error('invalid_vote_id');
-  }
+  if(!/^20\d{6}$/.test(event.post_key||'')||!/^[a-f0-9]{24}$/.test(event.actor_hash||''))throw Error('invalid_vote_id');
   return 'events/'+d+'/vote-'+event.post_key+'-'+event.actor_hash+'.json';
  }
  if(event.type==='subscriber_snapshot')return 'events/'+d+'/snapshot-'+event.observed_at.slice(0,10)+'.json';
@@ -77,7 +76,9 @@ export function createAudienceStore(adapter=null){
     recency_fully_ordered:!scan_truncated&&rows.every(x=>time(x.uploadedAt)>0)};
   },
   async purgeBefore(isoDate,{maxDelete=100}={}){
-   if(!/^\d{4}-\d{2}-\d{2}$/.test(isoDate))throw Error('invalid_cutoff');
+   if(!/^\d{4}-\d{2}-\d{2}$/.test(isoDate)||!Number.isFinite(Date.parse(isoDate))||
+    new Date(isoDate).toISOString().slice(0,10)!==isoDate)throw Error('invalid_cutoff');
+   if(!Number.isSafeInteger(maxDelete)||maxDelete<1||maxDelete>1000)throw Error('invalid_retention_limit');
    const api=await sdk();
    // A small bounded scan; never delete future or active entries.
    const page=await api.list({prefix:'events/',limit:Math.min(1000,maxDelete*3)});

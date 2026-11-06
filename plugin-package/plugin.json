@@ -1,0 +1,23 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "dev-6aec23bbc2fc8191a918fc2c8caef9e0",
+  "version": "2.4.0",
+  "description": "Money Psy Telegram MCP",
+  "author": {
+    "name": "App developer"
+  },
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "capabilities": [],
+        "category": "Other",
+        "defaultPrompt": null,
+        "developerName": "App developer",
+        "displayName": "Money Psy Telegram MCP",
+        "longDescription": "Money Psy Telegram MCP",
+        "shortDescription": "Money Psy Telegram MCP"
+      },
+      "apps": "./.app.json"
+    }
+  }
+}

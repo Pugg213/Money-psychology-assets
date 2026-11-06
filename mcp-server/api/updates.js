@@ -14,8 +14,11 @@ export default async function handler(req,res,{service=createAudienceService(),b
  if(length>65536)return res.status(413).json({ok:false,error:'payload_too_large'});
  let data;
  try{
+  const bodySize=Buffer.isBuffer(req.body)?req.body.length:typeof req.body==='string'?
+   Buffer.byteLength(req.body,'utf8'):Buffer.byteLength(JSON.stringify(req.body)||'','utf8');
+  if(bodySize>65536)return res.status(413).json({ok:false,error:'payload_too_large'});
   data=Buffer.isBuffer(req.body)?JSON.parse(req.body.toString('utf8')):typeof req.body==='string'?JSON.parse(req.body):req.body;
-  if(!data||typeof data!=='object'||Array.isArray(data)||!Number.isSafeInteger(data.update_id))throw Error('bad_update');
+  if(!data||typeof data!=='object'||Array.isArray(data)||!Number.isSafeInteger(data.update_id)||data.update_id<0)throw Error('bad_update');
  }catch{return res.status(400).json({ok:false,error:'invalid_update'});}
  try{
   const result=isBusinessUpdate(data)?await businessService.handle(data):await service.handle(data);

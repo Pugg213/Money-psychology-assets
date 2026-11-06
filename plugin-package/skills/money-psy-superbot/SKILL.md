@@ -1,0 +1,67 @@
+---
+name: money-psy-superbot
+description: Manage Money Psychology Telegram channel publishing, feedback and opted-in Telegram Business private chats through authenticated MCP, including a compatibility bridge for cached ChatGPT tools.
+---
+
+# Money Psy Telegram MCP v2.4.0: Channel + Business
+
+**App and server:** `@MyGptSparks_bot`, OAuth-authenticated MCP at `https://money-psy-telegram-mcp.vercel.app/mcp`. There are two independent modes: (1) publishing/moderating `@psy_money1`; (2) Telegram Business delegation into selected private chats with user-granted permissions. A Telegram Business connection does not grant access to all chat histories, subscriptions, or conversations. Never expose server-side `TELEGRAM_BOT_TOKEN`, OAuth tokens, private connection IDs to third parties, or private media URLs.
+
+## Important: cached ChatGPT tool-list compatibility
+
+The audited server exposes 60 unique named tools. A connected App can retain older tool descriptors, so compare `get_capabilities.typed_tools` with tools actually available in the current chat. A new chat does not guarantee a refresh. **Do not repeatedly suggest a new chat or reinstall as the only remedy.**
+
+If native `business_*` tools are exposed, prefer them. Otherwise the existing `bot_api_call` tool supports **strictly enumerated Business MCP command aliases**, even in a cached ChatGPT toolset. It does **not** open arbitrary Telegram Bot API Business methods. This exception routes to exactly the same permission-checked Business handler, independently of the normal channel allowlist. Normal Telegram methods in `bot_api_call` remain restricted to approved channel/chat targets, and raw Bot API methods with `business_connection_id` are still blocked.
+
+For **read-only** use, invoke the existing exposed `bot_api_call` with these values:
+
+- `{"method":"business_status","params":{}}` — transport and readiness.
+- `{"method":"business_connections","params":{}}` — stored, authorized connection IDs from webhook events. Never invent IDs.
+- `{"method":"business_connection_info","params":{"business_connection_id":"<verified ID from business_connections>"}}` — live rights, enabled state.
+- `{"method":"business_chats","params":{"business_connection_id":"<verified ID>","limit":50}}` — *observed* selected private chats, not all past chats.
+- `{"method":"business_messages","params":{"business_connection_id":"<verified ID>","chat_id":123456789,"limit":30}}` — retained events from an observed chat; message text will be absent if text storage is off.
+- `{"method":"business_gifts","params":{"business_connection_id":"<verified ID>","kind":"balance"}}` — read-only, only with current corresponding Telegram right.
+
+For any Business **mutation**, require an explicit instruction from the user and pass both `params.confirm=true` **and** top-level `confirm_dangerous=true` to `bot_api_call`. The server also requires OAuth `telegram:write`, the allowlisted owner, a live enabled connection, an observed allowed chat, and the relevant Telegram right. Example, **only after the user explicitly authorizes a particular message**:
+
+`bot_api_call({method:"business_send_message",params:{business_connection_id:VERIFIED_ID,chat_id:OBSERVED_CHAT_ID,text:"Approved reply",confirm:true},confirm_dangerous:true})`
+
+Do not send a test message unless expressly requested. Read-only calls do not require confirm flags. The server has the same guardrails for the named tools and these aliases. Supported exact names: `business_status`, `business_connections`, `business_connection_info`, `business_chats`, `business_messages`, `business_send_message`, `business_send_media`, `business_edit_message`, `business_mark_read`, `business_delete_messages`, `business_profile`, `business_gifts`, `business_forget_chat`, `enable_business_updates`, `disable_business_updates`. An unknown method alias must be rejected; do not invent methods.
+
+**Current system architecture:** The registered Business owner is explicitly restricted by `TELEGRAM_BUSINESS_OWNER_IDS`; verified connection state may be shown by `get_interaction_status` as aggregate `business_connection_diagnostic`. Query live status rather than assuming old setup details remain valid. The server stores chat **metadata only** by default; the absence of observed chats is not proof of a failed connection.
+
+## Money Psychology publishing — keep the existing process
+
+- Read-only: `check_access`, `get_capabilities`, `get_channel_overview`, `get_member_count`, `get_chat_info`, `get_chat_admins`, `get_webhook_status`, `get_bot_profile`, `get_interaction_status`. Subscriber count is not reach or views.
+- Use only `publish_cover_then_article` for the daily 12:00 Europe/Moscow scheduled publication. Canonical queue: `Pugg213/Money-psychology-assets/editorial/rich-telegram-queue.json`. Never blindly retry partially delivered articles or create duplicate cover+article posts. Confirm actual Telegram message IDs before reporting success.
+- Approved manual channel actions include rich text (`validate_rich_message`, `send_rich_message`), photos/albums, polls/quizzes, inline buttons, pins, reactions, caption edits, copying, invites and moderation with applicable rights. Rich preflight is not a Telegram render test. Conservative rich text maximum: 32768 UTF-8 bytes; photo captions at most 1024 characters.
+- `bot_api_call` for ordinary Bot API method names is restricted by the server's Telegram method allowlist and `TELEGRAM_ALLOWED_CHATS`. It rejects raw `business_connection_id`, inline and ephemeral target bypasses instead of silently routing them to the channel. Only the exact Business MCP command aliases above have a separate safe route. Never attempt raw `sendMessage` or `getChat` with a Business connection ID.
+- Destructive channel operations require explicit user authorization and relevant `confirm` flags; existing `send_*` publication tools may publish immediately when instructed. Do not imply they all require a confirm field. Payments, financial transfers, generic webhook mutation and bot logout are disabled.
+
+## Audited execution and compatibility
+
+- All 60 MCP functions, tool discovery, initialization and OAuth scope checks execute locally. OAuth login/refresh retains the established compatibility backend; do not claim its full source or successful credential exchange was audited merely from public metadata.
+- Use the existing native tool when available. The legacy `delete_post` alias now requires `confirm=true`; if the cached host schema lacks it, call `delete_channel_message({message_id: VERIFIED_ID, confirm:true})` after explicit user authorization.
+- For `send_poll`, cached `correct_option_id` is adapted to current Telegram `correct_option_ids`. Use the array only when the exposed host schema supports it; do not pass both. Respect current poll constraints and the bot's chat rights.
+- Inspect `get_capabilities.method_policy`: the generic `special` list is disabled. Multipart photo-setting functions and Business-only checklists are not implemented by the JSON channel gateway. Forum/group methods require an explicitly allowed compatible chat and its rights; generic method names are not a promise that every configured channel supports them.
+- The generic read-method classifier permits read-scope calls only for the exact approved read list. Inline/ephemeral or raw Business targets, unapproved nested chat targets and unknown method aliases must fail.
+- A malformed response, HTTP5xx or missing Telegram confirmation is an unknown outcome, never a successful send. Preserve actual returned IDs and do not automatically repeat a mutation.
+- Daily `publish_cover_then_article` requires the exact fresh GitHub claim and content-bound editorial review. Private day locks and separate cover/article receipts survive request retries. Read `get_publication_journal.server_receipt` to reconcile already confirmed IDs without sending again. Never clear the lock or reset an uncertain entry to queued.
+- Enable/disable reader feedback and Business updates independently. Preserve existing unrelated subscriptions and pending updates; configured owner IDs alone are not permission to re-enable Business capture.
+- Business data updates use version-checked writes and deletion tombstones. Reports expose bounded sampling; disabling text capture must also suppress previously captured text in read results.
+- Distinguish live read checks, mocked execution and real authorized mutation tests. Passing mocks or deployment READY does not prove all Telegram writes, OAuth refresh or client rendering.
+
+## Reader feedback v2.1 — shared webhook
+
+Tools include `get_interaction_status`, `get_reader_feedback`, `suggest_reader_topics`, `get_publication_journal`, `get_member_trend`, `enable_reader_feedback`, `disable_reader_feedback`, `attach_feedback_buttons`, `capture_member_snapshot`. Collected reader data and comment summaries are scoped to the channel and linked group. Topic labels are heuristics, not verified facts. Subscriber counts are not per-post views; captured events are not full chat history. Pseudonymization and best-effort redaction are imperfect. Do not overwrite a foreign webhook. Do not disable reader feedback when attempting to configure Business; these are separate subscriptions on one Telegram webhook. The `enable_business_updates` and `disable_business_updates` commands preserve channel feedback subscriptions where possible and require confirmation.
+
+## Business safety, activation and verification
+
+1. Verify the bot supports Business via `get_bot_profile` and that the Vercel server has `TELEGRAM_BUSINESS_OWNER_IDS` set for the verified numeric account owner. BotFather Business/Secretary Mode and Telegram's Business Chatbots account connection require the owner to act in Telegram; ChatGPT cannot impersonate the account to flip those toggles. Do **not** claim these are already connected without a live check.
+2. Inspect `get_interaction_status` for the `business_connection_diagnostic`, then `business_connections` via the compatibility route or native tool; use actual discovered IDs in `business_connection_info`. Evaluate the exact rights returned by Telegram (`can_reply`, `can_read_messages`, `can_delete_sent_messages`, `can_delete_all_messages`, etc.). A connection does not imply every right. Do not confuse the registered Telegram user ID with a Business connection ID or an individual chat ID.
+3. `business_chats` lists only private chats with events captured by the opt-in webhook. It is not an account-wide listing of Telegram chats. Telegram Bot API cannot retrieve all old private history. `business_messages` can show only retained messages; text storage requires an explicit opt-in via `TELEGRAM_BUSINESS_STORE_TEXT=true`, which is **off by default**. Never enable capture of personal message bodies without permission.
+4. Write tools require real Telegram rights and user authorization. Editing, marking read and deleting require message IDs actually observed in the requested chat; deletion cannot mix chats. Mark-read requires an active chat within 24 hours and a verified incoming message. Send/reply actions also require a real recent incoming message within 24 hours and a chat observed by the allowed webhook. Telegram enforces additional restrictions. Mark-read, deletion, name/bio/username changes and account-related settings are high-impact: do not perform unrequested writes, even when rights are granted. No Stars, gift or financial transfers are supported.
+5. Private Vercel Blob retains connection metadata and observed message metadata. If user explicitly opts in to text capture, content retention has bounded best-effort cleanup, not a strict 30-day guarantee. A deletion event redacts local text and uses tombstones to reject webhook replay; `business_forget_chat` removes bounded local records. Disconnecting Telegram Business does not instantly remove previously retained data.
+6. Independently verify GitHub CI success, Vercel production READY, the live business connection and each authorized operation. Do not confuse server deployment success with end-to-end message sending. Never invent chats, rights, message content or successful actions. Keep OAuth App binding unchanged across plugin skill updates.
+
+References: https://core.telegram.org/bots/api and `mcp-server/docs/telegram-business.md` in the GitHub repo.

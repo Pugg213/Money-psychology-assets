@@ -4,6 +4,7 @@ import {createBusinessStore} from './business-store.js';
 import {BUSINESS_UPDATES,ownerIds,validateConnection} from './business-core.js';
 import {createEditorialSource} from './editorial-source.js';
 import {createPublicationStore} from './publication-store.js';
+import {READER_UPDATES,effectiveUpdates} from './webhook-config.js';
 
 const DEFAULT_BASE='https://money-psy-telegram-mcp.vercel.app';
 const CHANNEL=process.env.TELEGRAM_CHAT_ID||'@psy_money1';
@@ -18,7 +19,9 @@ export async function botRequest(method,params={},clientFetch=fetch){
   const r=await clientFetch('https://api.telegram.org/bot'+token+'/'+method,{
    method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(params),signal:ctrl.signal});
   const j=await r.json();
-  if(!j.ok)throw Error('telegram_'+method+'_failed: '+String(j.description||j.error_code||'unknown').slice(0,180));
+  if(!r.ok||!j||typeof j!=='object'||j.ok!==true)
+   throw Error('telegram_'+method+'_failed: '+(Number.isSafeInteger(j?.error_code)?j.error_code:r.status||'invalid_response'));
+  if(j.result===undefined||j.result===null)throw Error('telegram_'+method+'_result_missing');
   return j.result;
  }finally{clearTimeout(timer);}
 }
@@ -86,23 +89,26 @@ export function createAudienceService({telegramApi=botRequest,store=null,botToke
   if(!process.env.BLOB_READ_WRITE_TOKEN && !store)throw Error('storage_not_configured');
   const info=await telegramApi('getWebhookInfo');
   if(info.url && info.url!==endpoint)throw Error('existing_webhook_owned_elsewhere: '+info.url);
-  await telegramApi('setWebhook',{url:endpoint,secret_token:webhookToken(botToken),allowed_updates:UPDATE_TYPES,
+  const allowed_updates=Array.from(new Set([...effectiveUpdates(info),...READER_UPDATES]));
+  const enabled=await telegramApi('setWebhook',{url:endpoint,secret_token:webhookToken(botToken),allowed_updates,
    drop_pending_updates:false,max_connections:4});
-  return {enabled:true,url:endpoint,allowed_updates:UPDATE_TYPES,drop_pending_updates:false,
+  if(enabled!==true)throw Error('webhook_enable_not_confirmed');
+  return {enabled:true,url:endpoint,allowed_updates,drop_pending_updates:false,
    secret:'configured_not_disclosed'};
  }
  async function disable({confirm=false}={}){
   if(confirm!==true)throw Error('confirmation_required');
   const info=await telegramApi('getWebhookInfo');
   if(info.url!==endpoint)throw Error('webhook_not_owned_by_this_service');
-  if(ownerIds().size>0){
-   // A Business integration shares the single Telegram webhook with reader feedback.
-   // Disable reader events without revoking Business capture.
-   await telegramApi('setWebhook',{url:endpoint,secret_token:webhookToken(botToken),
-    allowed_updates:BUSINESS_UPDATES,drop_pending_updates:false,max_connections:1});
-   return {enabled:false,business_preserved:true,drop_pending_updates:false};
+  const remaining=effectiveUpdates(info).filter(x=>!READER_UPDATES.includes(x));
+  if(remaining.length){
+   const changed=await telegramApi('setWebhook',{url:endpoint,secret_token:webhookToken(botToken),
+    allowed_updates:remaining,drop_pending_updates:false,max_connections:1});
+   if(changed!==true)throw Error('webhook_disable_not_confirmed');
+   return {enabled:false,business_preserved:remaining.some(x=>BUSINESS_UPDATES.includes(x)),allowed_updates:remaining,drop_pending_updates:false};
   }
-  await telegramApi('deleteWebhook',{drop_pending_updates:false});
+  const removed=await telegramApi('deleteWebhook',{drop_pending_updates:false});
+  if(removed!==true)throw Error('webhook_disable_not_confirmed');
   return {enabled:false,drop_pending_updates:false};
  }
  async function handle(update){
@@ -131,14 +137,25 @@ export function createAudienceService({telegramApi=botRequest,store=null,botToke
   const p=post_key??null;
   if(p!==null&&!/^20\d{6}$/.test(p))throw Error('invalid_post_key');
   const data=await audienceStore.readRecent({prefix:'events/'+m+'/',limit:Math.min(200,Math.max(1,limit))});
-  const events=(data.events||[]).filter(x=>!p||x.post_key===p||String(x.post_message_id)===p);
+  const references=new Map((data.events||[]).filter(x=>x.type==='feedback_vote').map(x=>[x.message_id,x.post_key]));
+  if(p){
+   // Feedback callback dates and Telegram message IDs are different identifiers.
+   const journal=await publicationJournal({limit:40});
+   const e=journal.entries.find(x=>x.date.replaceAll('-','')===p);
+   const id=e?.telegram_publication?.article_message_id;
+   if(Number.isSafeInteger(id))references.set(id,p);
+  }
+  const events=(data.events||[]).filter(x=>!p||x.post_key===p||references.get(x.post_message_id)===p||references.get(x.message_id)===p);
   return {month:m,channel:CHANNEL,report:aggregateAudience(events),
+   post_filter_mapping_available:p?[...references.values()].includes(p):null,
    checked_events:events.length,sample_truncated:!!data.hasMore,retention_notice:'Only updates delivered after webhook activation can be analyzed.'};
  }
  async function topics({month,limit=150}={}){
   const m=month||new Date().toISOString().slice(0,7);
+  if(!/^20\d{2}-(0[1-9]|1[0-2])$/.test(m))throw Error('invalid_month');
   const data=await audienceStore.readRecent({prefix:'events/'+m+'/',limit:Math.min(200,Math.max(1,limit))});
   return {month:m,topic_ideas:topicIdeas(data.events),verified_research:false,
+   checked_events:data.events.length,sample_truncated:!!data.hasMore,scan_truncated:!!data.scan_truncated,
    source:'Captured reader questions, heuristic topic categorization; verify sources and editorial novelty before publishing.'};
  }
  async function publicationJournal({limit=20}={}){
@@ -146,7 +163,7 @@ export function createAudienceService({telegramApi=botRequest,store=null,botToke
   const items=Array.isArray(body.entries)?body.entries:[];
   const receipts=publicationStore||createPublicationStore();
   const entries=[];
-  for(const x of items.slice(-Math.min(40,Math.max(1,limit)))){
+  for(const x of [...items].sort((a,b)=>a.date_moscow.localeCompare(b.date_moscow)).slice(-Math.min(40,Math.max(1,limit)))){
    let server_receipt;
    try{server_receipt=await receipts.summary(x.date_moscow);}
    catch{server_receipt={status:'storage_unavailable',automatic_retry_allowed:false};}
@@ -171,8 +188,25 @@ export function createAudienceService({telegramApi=botRequest,store=null,botToke
   if(!Number.isSafeInteger(n)||n<1)throw Error('verified_article_message_id_missing');
   const mark=date_moscow.replaceAll('-','');
   const result=await telegramApi('editMessageReplyMarkup',{chat_id:CHANNEL,message_id:n,reply_markup:feedbackKeyboard(mark)});
+  if(result!==true&&(!Number.isSafeInteger(result?.message_id)||result.message_id!==n))throw Error('feedback_buttons_not_confirmed');
   return {attached:true,date:date_moscow,article_message_id:n,channel:CHANNEL,
    no_new_post_sent:true,telegram_result:typeof result==='boolean'?result:result?.message_id||null};
  }
- return {context,status,enable,disable,handle,report,topics,publicationJournal,attachButtons};
+ async function memberTrend({month,limit=150}={}){
+  const m=month||new Date().toISOString().slice(0,7);
+  if(!/^20\d{2}-(0[1-9]|1[0-2])$/.test(m))throw Error('invalid_month');
+  const data=await audienceStore.readRecent({prefix:'events/'+m+'/',limit});
+  return {month:m,snapshots:data.events.filter(x=>x.type==='subscriber_snapshot'&&
+   Number.isSafeInteger(x.member_count)&&x.member_count>=0&&typeof x.observed_at==='string').map(x=>({
+    date:x.observed_at.slice(0,10),member_count:x.member_count
+   })).sort((a,b)=>a.date.localeCompare(b.date)),truncated:!!data.hasMore,
+   note:'Subscriber count from getChatMemberCount, not message views or reach.'};
+ }
+ async function captureSnapshot(){
+  const raw=await telegramApi('getChatMemberCount',{chat_id:CHANNEL});
+  if(!Number.isSafeInteger(raw)||raw<0)throw Error('invalid_member_count');
+  const saved=await audienceStore.record({type:'subscriber_snapshot',member_count:raw,observed_at:new Date().toISOString()});
+  return {member_count:raw,stored:saved.stored,duplicate:saved.duplicate,not_post_views:true};
+ }
+ return {context,status,enable,disable,handle,report,topics,publicationJournal,attachButtons,memberTrend,captureSnapshot};
 }

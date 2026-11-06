@@ -10,16 +10,19 @@ import {webhookToken} from '../lib/audience-core.js';
 const raw={id:'conn-private-1',user:{id:123},user_chat_id:123,is_enabled:true,
  rights:{can_reply:true,can_read_messages:true,can_delete_all_messages:false,can_view_gifts_and_stars:true}};
 function fakeBlob(){
- const objects=new Map(),calls=[];
+ const objects=new Map(),versions=new Map(),calls=[];
  return {
   objects,calls,
   async put(path,value,opts){
-   assert.equal(opts.access,'private');calls.push(['put',path]);objects.set(path,value);return {pathname:path};
+   assert.equal(opts.access,'private');calls.push(['put',path]);
+   if(opts.allowOverwrite===false&&objects.has(path))throw Error('BlobAlreadyExists');
+   if(opts.ifMatch&&opts.ifMatch!==String(versions.get(path)))throw Error('BlobPreconditionFailed');
+   objects.set(path,value);versions.set(path,(versions.get(path)||0)+1);return {pathname:path};
   },
   async get(path,opts){
    assert.equal(opts.access,'private');
    const value=objects.get(path);
-   return value===undefined?null:{statusCode:200,stream:new Blob([value]).stream()};
+   return value===undefined?null:{statusCode:200,stream:new Blob([value]).stream(),blob:{etag:String(versions.get(path))}};
   },
   async list({prefix,limit}){
    const paths=[...objects.keys()].filter(x=>x.startsWith(prefix)).sort();
@@ -34,7 +37,7 @@ function fixture({rights=raw.rights,text=true}={}){
  const telegramApi=async(method,p={})=>{
   calls.push({method,params:p});
   if(method==='getBusinessConnection')return {...raw,rights};
-  if(method==='sendMessage')return {message_id:91};
+  if(method==='sendMessage')return {message_id:91,chat:{id:p.chat_id},date:Math.floor(Date.now()/1000)};
   if(method==='deleteBusinessMessages'||method==='readBusinessMessage')return true;
   if(method==='getWebhookInfo')return {url:'',allowed_updates:['message','channel_post']};
   if(method==='setWebhook')return true;
@@ -206,7 +209,7 @@ test('disabling reader feedback keeps Business webhook if owner allowlist exists
 test('capability discovery advertises Business tools separately from channel-only generic gateway',async()=>{
  const {executeTool}=await import('../lib/extensions.js');
  const capabilities=await executeTool('get_capabilities');
- assert.equal(capabilities.version,'2.3.0');
+ assert.equal(capabilities.version,'2.4.0');
  assert.equal(capabilities.business.available,true);
  assert.equal(capabilities.business.requires_explicit_activation,true);
  assert.ok(capabilities.typed_tools.includes('business_status'));
