@@ -62,7 +62,7 @@ test('modern MCP request metadata, discovery and result fields',async()=>{
  for(const method of ['tools/list','server/discover','ping']){
   const r=res();await mcp(modern(method),r);const body=JSON.parse(r.body);
   assert.equal(r.statusCode,200);assert.equal(body.result.resultType,'complete');
-  assert.equal(body.result._meta['io.modelcontextprotocol/serverInfo'].version,'2.5.0');
+  assert.equal(body.result._meta['io.modelcontextprotocol/serverInfo'].version,'2.5.1');
   if(method!=='ping'){assert.equal(body.result.ttlMs,0);assert.equal(body.result.cacheScope,'private');}
  }
  const r=res();await mcp(modern('unknown'),r);assert.equal(r.statusCode,404);

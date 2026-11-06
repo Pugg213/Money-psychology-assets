@@ -8,8 +8,7 @@ import {READER_UPDATES,effectiveUpdates} from './webhook-config.js';
 
 const DEFAULT_BASE='https://money-psy-telegram-mcp.vercel.app';
 const CHANNEL=process.env.TELEGRAM_CHAT_ID||'@psy_money1';
-export const UPDATE_TYPES=['callback_query','channel_post','message','poll','message_reaction_count',
- 'business_connection','business_message','edited_business_message','deleted_business_messages'];
+export const UPDATE_TYPES=[...READER_UPDATES,...BUSINESS_UPDATES];
 
 export async function botRequest(method,params={},clientFetch=fetch){
  const token=process.env.TELEGRAM_BOT_TOKEN;

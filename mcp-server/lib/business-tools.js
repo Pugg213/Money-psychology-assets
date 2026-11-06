@@ -7,7 +7,7 @@ const str={type:'string'},positive={type:'integer',minimum:1},yes={type:'boolean
 const C=(name,description,fields={},required=[],readOnly=false)=>({
  name,description,inputSchema:schema(fields,required),annotations:readOnly?{readOnlyHint:true}:{}
 });
-const id={business_connection_id:str},chat={...id,chat_id:{type:'integer'}},conf={confirm:yes};
+const id={business_connection_id:str},chat={...id,chat_id:{type:'integer'}};
 const need=(condition,message)=>{if(!condition)throw Error(message);};
 const confirmed=(x)=>need(x===true,'explicit_confirmation_required');
 const pos=(n)=>{need(Number.isSafeInteger(n)&&n>0,'valid_message_id_required');return n;};
@@ -66,8 +66,8 @@ export async function executeBusinessTool(name,a={},s=createBusinessService()){
    const allowed=w.allowed_updates||[];
    return {owner_allowlist_configured:ownerIds().size>0,private_store_configured:!!process.env.BLOB_READ_WRITE_TOKEN,
     text_capture_enabled:process.env.TELEGRAM_BUSINESS_STORE_TEXT==='true',
-    webhook_owned:w.url==='https://money-psy-telegram-mcp.vercel.app/api/updates',
-    business_events_subscribed:w.url==='https://money-psy-telegram-mcp.vercel.app/api/updates'&&(
+    webhook_owned:w.url===ENDPOINT,
+    business_events_subscribed:w.url===ENDPOINT&&(
       !Array.isArray(w.allowed_updates)||w.allowed_updates.length===0||BUSINESS_UPDATES.every(x=>allowed.includes(x))),
     allowed_updates:allowed,botfather_business_mode_required:true,
     note:'Connected Telegram Business accounts and enabled rights are required; old private chat history cannot be fetched.'};
@@ -183,26 +183,24 @@ export async function executeBusinessTool(name,a={},s=createBusinessService()){
    confirmed(a.confirm);
    own(Array.from(ownerIds()));
    need(!!process.env.BLOB_READ_WRITE_TOKEN,'private_storage_not_configured');
-   const endpoint='https://money-psy-telegram-mcp.vercel.app/api/updates';
    const w=await telegram('getWebhookInfo');
-   need(!w.url||w.url===endpoint,'foreign_webhook_must_not_be_overwritten');
+   need(!w.url||w.url===ENDPOINT,'foreign_webhook_must_not_be_overwritten');
    const previous=Array.isArray(w.allowed_updates)?w.allowed_updates:[];
    const defaultSubscription=!!w.url&&!previous.length;
    const allowed_updates=defaultSubscription?[]:Array.from(new Set([...(w.url?previous:[]),...BUSINESS_UPDATES]));
-   need(await telegram('setWebhook',{url:endpoint,secret_token:webhookToken(process.env.TELEGRAM_BOT_TOKEN),
+   need(await telegram('setWebhook',{url:ENDPOINT,secret_token:webhookToken(process.env.TELEGRAM_BOT_TOKEN),
     allowed_updates,drop_pending_updates:false,max_connections:1})===true,'business_webhook_confirmation_unknown');
-   return {enabled:true,url:endpoint,allowed_updates,pending_updates_preserved:true};
+   return {enabled:true,url:ENDPOINT,allowed_updates,pending_updates_preserved:true};
   }
   case 'disable_business_updates':{
    confirmed(a.confirm);
-   const endpoint='https://money-psy-telegram-mcp.vercel.app/api/updates';
    const w=await telegram('getWebhookInfo');
-   need(w.url===endpoint,'webhook_not_owned_by_this_service');
+   need(w.url===ENDPOINT,'webhook_not_owned_by_this_service');
    const source=Array.isArray(w.allowed_updates)&&w.allowed_updates.length
     ?w.allowed_updates:DEFAULT_UPDATES;
    const remaining=source.filter(x=>!BUSINESS_UPDATES.includes(x));
    if(remaining.length){
-    need(await telegram('setWebhook',{url:endpoint,secret_token:webhookToken(process.env.TELEGRAM_BOT_TOKEN),
+    need(await telegram('setWebhook',{url:ENDPOINT,secret_token:webhookToken(process.env.TELEGRAM_BOT_TOKEN),
      allowed_updates:remaining,drop_pending_updates:false,max_connections:4})===true,'business_webhook_confirmation_unknown');
     return {enabled:false,reader_feedback_preserved:remaining.some(x=>['message','channel_post','callback_query','poll','message_reaction_count'].includes(x)),allowed_updates:remaining,drop_pending_updates:false};
    }
