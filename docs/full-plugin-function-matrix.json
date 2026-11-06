@@ -221,7 +221,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/core-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "read_or_static_success"
     },
     {
       "name": "publish_text",
@@ -230,7 +231,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/core-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "publish_rich_article",
@@ -239,7 +241,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/core-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "publish_photo",
@@ -248,7 +251,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/core-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "edit_text",
@@ -257,7 +261,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/core-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "edit_rich_article",
@@ -266,7 +271,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/core-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "delete_post",
@@ -275,7 +281,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/core-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "get_capabilities",
@@ -284,7 +291,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/channel-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "read_or_static_success"
     },
     {
       "name": "validate_rich_message",
@@ -293,7 +301,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/channel-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "read_or_static_success"
     },
     {
       "name": "get_channel_overview",
@@ -302,7 +311,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/channel-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "read_or_static_success"
     },
     {
       "name": "get_chat_info",
@@ -311,7 +321,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/channel-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "read_or_static_success"
     },
     {
       "name": "get_member_count",
@@ -320,7 +331,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/channel-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "read_or_static_success"
     },
     {
       "name": "get_chat_admins",
@@ -329,7 +341,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/channel-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "read_or_static_success"
     },
     {
       "name": "get_chat_member_info",
@@ -338,7 +351,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/channel-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "read_or_static_success"
     },
     {
       "name": "get_webhook_status",
@@ -347,7 +361,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/channel-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "read_or_static_success"
     },
     {
       "name": "get_bot_profile",
@@ -356,7 +371,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/channel-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "read_or_static_success"
     },
     {
       "name": "get_bot_stars",
@@ -365,7 +381,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/channel-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "read_or_static_success"
     },
     {
       "name": "get_telegram_message_link",
@@ -374,7 +391,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/channel-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "read_or_static_success"
     },
     {
       "name": "send_rich_message",
@@ -383,7 +401,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/channel-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "send_media",
@@ -392,7 +411,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/channel-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "send_album",
@@ -401,7 +421,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/channel-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "send_poll",
@@ -410,7 +431,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/channel-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "send_buttons",
@@ -419,7 +441,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/channel-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "edit_caption",
@@ -428,7 +451,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/channel-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "edit_buttons",
@@ -437,7 +461,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/channel-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "set_reaction",
@@ -446,7 +471,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/channel-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "pin_message",
@@ -455,7 +481,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/channel-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "unpin_message",
@@ -464,7 +491,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/channel-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "copy_channel_message",
@@ -473,7 +501,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/channel-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "delete_channel_message",
@@ -482,7 +511,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/channel-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "set_channel_description",
@@ -491,7 +521,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/channel-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "create_invite_link",
@@ -500,7 +531,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/channel-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "revoke_invite_link",
@@ -509,7 +541,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/channel-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "get_file_metadata",
@@ -518,7 +551,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/channel-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "read_or_static_success"
     },
     {
       "name": "bot_api_call",
@@ -527,7 +561,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/channel-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "read_or_static_success"
     },
     {
       "name": "get_interaction_status",
@@ -536,7 +571,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/audience-all-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "read_or_static_success"
     },
     {
       "name": "get_reader_feedback",
@@ -545,7 +581,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/audience-all-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "read_or_static_success"
     },
     {
       "name": "suggest_reader_topics",
@@ -554,7 +591,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/audience-all-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "read_or_static_success"
     },
     {
       "name": "get_publication_journal",
@@ -563,7 +601,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/audience-all-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "read_or_static_success"
     },
     {
       "name": "get_member_trend",
@@ -572,7 +611,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/audience-all-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "read_or_static_success"
     },
     {
       "name": "enable_reader_feedback",
@@ -581,7 +621,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/audience-all-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "disable_reader_feedback",
@@ -590,7 +631,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/audience-all-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "attach_feedback_buttons",
@@ -599,7 +641,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/audience-all-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "capture_member_snapshot",
@@ -608,7 +651,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/audience-all-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "business_status",
@@ -617,7 +661,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/business-all-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "read_or_static_success"
     },
     {
       "name": "business_connections",
@@ -626,7 +671,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/business-all-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "read_or_static_success"
     },
     {
       "name": "business_connection_info",
@@ -635,7 +681,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/business-all-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "read_or_static_success"
     },
     {
       "name": "business_chats",
@@ -644,7 +691,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/business-all-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "read_or_static_success"
     },
     {
       "name": "business_messages",
@@ -653,7 +701,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/business-all-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "not_run_no_observed_chat"
     },
     {
       "name": "business_send_message",
@@ -662,7 +711,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/business-all-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "business_send_media",
@@ -671,7 +721,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/business-all-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "business_edit_message",
@@ -680,7 +731,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/business-all-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "business_mark_read",
@@ -689,7 +741,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/business-all-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "business_delete_messages",
@@ -698,7 +751,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/business-all-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "business_profile",
@@ -707,7 +761,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/business-all-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "business_gifts",
@@ -716,7 +771,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/business-all-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "expected_live_permission_rejection"
     },
     {
       "name": "business_forget_chat",
@@ -725,7 +781,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/business-all-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "enable_business_updates",
@@ -734,7 +791,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/business-all-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "disable_business_updates",
@@ -743,7 +801,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/business-all-tools.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     },
     {
       "name": "publish_cover_then_article",
@@ -752,7 +811,8 @@
       "schema_dispatch_scope_test": "mcp-server/tests/catalog.test.mjs",
       "execution_tests": "mcp-server/tests/publication.test.mjs",
       "execution_evidence": "mocked transport/service; not proof of live Telegram mutations",
-      "live_mutation_tested_this_audit": false
+      "live_mutation_tested_this_audit": false,
+      "live_status": "mutation_not_run; mocked_execution_passed"
     }
   ]
 }

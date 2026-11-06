@@ -1,0 +1,137 @@
+{
+  "date": "2026-11-06",
+  "version": "2.4.0",
+  "production": {
+    "deployment_id": "dpl_3EkpUa18uCWxTG66QGGBQ8XeMSF9",
+    "state": "READY",
+    "source_commit": "8762afd9aa1a797ef07da471fd8a562dfe5f0f94",
+    "endpoint": "https://money-psy-telegram-mcp.vercel.app/mcp",
+    "health_version": "2.4.0",
+    "mcp_implementation": "local_all_tools_v1",
+    "oauth_implementation": "legacy_compatibility_proxy"
+  },
+  "github_ci": {
+    "pull_request": "https://github.com/Pugg213/Money-psychology-assets/pull/7",
+    "pr_run": "https://github.com/Pugg213/Money-psychology-assets/actions/runs/42221074246",
+    "main_run": "https://github.com/Pugg213/Money-psychology-assets/actions/runs/42221119878",
+    "asset_integrity": "success",
+    "telegram_mcp_regression": "success",
+    "local_tests": {
+      "total": 251,
+      "passed": 251,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "plugin": {
+    "version": "2.4.0",
+    "release_id": "pluginrel_6aedcdd8bf108191b29717c71237751c",
+    "app_binding_unchanged": true,
+    "interface_unchanged": true,
+    "audience": "PRIVATE"
+  },
+  "successful_read_or_static_checks": [
+    "get_channel_overview",
+    "get_chat_info",
+    "get_member_count",
+    "get_chat_admins",
+    "get_webhook_status",
+    "get_bot_profile",
+    "get_bot_stars",
+    "get_interaction_status",
+    "get_reader_feedback",
+    "suggest_reader_topics",
+    "get_publication_journal",
+    "get_member_trend",
+    "get_telegram_message_link",
+    "validate_rich_message",
+    "business_connections",
+    "bot_api_call",
+    "get_capabilities",
+    "check_access",
+    "business_status",
+    "get_chat_member_info",
+    "get_file_metadata",
+    "business_connection_info",
+    "business_chats"
+  ],
+  "negative_target_checks": [
+    {
+      "case": "generic_foreign_chat",
+      "rejected": true,
+      "error": "chat_not_allowed: chat_id must match configured channel or TELEGRAM_ALLOWED_CHATS"
+    },
+    {
+      "case": "generic_business_target",
+      "rejected": true,
+      "error": "business_connection_requires_dedicated_tool"
+    },
+    {
+      "case": "generic_unchecked_business_connection",
+      "rejected": true,
+      "error": "method_disabled_for_safety: getBusinessConnection (requires a separately reviewed integration)"
+    },
+    {
+      "case": "generic_inline_target",
+      "rejected": true,
+      "error": "unscoped_target_not_allowed: inline_message_id"
+    }
+  ],
+  "business": {
+    "connection_count": 1,
+    "enabled": true,
+    "observed_chat_count": 0,
+    "text_capture_enabled": false,
+    "private_message_bodies_read": false,
+    "live_messages_check": "not_run_no_observed_chat_returned",
+    "gifts_check": {
+      "expected_permission_rejection": true,
+      "error": "business_right_missing: can_view_gifts_and_stars"
+    }
+  },
+  "webhook": {
+    "owned": true,
+    "pending_update_count": 0,
+    "reader_and_business_subscribed": true
+  },
+  "publication": {
+    "journal_read": true,
+    "confirmed_historical_queue_message_ids": [
+      381,
+      382,
+      383,
+      384
+    ],
+    "future_queued_dates": [
+      "2026-11-07",
+      "2026-11-08"
+    ],
+    "historical_private_receipts": "no_server_attempt_record; historical queue evidence is shown separately",
+    "new_messages_sent_for_audit": false
+  },
+  "oauth": {
+    "discovery": 200,
+    "protected_resource": 200,
+    "invalid_refresh": 401,
+    "invalid_code": 401,
+    "public_client_registration": 201,
+    "invalid_pkce": 400,
+    "invalid_redirect": 400,
+    "invalid_resource": 400,
+    "invalid_scope": 400,
+    "password_form": 200,
+    "invalid_credential_without_reflection": 401,
+    "real_bot_token_used": false,
+    "valid_code_exchange_tested": false,
+    "valid_refresh_tested": false,
+    "full_legacy_source_audited": false
+  },
+  "telegram_mutations_performed_for_audit": false,
+  "limits": [
+    "Mocked execution is not live delivery/render proof.",
+    "No real mutation, profile change, deletion or private message read was used to test functions.",
+    "OAuth compatibility source and successful code/refresh exchanges remain unverified.",
+    "The live Business list returned zero observed chats; a live business_messages call was therefore not performed. No chat IDs were invented.",
+    "Scheduled next-run execution remains unverified until it occurs."
+  ]
+}
