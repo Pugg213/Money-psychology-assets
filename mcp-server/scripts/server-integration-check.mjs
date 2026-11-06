@@ -49,7 +49,7 @@ try{
  summary.checks.valid_login=true;summary.checks.valid_code_exchange=true;summary.checks.authenticated_mcp=true;
  summary.legacy_claim_shapes.code=shape(grant.code);
  const legacyClient=JSON.parse(Buffer.from(client.client_id.split('.')[0],'base64url'));
- summary.client_binding_kind=JSON.parse(Buffer.from(tokens.refresh_token.split('.')[0],'base64url')).client===legacyClient.jti?'registration_jti':'other';
+ summary.client_binding_kind=JSON.parse(Buffer.from(tokens.refresh_token.split('.')[0],'base64url')).client===legacyClient.jti?'registration_jti':JSON.parse(Buffer.from(tokens.refresh_token.split('.')[0],'base64url')).client===client.client_id?'signed_client_id':'other';
  const refresh={grant_type:'refresh_token',refresh_token:tokens.refresh_token,client_id:client.client_id,resource:base+'/mcp'};
  x=await call('/oauth/token',form(refresh));assert.equal(x.status,200,'valid refresh');tokens=JSON.parse(x.text);await access(tokens.access_token);summary.checks.valid_refresh=true;
  x=await call('/oauth/token',form(refresh));summary.checks.refresh_replay_rejected=x.status>=400&&x.status<500;
