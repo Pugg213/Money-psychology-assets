@@ -105,3 +105,27 @@ test('private immutable events are idempotent, storage missing fails closed',asy
  const noToken=createAudienceStore(null);
  await assert.rejects(()=>noToken.record(event),/storage_not_configured/);
 });
+
+test('rich channel deliveries keep distinct JSON digests and reply metadata without text',()=>{
+ const ctx={channelId,discussionId,secret};
+ const delivery=(text,id=81)=>normalizeEvent({update_id:id,channel_post:{
+  chat:{id:channelId},message_id:id,date:1793860000,
+  rich_message:{blocks:[{type:'paragraph',text}]},
+  reply_to_message:{message_id:80,chat:{id:channelId},caption:'cover caption never stored'}
+ }},ctx);
+ const first=delivery('first rich article secret content');
+ const second=delivery('second rich article secret content',82);
+ assert.equal(first.kind,'rich');
+ assert.equal(first.digest_source,'rich_message_json');
+ assert.equal(first.reply_to_message_id,80);
+ assert.notEqual(first.content_digest,second.content_digest);
+ const stored=JSON.stringify(first);
+ assert.ok(!stored.includes('first rich article secret content'));
+ assert.ok(!stored.includes('cover caption never stored'));
+ const text=normalizeEvent({update_id:83,channel_post:{chat:{id:channelId},message_id:83,text:'private author text'}},ctx);
+ assert.equal(text.digest_source,'text');
+ assert.equal(text.reply_to_message_id,null);
+ const foreign=normalizeEvent({update_id:84,channel_post:{chat:{id:channelId},message_id:84,
+  reply_to_message:{message_id:99,chat:{id:-999}}}},ctx);
+ assert.equal(foreign.reply_to_message_id,null);
+});

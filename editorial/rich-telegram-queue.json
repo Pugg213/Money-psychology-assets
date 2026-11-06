@@ -123,7 +123,31 @@
         "math_check": "passed 2026-11-05",
         "markdown_static_check": "passed 2026-11-05",
         "primary_sources": "IFRS/SEC/Vanguard/ILO/OECD verified in current turn",
-        "live_telegram_render": "not_tested"
+        "live_telegram_render": "not_tested",
+        "pipeline_review": {
+          "version": 1,
+          "checked_at": "2026-11-06T12:06:37.342Z",
+          "payload_hash": "8b67e830abae6407bcf366216daa228a8db6aa71a73c46f25a52b57aee3ae19c",
+          "asset_blob_sha": "7b61695a98cfa37ee174da52ca32cfb963be6044",
+          "scores": {
+            "originality": 1,
+            "evidence": 2,
+            "depth": 2,
+            "language": 2,
+            "practical_value": 2,
+            "visual": 2
+          },
+          "assessment": "Assistant editorial judgment, 11/12. Existing text, source claims and arithmetic reviewed; exact JPEG pixels viewed. No user image approval or Telegram render test inferred.",
+          "arithmetic": "100*1000=100000; 130*900=117000; 100*600=60000; 130*600=78000; margins 40000 and 39000; change -2.5%.",
+          "sources": [
+            {
+              "url": "https://www.ilo.org/resource/statement/making-productivity-growth-work-people",
+              "checked_at": "2026-11-06T12:06:37.342Z",
+              "publication_date": "2026-10-12",
+              "claim": "ILO discusses weak transmission of productivity gains to workers and the influence of concentration and bargaining power."
+            }
+          ]
+        }
       },
       "publisher": "Money Psy Telegram MCP",
       "migrated_and_deduplicated": true
@@ -153,7 +177,31 @@
         "math_check": "passed 2026-11-05",
         "markdown_static_check": "passed 2026-11-05",
         "primary_sources": "IFRS/SEC/Vanguard/ILO/OECD verified in current turn",
-        "live_telegram_render": "not_tested"
+        "live_telegram_render": "not_tested",
+        "pipeline_review": {
+          "version": 1,
+          "checked_at": "2026-11-06T12:06:37.342Z",
+          "payload_hash": "65c7341fbb65d267fdea756189cbba57a3c027e64e237027587efeff6a430f57",
+          "asset_blob_sha": "44349d55273f970d293d7564c5ffb798589b502b",
+          "scores": {
+            "originality": 1,
+            "evidence": 2,
+            "depth": 2,
+            "language": 2,
+            "practical_value": 2,
+            "visual": 2
+          },
+          "assessment": "Assistant editorial judgment, 11/12. Existing text, source claims and arithmetic reviewed; exact JPEG pixels viewed. No user image approval or Telegram render test inferred.",
+          "arithmetic": "20*1=20 hours; 12000/20=600 per hour. The example is hypothetical; OECD statistic is not the daily one-hour gap.",
+          "sources": [
+            {
+              "url": "https://www.oecd.org/en/publications/education-at-a-glance-2026_b4968bbc-en/full-report/how-has-participation-in-early-childhood-education-and-care-evolved-across-age-groups-and-countries_ea5deac7.html",
+              "checked_at": "2026-11-06T12:06:37.342Z",
+              "reference_year": 2024,
+              "claim": "Chapter B1 reports a childcare gap around two years and no gap in 13 of 44 countries; availability, affordability and opening hours also matter."
+            }
+          ]
+        }
       },
       "publisher": "Money Psy Telegram MCP",
       "migrated_and_deduplicated": true

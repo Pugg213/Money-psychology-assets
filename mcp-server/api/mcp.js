@@ -3,6 +3,11 @@ import {extensions,isExtension,executeTool} from '../lib/extensions.js';
 import {audienceTools,isAudienceTool,executeAudienceTool} from '../lib/audience-tools.js';
 import {businessTools,isBusinessTool,executeBusinessTool} from '../lib/business-tools.js';
 import {legacyFetch,relay} from '../lib/legacy.js';
+import {createPublicationService} from '../lib/publication-service.js';
+const publicationTool={name:'publish_cover_then_article',
+ description:'Publish the claimed canonical daily cover and linked rich article once. Durable stage receipts; retries never send again.',
+ inputSchema:{type:'object',properties:{photo_url:{type:'string'},caption:{type:'string'},content:{type:'string'},
+ format:{type:'string',enum:['markdown','html']}},required:['photo_url','content','format'],additionalProperties:false},annotations:{}};
 const BASE='https://money-psy-telegram-mcp.vercel.app';
 const RESOURCE=BASE+'/mcp';
 function checkToken(req){
@@ -51,7 +56,7 @@ function parseLegacyReply(raw){
  for(const line of lines){try{const parsed=JSON.parse(line.slice(5).trim());if(parsed.result)return parsed;}catch{}}
  return null;
 }
-export default async function handler(req,res,{businessExecutor=executeBusinessTool}={}){
+export default async function handler(req,res,{businessExecutor=executeBusinessTool,publicationService=null}={}){
  res.setHeader('Cache-Control','no-store');
  if(req.method==='OPTIONS'){res.setHeader('Allow','GET, POST, OPTIONS');return res.status(204).end();}
  if(!process.env.TELEGRAM_BOT_TOKEN)return res.status(503).json({error:'bot_not_configured'});
@@ -63,7 +68,7 @@ export default async function handler(req,res,{businessExecutor=executeBusinessT
  if(req.method!=='POST')return relay(req,res,'/api/mcp');
  let payload;
  try{payload=readRpc(req);}catch{return res.status(400).json({error:'invalid_json'});}
- if(Array.isArray(payload))return relay(req,res,'/api/mcp');
+ if(Array.isArray(payload))return respond(req,res,{jsonrpc:'2.0',id:null,error:{code:-32600,message:'JSON-RPC batches are not supported'}},400);
  const name=payload?.params?.name;
  const argumentsObject=payload?.params?.arguments||{};
  // Compatibility with ChatGPT App connections whose tool descriptors predate Business v2.2.
@@ -84,21 +89,24 @@ export default async function handler(req,res,{businessExecutor=executeBusinessT
    for(const item of extensions)if(!byName.has(item.name))byName.set(item.name,item);
    for(const item of audienceTools)if(!byName.has(item.name))byName.set(item.name,item);
    for(const item of businessTools)if(!byName.has(item.name))byName.set(item.name,item);
+   byName.set(publicationTool.name,publicationTool);
    j.result.tools=Array.from(byName.values());
    return respond(req,res,j);
   }catch(e){return respond(req,res,{jsonrpc:'2.0',id:payload?.id,error:{code:-32603,message:'Tool discovery unavailable: '+String(e).slice(0,180)}},502);}
  }
- if(payload?.method==='tools/call' && (isExtension(name)||isAudienceTool(name)||isBusinessTool(name))){
+ if(payload?.method==='tools/call' && (isExtension(name)||isAudienceTool(name)||isBusinessTool(name)||name===publicationTool.name)){
   const toolDefinition=extensions.find(x=>x.name===effectiveName)||
     audienceTools.find(x=>x.name===effectiveName)||
-    businessTools.find(x=>x.name===effectiveName);
+    businessTools.find(x=>x.name===effectiveName)||(name===publicationTool.name?publicationTool:null);
   if(!auth.scopes.has('telegram:write') && !toolDefinition?.annotations?.readOnlyHint){
    return respond(req,res,{jsonrpc:'2.0',id:payload.id,error:{code:-32003,message:'insufficient_scope'}},403);
   }
   try{
    if(businessCompatibility&&!toolDefinition?.annotations?.readOnlyHint&&argumentsObject.confirm_dangerous!==true)
     throw Error('business_compatibility_write_requires_confirm_dangerous');
-   const result=businessCompatibility
+   const result=name===publicationTool.name
+    ?await (publicationService||createPublicationService()).publish(argumentsObject)
+    :businessCompatibility
     ?await businessExecutor(effectiveName,argumentsObject.params||{})
     :isBusinessTool(name)?await businessExecutor(name,argumentsObject)
     :isAudienceTool(name)?await executeAudienceTool(name,argumentsObject)
@@ -106,7 +114,9 @@ export default async function handler(req,res,{businessExecutor=executeBusinessT
    return respond(req,res,{jsonrpc:'2.0',id:payload.id,result:{content:[{type:'text',text:JSON.stringify(result)}],isError:false}});
   }catch(e){
    // Secrets must never enter model-visible error messages.
-   const message=String(e.message||e).replace(/bot\d{5,}:[A-Za-z0-9_-]+/g,'[redacted]').slice(0,500);
+   const message=name===publicationTool.name
+    ?(/^[a-z0-9_]{1,100}$|^invalid_original_jpeg: [a-z0-9_]{1,80}$/.test(e.message||'')?e.message:'publication_guard_failed_no_automatic_retry')
+    :String(e.message||e).replace(/bot\d{5,}:[A-Za-z0-9_-]+/g,'[redacted]').slice(0,500);
    return respond(req,res,{jsonrpc:'2.0',id:payload.id,result:{content:[{type:'text',text:JSON.stringify({ok:false,error:message})}],isError:true}});
   }
  }

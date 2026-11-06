@@ -216,7 +216,11 @@ function summaryResult(method,result){
 export async function executeTool(name,args={},clientFetch=fetch){
  const api=(method,params,confirmed)=>tg(method,params,confirmed,clientFetch);
  switch(name){
-  case 'get_capabilities':return {version:'2.2.0',channel:CHANNEL,methods,
+  case 'get_capabilities':return {version:'2.3.0',channel:CHANNEL,methods,
+    daily_publication:{tool:'publish_cover_then_article',implementation:'local_durable_v1',
+     requires_canonical_github_claim:true,create_only_day_lock:true,stage_receipts:true,
+     immutable_source_revision:true,retries_send_no_new_messages:true,
+     journal_tool:'get_publication_journal',not_an_exact_time_scheduler:true},
     typed_tools:[...toolList.map(t=>t.name),...audienceTools.map(t=>t.name),...businessTools.map(t=>t.name)],
     business:{
      available:true,requires_explicit_activation:true,

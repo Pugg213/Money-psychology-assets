@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "functions": {"api/mcp.js": {"maxDuration": 120}},
   "rewrites": [
     {
       "source": "/mcp",

@@ -5,6 +5,9 @@ on:
     paths:
       - 'telegram/**'
       - 'editorial/asset-ledger.json'
+      - 'editorial/rich-telegram-queue.json'
+      - 'editorial/articles/**'
+      - 'scripts/verify_publication_queue.mjs'
       - 'scripts/verify_asset_ledger.py'
       - '.github/workflows/**'
       - 'mcp-server/**'
@@ -12,6 +15,9 @@ on:
     paths:
       - 'telegram/**'
       - 'editorial/asset-ledger.json'
+      - 'editorial/rich-telegram-queue.json'
+      - 'editorial/articles/**'
+      - 'scripts/verify_publication_queue.mjs'
       - 'scripts/verify_asset_ledger.py'
       - '.github/workflows/**'
       - 'mcp-server/**'
@@ -42,4 +48,7 @@ jobs:
       - run: npm install --ignore-scripts --no-audit --no-fund
       - run: node --check api/mcp.js && node --check api/updates.js
       - run: node --check lib/business-core.js && node --check lib/business-store.js && node --check lib/business-service.js && node --check lib/business-tools.js
-      - run: node --test tests/business.test.mjs tests/business-compat.test.mjs tests/audience.test.mjs tests/smoke.test.mjs
+      - name: Verify canonical queue, asset bindings and article copies
+        run: node ../scripts/verify_publication_queue.mjs
+      - name: Run every regression test (no Telegram sends)
+        run: node --test tests/*.test.mjs

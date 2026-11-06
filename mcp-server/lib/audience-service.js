@@ -2,6 +2,8 @@ import {webhookToken,normalizeEvent,aggregateAudience,topicIdeas,feedbackKeyboar
 import {createAudienceStore} from './audience-store.js';
 import {createBusinessStore} from './business-store.js';
 import {BUSINESS_UPDATES,ownerIds,validateConnection} from './business-core.js';
+import {createEditorialSource} from './editorial-source.js';
+import {createPublicationStore} from './publication-store.js';
 
 const DEFAULT_BASE='https://money-psy-telegram-mcp.vercel.app';
 const CHANNEL=process.env.TELEGRAM_CHAT_ID||'@psy_money1';
@@ -21,7 +23,8 @@ export async function botRequest(method,params={},clientFetch=fetch){
  }finally{clearTimeout(timer);}
 }
 const cleanBase=(s)=>String(s||DEFAULT_BASE).replace(/\/+$/,'');
-export function createAudienceService({telegramApi=botRequest,store=null,botToken=process.env.TELEGRAM_BOT_TOKEN,baseUrl=DEFAULT_BASE,businessStore=null}={}){
+export function createAudienceService({telegramApi=botRequest,store=null,botToken=process.env.TELEGRAM_BOT_TOKEN,baseUrl=DEFAULT_BASE,businessStore=null,
+ editorialSource=null,publicationStore=null}={}){
  const audienceStore=store||createAudienceStore();
  const diagnosticBusinessStore=businessStore||createBusinessStore();
  const endpoint=cleanBase(baseUrl)+'/api/updates';
@@ -139,16 +142,21 @@ export function createAudienceService({telegramApi=botRequest,store=null,botToke
    source:'Captured reader questions, heuristic topic categorization; verify sources and editorial novelty before publishing.'};
  }
  async function publicationJournal({limit=20}={}){
-  const url='https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/editorial/rich-telegram-queue.json';
-  const response=await fetch(url,{cache:'no-store',signal:AbortSignal.timeout(10000)});
-  if(!response.ok)throw Error('editorial_queue_unavailable');
-  const body=await response.json();
+  const {queue:body,commit}=await (editorialSource||createEditorialSource()).readQueue();
   const items=Array.isArray(body.entries)?body.entries:[];
-  return {channel:CHANNEL,source:'GitHub canonical editorial queue',
-   entries:items.slice(-Math.min(40,Math.max(1,limit))).map(x=>({
+  const receipts=publicationStore||createPublicationStore();
+  const entries=[];
+  for(const x of items.slice(-Math.min(40,Math.max(1,limit)))){
+   let server_receipt;
+   try{server_receipt=await receipts.summary(x.date_moscow);}
+   catch{server_receipt={status:'storage_unavailable',automatic_retry_allowed:false};}
+   entries.push({
     date:x.date_moscow,title:x.title,state:x.state,
-    scheduled_at:x.scheduled_at,telegram_publication:x.telegram_publication||null
-   }))};
+    scheduled_at:x.scheduled_at,telegram_publication:x.telegram_publication||null,server_receipt
+   });
+  }
+  return {channel:CHANNEL,source:'GitHub canonical editorial queue',source_commit:commit,
+   delivery_evidence:'GitHub confirmations and private server receipts are separate; never infer a send from a constructed URL.',entries};
  }
  async function attachButtons({date_moscow,confirm=false}={}){
   if(confirm!==true)throw Error('confirmation_required');

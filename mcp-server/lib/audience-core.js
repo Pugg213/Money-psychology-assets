@@ -67,9 +67,16 @@ export function normalizeEvent(update,{channelId,discussionId,secret}){
  }
  const ch=update.channel_post;
  if(ch && String(ch.chat?.id)===String(channelId) && Number.isSafeInteger(ch.message_id)){
+  const rich=ch.rich_message!==undefined&&ch.rich_message!==null;
+  const digest_source=rich?'rich_message_json':typeof ch.text==='string'?'text':typeof ch.caption==='string'?'caption':'empty';
+  const digest_input=rich?JSON.stringify(ch.rich_message):digest_source==='text'?ch.text:digest_source==='caption'?ch.caption:'';
+  const reply=ch.reply_to_message;
+  const reply_to_message_id=Number.isSafeInteger(reply?.message_id)&&reply.message_id>0&&
+   (!reply.chat||String(reply.chat.id)===String(channelId))?reply.message_id:null;
   return {type:'channel_delivery',update_id:id,message_id:ch.message_id,date:ch.date,
-   media_group_id:ch.media_group_id||null,kind:ch.photo?'photo':ch.video?'video':ch.rich_message?'rich':'text',
-   content_digest:createHash('sha256').update(String(ch.text||ch.caption||'')).digest('hex').slice(0,16),observed_at};
+   media_group_id:ch.media_group_id||null,kind:ch.photo?'photo':ch.video?'video':rich?'rich':'text',
+   content_digest:createHash('sha256').update(digest_input).digest('hex').slice(0,16),
+   digest_source,reply_to_message_id,observed_at};
  }
  const r=update.message_reaction_count;
  if(r && String(r.chat?.id)===String(channelId) && Number.isSafeInteger(r.message_id)){
