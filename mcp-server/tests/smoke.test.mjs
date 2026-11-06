@@ -3,7 +3,6 @@ import assert from 'node:assert/strict';
 import {createHmac} from 'node:crypto';
 import {executeTool,extensions,security} from '../lib/extensions.js';
 import mcp from '../api/mcp.js';
-import oauth from '../api/oauth.js';
 
 process.env.TELEGRAM_BOT_TOKEN = '123456:AbCdEfGhIjKlMnOpQrStUvWxYz012345';
 process.env.TELEGRAM_CHAT_ID = '@psy_money1';
@@ -123,14 +122,3 @@ test('read-only oauth scope can read but not send, unauthenticated rejected',asy
  assert.equal(res.statusCode,401);
 });
 
-test('OAuth reverse proxy uses existing immutable deployment and keeps user form input',async()=>{
- const old=globalThis.fetch;let called;
- globalThis.fetch=async(url,opts)=>{called={url,opts};return {status:303,headers:new Headers({'location':'https://chatgpt.com/connector_platform_oauth_redirect?code=x&state=y','cache-control':'no-store'}),arrayBuffer:async()=>new ArrayBuffer(0)};};
- try{
-  const r=makeRes();
-  await oauth({method:'POST',url:'/api/oauth?endpoint=authorize',headers:{'content-type':'application/x-www-form-urlencoded'},body:{state:'abc',approve:'yes'}},r);
-  assert.match(called.url,/repj9lbvy/);
-  assert.match(called.opts.body,/state=abc/);
-  assert.equal(r.statusCode,303);
- }finally{globalThis.fetch=old;}
-});

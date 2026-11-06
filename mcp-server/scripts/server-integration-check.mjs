@@ -47,10 +47,14 @@ try{
  assert.equal(tokens.scope,'telegram:read','read-only scope preserved');await access(tokens.access_token);
  summary.legacy_claim_shapes.access=shape(tokens.access_token);summary.legacy_claim_shapes.refresh=shape(tokens.refresh_token);
  summary.checks.valid_login=true;summary.checks.valid_code_exchange=true;summary.checks.authenticated_mcp=true;
- x=await call('/oauth/token',form(grant));summary.checks.code_replay_rejected=x.status>=400&&x.status<500;
+ summary.legacy_claim_shapes.code=shape(grant.code);
+ const legacyClient=JSON.parse(Buffer.from(client.client_id.split('.')[0],'base64url'));
+ summary.client_binding_kind=JSON.parse(Buffer.from(tokens.refresh_token.split('.')[0],'base64url')).client===legacyClient.jti?'registration_jti':'other';
  const refresh={grant_type:'refresh_token',refresh_token:tokens.refresh_token,client_id:client.client_id,resource:base+'/mcp'};
  x=await call('/oauth/token',form(refresh));assert.equal(x.status,200,'valid refresh');tokens=JSON.parse(x.text);await access(tokens.access_token);summary.checks.valid_refresh=true;
  x=await call('/oauth/token',form(refresh));summary.checks.refresh_replay_rejected=x.status>=400&&x.status<500;
+ x=await call('/oauth/token',form(grant));summary.checks.code_replay_rejected=x.status>=400&&x.status<500;
+ x=await call('/oauth/token',form({...refresh,refresh_token:tokens.refresh_token}));summary.checks.refresh_descendant_revoked=x.status>=400&&x.status<500;
  if(process.argv.includes('--save-legacy-fixture'))await put(fixture,JSON.stringify(seal({client_id:client.client_id,refresh_token:tokens.refresh_token,expires_at:Date.now()+3600000})),{access:'private',addRandomSuffix:false,allowOverwrite:true,contentType:'application/json'});
  if(process.argv.includes('--check-legacy-fixture')){
   const record=await get(fixture,{access:'private',useCache:false});assert.ok(record?.stream,'legacy fixture exists');const old=open(JSON.parse(await new Response(record.stream).text()));assert.ok(old.expires_at>Date.now(),'legacy fixture freshness');
@@ -58,7 +62,7 @@ try{
  }
  summary.business_inventory={};
  for(const part of ['chats','messages','forget-markers']){const page=await list({prefix:'business/v1/'+part+'/',limit:1000});summary.business_inventory[part]={count_in_sample:page.blobs.length,partial:page.hasMore===true};}
- if(strict){assert.equal(summary.checks.code_replay_rejected,true,'authorization code replay must fail');assert.equal(summary.checks.refresh_replay_rejected,true,'refresh replay must fail');}
+ if(strict){assert.equal(summary.checks.code_replay_rejected,true,'authorization code replay must fail');assert.equal(summary.checks.refresh_replay_rejected,true,'refresh replay must fail');assert.equal(summary.checks.refresh_descendant_revoked,true,'descendant refresh must be revoked');}
  console.log('MONEY_PSY_INTEGRATION '+JSON.stringify({ok:true,...summary}));
 }catch(e){
  // Assertion diagnostics only: never print response bodies, URLs, tokens or SDK exceptions.

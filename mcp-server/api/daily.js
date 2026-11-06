@@ -2,10 +2,11 @@ import {timingSafeEqual} from 'node:crypto';
 import {botRequest} from '../lib/audience-service.js';
 import {createAudienceStore} from '../lib/audience-store.js';
 import {createBusinessStore} from '../lib/business-store.js';
+import {createOAuthState} from '../lib/oauth-state.js';
 
 const safeEqual=(a,b)=>{const x=Buffer.from(String(a||'')),y=Buffer.from(String(b||''));return x.length===y.length&&timingSafeEqual(x,y);};
 export default async function handler(req,res,{
-  secret=process.env.CRON_SECRET,telegramApi=botRequest,store=createAudienceStore(),now=new Date()
+  secret=process.env.CRON_SECRET,telegramApi=botRequest,store=createAudienceStore(),now=new Date(),oauthState=null
 }={}){
  res.setHeader('Cache-Control','no-store');
  if(req.method!=='GET')return res.status(405).json({ok:false,error:'method_not_allowed'});
@@ -28,8 +29,13 @@ export default async function handler(req,res,{
     business_retention={enabled:true,...await createBusinessStore().purgeOld({cutoff:cut,maxDelete:80})};
    }catch{business_retention={enabled:true,error:'business_retention_failed',retry_next_run:true};}
   }
+  let oauth_retention={enabled:false};
+  if(oauthState||process.env.BLOB_READ_WRITE_TOKEN){
+   try{oauth_retention={enabled:true,...await(oauthState||createOAuthState()).purgeExpired({now:Math.floor(now.getTime()/1000),limit:100})};}
+   catch{oauth_retention={enabled:true,error:'oauth_retention_failed',retry_next_run:true};}
+  }
   return res.status(200).json({ok:true,member_count,recorded:recorded.stored===true,
-   duplicate:recorded.duplicate===true,retention,business_retention,not_post_views:true});
+   duplicate:recorded.duplicate===true,retention,business_retention,oauth_retention,not_post_views:true});
  }catch(err){
   return res.status(503).json({ok:false,error:'snapshot_failed'});
  }

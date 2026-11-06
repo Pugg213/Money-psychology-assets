@@ -1,10 +1,10 @@
 {
   "name": "money-psy-telegram-mcp",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "private": true,
   "type": "module",
   "engines": {
-    "node": ">=22"
+    "node": "22.x"
   },
   "dependencies": {
     "@vercel/blob": "2.8.2"

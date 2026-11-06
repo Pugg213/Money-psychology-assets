@@ -67,6 +67,11 @@ const cases={
  disable_business_updates:{args:{confirm:true},method:'setWebhook',verify:r=>{assert.equal(r.enabled,false);assert.equal(r.reader_feedback_preserved,true);}}
 };
 test('all15 Business functions have direct execution cases',()=>assert.deepEqual(businessTools.map(t=>t.name).sort(),Object.keys(cases).sort()));
+test('empty Business observations explain the missing Telegram history without inventing a chat',async()=>{
+ const result=await executeBusinessTool('business_chats',{business_connection_id:id},{chats:async()=>({chats:[],partial:false})});
+ assert.equal(result.observation_status,'waiting_for_first_business_message');
+ assert.equal(result.chats.length,0);assert.match(result.note,/Telegram/);
+});
 for(const [name,c] of Object.entries(cases))test('Business function '+name+' executes with correct live-rights and chat prerequisites (mock)',async()=>{
  const f=await fixture(),r=await executeBusinessTool(name,c.args,f.service);c.verify(r);
  if(c.method)assert.ok(f.calls.some(x=>x.method===c.method),name);
