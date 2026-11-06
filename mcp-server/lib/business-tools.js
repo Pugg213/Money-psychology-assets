@@ -1,7 +1,7 @@
 import {createBusinessService} from './business-service.js';
-import {BUSINESS_UPDATES,ownerIds,requireRight,numericId} from './business-core.js';
-import {UPDATE_TYPES} from './audience-service.js';
+import {BUSINESS_UPDATES,ownerIds,requireRight,numericId,hashConnection} from './business-core.js';
 import {webhookToken} from './audience-core.js';
+import {DEFAULT_UPDATES} from './webhook-config.js';
 const schema=(properties={},required=[])=>({type:'object',properties,required,additionalProperties:false});
 const str={type:'string'},positive={type:'integer',minimum:1},yes={type:'boolean'};
 const C=(name,description,fields={},required=[],readOnly=false)=>({
@@ -12,6 +12,27 @@ const need=(condition,message)=>{if(!condition)throw Error(message);};
 const confirmed=(x)=>need(x===true,'explicit_confirmation_required');
 const pos=(n)=>{need(Number.isSafeInteger(n)&&n>0,'valid_message_id_required');return n;};
 const own=(s)=>{need(s.length>0&&s.every(id=>/^\d{1,16}$/.test(id)),'owner_allowlist_not_configured');};
+const ENDPOINT='https://money-psy-telegram-mcp.vercel.app/api/updates';
+async function observedMessage(s,id,chatId,messageId){
+ const message=await s.store.getMessage(id,chatId,messageId);
+ need(message&&!message.deleted&&message.connection_id===id&&message.chat_id===chatId&&message.message_id===messageId,
+  'business_message_not_seen_in_requested_chat');
+ return message;
+}
+async function sentResult(s,id,chatId,message,content={}){
+ need(Number.isSafeInteger(message?.message_id)&&message.message_id>0&&message.chat?.id===chatId,
+  'business_send_confirmation_unknown_do_not_retry');
+ let metadata_recorded=false;
+ try{
+  await s.store.saveMessage({connectionId:id,chatId,messageId:message.message_id,
+   updateId:null,senderId:message.from?.id||null,sentByBot:true,incoming:false,
+   timestamp:Number.isSafeInteger(message.date)?message.date:Math.floor(Date.now()/1000),
+   text:content.text||'',mediaType:content.mediaType||null,chatLabel:''},{storeText:s.storeText===true});
+  metadata_recorded=true;
+ }catch{/* Telegram confirmation must survive a failed metadata write; never suggest resending. */}
+ return {sent:true,chat_id:chatId,message_id:message.message_id,metadata_recorded,
+  automatic_retry_allowed:false,...(!metadata_recorded?{warning:'sent_metadata_storage_failed_do_not_retry'}:{})};
+}
 export const businessTools=[
  C('business_status','Read-only: Telegram Business webhook, private store and owner configuration; no account access is enabled by this query.',{},[],true),
  C('business_connections','Read-only: list known connections for configured owners. Connections only appear after authorized Business webhook events.',{},[],true),
@@ -32,6 +53,11 @@ export const businessTools=[
 const names=new Set(businessTools.map(x=>x.name));
 export const isBusinessTool=(name)=>names.has(name);
 export async function executeBusinessTool(name,a={},s=createBusinessService()){
+ need(a&&typeof a==='object'&&!Array.isArray(a),'invalid_business_arguments');
+ if(a.limit!==undefined)need(Number.isInteger(a.limit)&&a.limit>=1&&a.limit<=(name==='business_gifts'?50:100),'invalid_business_limit');
+ if(a.query!==undefined)need(typeof a.query==='string'&&a.query.length<=512,'invalid_business_query');
+ if(!['business_status','business_connections','enable_business_updates','disable_business_updates'].includes(name))hashConnection(a.business_connection_id);
+ if(a.chat_id!==undefined)need(numericId(a.chat_id),'numeric_chat_id_required');
  const id=a.business_connection_id,chatId=a.chat_id;
  const telegram=s.telegramApi,store=s.store;
  switch(name){
@@ -47,9 +73,9 @@ export async function executeBusinessTool(name,a={},s=createBusinessService()){
     note:'Connected Telegram Business accounts and enabled rights are required; old private chat history cannot be fetched.'};
   }
   case 'business_connections':{
-   const ids=Array.from(ownerIds()).map(Number);const connections=[];
-   for(const ownerId of ids){const result=await store.connections(ownerId);connections.push(...result.connections);}
-   return {connections,owners_configured:ids.length>0};
+   const ids=Array.from(ownerIds()).map(Number);const connections=[];let partial=false;
+   for(const ownerId of ids){const result=await store.connections(ownerId);connections.push(...result.connections);partial=partial||result.partial===true;}
+   return {connections,owners_configured:ids.length>0,partial};
   }
   case 'business_connection_info':return s.connection(id);
   case 'business_chats':return s.chats(id,a.limit||100);
@@ -62,7 +88,7 @@ export async function executeBusinessTool(name,a={},s=createBusinessService()){
    const p={business_connection_id:id,chat_id:chatId,text:a.text};
    if(a.parse_mode)p.parse_mode=a.parse_mode;
    const r=await telegram('sendMessage',p);
-   return {sent:true,chat_id:chatId,message_id:r?.message_id||null};
+   return sentResult(s,id,chatId,r,{text:a.text});
   }
   case 'business_send_media':{
    confirmed(a.confirm);
@@ -74,32 +100,49 @@ export async function executeBusinessTool(name,a={},s=createBusinessService()){
    const p={business_connection_id:id,chat_id:chatId,[a.kind]:a.file_id};
    if(a.caption)p.caption=a.caption;
    const r=await telegram(methods[a.kind],p);
-   return {sent:true,chat_id:chatId,message_id:r?.message_id||null};
+   return sentResult(s,id,chatId,r,{text:a.caption||'',mediaType:a.kind});
   }
   case 'business_edit_message':{
    confirmed(a.confirm);pos(a.message_id);
    need(typeof a.text==='string'&&a.text.trim()&&a.text.length<=4096,'invalid_text_1_to_4096');
    await s.writable(id,chatId);
-   await telegram('editMessageText',{business_connection_id:id,chat_id:chatId,message_id:a.message_id,text:a.text});
-   return {edited:true,chat_id:chatId,message_id:a.message_id};
+   const message=await observedMessage(s,id,chatId,a.message_id);
+   need(message.incoming!==true,'cannot_edit_incoming_business_message');
+   const result=await telegram('editMessageText',{business_connection_id:id,chat_id:chatId,message_id:a.message_id,text:a.text});
+   need(result?.message_id===a.message_id&&result.chat?.id===chatId,'business_edit_confirmation_unknown_do_not_retry');
+   let metadata_recorded=false;
+   try{const saved=await store.saveMessage({connectionId:id,chatId,messageId:a.message_id,updateId:null,
+    senderId:message.sender_id,sentByBot:message.sent_by_bot===true,incoming:false,
+    timestamp:Number.isSafeInteger(result.date)?result.date:message.telegram_date,text:a.text,
+    mediaType:message.media_type||null,chatLabel:''},{storeText:s.storeText===true});metadata_recorded=saved.stored===true;}catch{}
+   return {edited:true,chat_id:chatId,message_id:a.message_id,metadata_recorded,automatic_retry_allowed:false};
   }
   case 'business_mark_read':{
    confirmed(a.confirm);pos(a.message_id);
    const c=await s.verified(id);requireRight(c,'can_read_messages');
-   await s.chat(id,chatId);
+   await s.active(id,chatId);
+   const message=await observedMessage(s,id,chatId,a.message_id);
+   need(message.incoming===true||(message.sender_id===chatId&&message.sender_id!==c.owner_id&&message.sent_by_bot!==true),
+    'business_message_is_not_incoming');
    const r=await telegram('readBusinessMessage',{business_connection_id:id,chat_id:chatId,message_id:a.message_id});
+   need(r===true,'business_read_confirmation_unknown_do_not_retry');
    return {marked_read:r===true};
   }
   case 'business_delete_messages':{
    confirmed(a.confirm);
    need(Array.isArray(a.message_ids)&&a.message_ids.length>0&&a.message_ids.length<=100,'invalid_message_ids');
    a.message_ids.forEach(pos);
+   need(new Set(a.message_ids).size===a.message_ids.length,'duplicate_message_ids');
    const c=await s.verified(id);
    requireRight(c,'can_delete_all_messages');
    await s.chat(id,chatId);
+   for(const messageId of a.message_ids)await observedMessage(s,id,chatId,messageId);
    const r=await telegram('deleteBusinessMessages',{business_connection_id:id,message_ids:a.message_ids});
-   if(r===true)await store.deleteMessages(id,chatId,a.message_ids);
-   return {deleted:r===true,message_ids:a.message_ids};
+   need(r===true,'business_delete_confirmation_unknown_do_not_retry');
+   let local_content_redacted=false;
+   if(r===true){try{await store.deleteMessages(id,chatId,a.message_ids);local_content_redacted=true;}catch{}}
+   return {deleted:r===true,message_ids:a.message_ids,local_content_redacted,
+    ...(r===true&&!local_content_redacted?{warning:'telegram_deleted_local_redaction_failed'}:{}),automatic_retry_allowed:false};
   }
   case 'business_profile':{
    confirmed(a.confirm);
@@ -119,7 +162,8 @@ export async function executeBusinessTool(name,a={},s=createBusinessService()){
    if(a.action==='username'){
     need(typeof a.username==='string'&&(!a.username||/^[A-Za-z][A-Za-z0-9_]{4,31}$/.test(a.username)),'invalid_username');p.username=a.username;
    }
-   return {changed:(await telegram(method,p))===true,action:a.action};
+   need((await telegram(method,p))===true,'business_profile_confirmation_unknown_do_not_retry');
+   return {changed:true,action:a.action};
   }
   case 'business_gifts':{
    const c=await s.verified(id);requireRight(c,'can_view_gifts_and_stars');
@@ -138,9 +182,11 @@ export async function executeBusinessTool(name,a={},s=createBusinessService()){
    const endpoint='https://money-psy-telegram-mcp.vercel.app/api/updates';
    const w=await telegram('getWebhookInfo');
    need(!w.url||w.url===endpoint,'foreign_webhook_must_not_be_overwritten');
-   const allowed_updates=Array.from(new Set([...(w.allowed_updates||[]),...UPDATE_TYPES,...BUSINESS_UPDATES]));
-   await telegram('setWebhook',{url:endpoint,secret_token:webhookToken(process.env.TELEGRAM_BOT_TOKEN),
-    allowed_updates,drop_pending_updates:false,max_connections:1});
+   const previous=Array.isArray(w.allowed_updates)?w.allowed_updates:[];
+   const defaultSubscription=!!w.url&&!previous.length;
+   const allowed_updates=defaultSubscription?[]:Array.from(new Set([...(w.url?previous:[]),...BUSINESS_UPDATES]));
+   need(await telegram('setWebhook',{url:endpoint,secret_token:webhookToken(process.env.TELEGRAM_BOT_TOKEN),
+    allowed_updates,drop_pending_updates:false,max_connections:1})===true,'business_webhook_confirmation_unknown');
    return {enabled:true,url:endpoint,allowed_updates,pending_updates_preserved:true};
   }
   case 'disable_business_updates':{
@@ -149,14 +195,14 @@ export async function executeBusinessTool(name,a={},s=createBusinessService()){
    const w=await telegram('getWebhookInfo');
    need(w.url===endpoint,'webhook_not_owned_by_this_service');
    const source=Array.isArray(w.allowed_updates)&&w.allowed_updates.length
-    ?w.allowed_updates:UPDATE_TYPES;
+    ?w.allowed_updates:DEFAULT_UPDATES;
    const remaining=source.filter(x=>!BUSINESS_UPDATES.includes(x));
    if(remaining.length){
-    await telegram('setWebhook',{url:endpoint,secret_token:webhookToken(process.env.TELEGRAM_BOT_TOKEN),
-     allowed_updates:remaining,drop_pending_updates:false,max_connections:4});
-    return {enabled:false,reader_feedback_preserved:true,allowed_updates:remaining,drop_pending_updates:false};
+    need(await telegram('setWebhook',{url:endpoint,secret_token:webhookToken(process.env.TELEGRAM_BOT_TOKEN),
+     allowed_updates:remaining,drop_pending_updates:false,max_connections:4})===true,'business_webhook_confirmation_unknown');
+    return {enabled:false,reader_feedback_preserved:remaining.some(x=>['message','channel_post','callback_query','poll','message_reaction_count'].includes(x)),allowed_updates:remaining,drop_pending_updates:false};
    }
-   await telegram('deleteWebhook',{drop_pending_updates:false});
+   need(await telegram('deleteWebhook',{drop_pending_updates:false})===true,'business_webhook_confirmation_unknown');
    return {enabled:false,reader_feedback_preserved:false,webhook_deleted:true,drop_pending_updates:false};
   }
   default:throw Error('unknown_business_tool');

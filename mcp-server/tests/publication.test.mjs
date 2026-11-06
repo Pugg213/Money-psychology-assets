@@ -189,7 +189,7 @@ const response=()=>({statusCode:200,setHeader(){},status(c){this.statusCode=c;re
 test('cached publication tool routes locally, write scope is required, batch cannot bypass the lock',async()=>{
  process.env.TELEGRAM_BOT_TOKEN='123456:fake-token-for-test-only-0123456789';
  let count=0;const publicationService={publish:async()=>{count++;return {ok:true,stage_receipts:true};}};
- const rpc={jsonrpc:'2.0',id:1,method:'tools/call',params:{name:'publish_cover_then_article',arguments:{}}};
+ const rpc={jsonrpc:'2.0',id:1,method:'tools/call',params:{name:'publish_cover_then_article',arguments:{photo_url:'https://example.org/cover.jpg',content:'# Example',format:'markdown'}}};
  const req=(scope,body=rpc)=>({method:'POST',headers:{authorization:auth(scope)},body});
  let res=response();await mcp(req('telegram:read'),res,{publicationService});assert.equal(res.statusCode,403);assert.equal(count,0);
  res=response();await mcp(req('telegram:read telegram:write'),res,{publicationService});

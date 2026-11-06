@@ -35,7 +35,7 @@ function sign(scopes){
 function req(method,body,scope='telegram:read telegram:write'){
  return {method,url:'/api/mcp',headers:{authorization:'Bearer '+sign(scope),accept:'application/json','content-type':'application/json'},body};
 }
-const captures=[];const client=fakeApi((method,params)=>{captures.push({method,params});return method==='getMe'?{id:111,username:'bot'}:method==='getChatMemberCount'?1234:{message_id:77,status:'administrator',title:'Money Psychology'}});
+const captures=[];const client=fakeApi((method,params)=>{captures.push({method,params});return method==='getMe'?{id:111,username:'bot'}:method==='getChatMemberCount'?1234:method==='sendMediaGroup'?[{message_id:77},{message_id:78}]:{message_id:77,status:'administrator',title:'Money Psychology'}});
 
 test('discovery has 25+ typed tools, all uniquely named',()=>{
  assert.ok(extensions.length>=25);
@@ -63,7 +63,8 @@ test('poll is correctly formatted and chat scoped',async()=>{
  assert.equal(p.chat_id,'@psy_money1');
  assert.equal(p.type,'quiz');
  assert.deepEqual(p.options,[{text:'A'},{text:'B'}]);
- assert.equal(p.correct_option_id,1);
+ assert.deepEqual(p.correct_option_ids,[1]);
+ assert.equal(p.correct_option_id,undefined);
 });
 
 test('media, album and rich markdown calls use official methods',async()=>{
