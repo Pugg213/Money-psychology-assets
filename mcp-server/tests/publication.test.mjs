@@ -4,13 +4,14 @@ import {createHmac,createHash} from 'node:crypto';
 import {createPublicationService,publicationTelegram} from '../lib/publication-service.js';
 import {createPublicationStore} from '../lib/publication-store.js';
 import {payloadHash,validateQueue,verifyEntryAsset,createEditorialSource,publicationDate,RAW} from '../lib/editorial-source.js';
+import {feedbackKeyboard} from '../lib/audience-core.js';
 import mcp from '../api/mcp.js';
 import {readFileSync} from 'node:fs';
 
 const fixture=JSON.parse(readFileSync(new URL('../../editorial/rich-telegram-queue.json',import.meta.url)));
 const assets=JSON.parse(readFileSync(new URL('../../editorial/asset-ledger.json',import.meta.url)));
 const day='2026-11-07',now=new Date(day+'T12:00:01+03:00'),commit='a'.repeat(40),chatId=-1003639946241;
-function setup({failStage,telegramFailure,claimError,clock=()=>now,modifyEntry}={}){
+function setup({failStage,telegramFailure,claimError,clock=()=>now,modifyEntry,articleMarkup,webhook}={}){
  const queue=structuredClone(fixture),entry=queue.entries.find(x=>x.date_moscow===day);
  entry.state='sending';entry.send_attempts=1;entry.send_claimed_at=day+'T12:00:00+03:00';
  if(modifyEntry)modifyEntry(entry);
@@ -23,7 +24,7 @@ function setup({failStage,telegramFailure,claimError,clock=()=>now,modifyEntry}=
   if(s==='claim'&&claimError)throw Error('lost claim reply');
  },async summary(d){
   const c=records.get(d+'/claim'),cover=records.get(d+'/cover_result'),article=records.get(d+'/article_result');
-  return {status:cover&&article?'published':records.get(d+'/failure')?.status||'sending_or_uncertain',
+  return {status:cover&&article&&article.feedback_buttons_confirmed?'published':records.get(d+'/failure')?.status||'sending_or_uncertain',
    attempt_id:c?.attempt_id,payload_hash:c?.payload_hash,cover_message_id:cover?.message_id,
    article_message_id:article?.message_id,automatic_retry_allowed:false};
  }};
@@ -31,11 +32,12 @@ function setup({failStage,telegramFailure,claimError,clock=()=>now,modifyEntry}=
   async verifyMedia(a,rev){assert.equal(rev,commit);return RAW+rev+'/'+a.github_path;}};
  const telegram=async(method,p)=>{
   calls.push({method,p});
+  if(method==='getWebhookInfo')return webhook||{url:'https://money-psy-telegram-mcp.vercel.app/api/updates',allowed_updates:['callback_query']};
   if(method==='getMe')return {id:123,username:'MyGptSparks_bot'};
   if(method==='getChat')return {id:chatId,username:'psy_money1',type:'channel'};
   if(method==='getChatMember')return {status:'administrator',can_post_messages:true};
   if(method===telegramFailure?.method)throw Object.assign(Error('injected'),telegramFailure);
-  return {message_id:method==='sendPhoto'?501:502,chat:{id:chatId}};
+  return {message_id:method==='sendPhoto'?501:502,chat:{id:chatId},reply_markup:articleMarkup?articleMarkup(p.reply_markup):p.reply_markup};
  };
  const service=createPublicationService({store,source,telegram,clock,id:()=> 'test-attempt'});
  const sends=()=>calls.filter(c=>c.method.startsWith('send'));
@@ -196,4 +198,48 @@ test('cached publication tool routes locally, write scope is required, batch can
  assert.equal(JSON.parse(res.body).result.isError,false);assert.equal(count,1);
  res=response();await mcp(req('telegram:read telegram:write',[rpc]),res,{publicationService});
  assert.equal(res.statusCode,400);assert.equal(count,1);
+});
+
+test('daily article carries and confirms the exact three feedback buttons in its only send',async()=>{
+ const f=setup(),r=await f.service.publish(f.args),p=f.sends()[1].p;
+ assert.deepEqual(p.reply_markup,feedbackKeyboard('20261107'));
+ assert.equal(r.feedback_buttons_confirmed,true);
+ assert.equal(r.feedback_post_key,'20261107');
+ assert.equal(f.records.get(day+'/claim').feedback_required,true);
+ assert.equal(f.records.get(day+'/article_result').feedback_buttons_confirmed,true);
+});
+test('missing or incorrect keyboard keeps both confirmed IDs, fails closed and never republishes',async()=>{
+ for(const articleMarkup of [()=>undefined,()=>feedbackKeyboard('20261106'),()=>({inline_keyboard:[]})]){
+  const f=setup({articleMarkup}),r=await f.service.publish(f.args);
+  assert.equal(r.ok,false);assert.equal(r.category,'feedback_unconfirmed');
+  assert.equal(r.status,'partial_or_uncertain');assert.equal(r.article.message_id,502);
+  assert.equal(f.records.get(day+'/article_result').feedback_buttons_confirmed,false);
+  const again=await f.service.publish(f.args);assert.equal(again.ok,false);assert.equal(f.sends().length,2);
+ }
+});
+test('feedback webhook must be active and receive callbacks before any publication claim or send',async()=>{
+ for(const webhook of [{url:''},{url:'https://elsewhere.example/api/updates',allowed_updates:['callback_query']},
+  {url:'https://money-psy-telegram-mcp.vercel.app/api/updates',allowed_updates:['message']}]){
+  const f=setup({webhook});await assert.rejects(()=>f.service.publish(f.args),/interactive_webhook_not_active/);
+  assert.equal(f.sends().length,0);assert.equal(f.records.size,0);
+ }
+});
+test('new receipt contract needs keyboard proof, including backup receipts and immutable repair records',async()=>{
+ for(const proof of [
+  {message_id:999,chat_id:chatId,feedback_post_key:'20261107'},
+  {message_id:502,chat_id:-999,feedback_post_key:'20261107'},
+  {message_id:502,chat_id:chatId,feedback_post_key:'20261106'},
+  {message_id:502,chat_id:chatId,feedback_post_key:'20261107'}]){
+  const records=new Map(),store=createPublicationStore({async get(p){const v=records.get(p);return v?{statusCode:200,stream:new Response(v).body}:null;},
+   async put(p,b,opts){assert.equal(opts.allowOverwrite,false);if(records.has(p))throw Error('conflict');records.set(p,b);}});
+  const claim={attempt_id:'a',payload_hash:'b',telegram_chat_id:chatId,feedback_required:true};
+  const receipt=message_id=>({...claim,message_id,chat_id:chatId});
+  await store.write(day,'claim',claim);
+  await store.write(day,'failure',{...claim,confirmed_cover:receipt(501),confirmed_article:receipt(502)});
+  let r=await store.summary(day);assert.equal(r.status,'partial_or_uncertain');assert.equal(r.feedback_buttons_confirmed,false);
+  await store.write(day,'feedback_result',{...proof,feedback_buttons_confirmed:true});
+  const expected=proof.message_id===502&&proof.chat_id===chatId&&proof.feedback_post_key==='20261107';
+  r=await store.summary(day);assert.equal(r.status,expected?'published':'partial_or_uncertain');assert.equal(r.feedback_buttons_confirmed,expected);
+  await assert.rejects(()=>store.write(day,'feedback_result',proof),/conflict/);
+ }
 });

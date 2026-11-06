@@ -1,4 +1,4 @@
-import {webhookToken,normalizeEvent,aggregateAudience,topicIdeas,feedbackKeyboard} from './audience-core.js';
+import {webhookToken,normalizeEvent,aggregateAudience,topicIdeas,feedbackKeyboard,feedbackKeyboardMatches,feedbackWebhookActive} from './audience-core.js';
 import {createAudienceStore} from './audience-store.js';
 import {createBusinessStore} from './business-store.js';
 import {BUSINESS_UPDATES,ownerIds,validateConnection} from './business-core.js';
@@ -18,8 +18,13 @@ export async function botRequest(method,params={},clientFetch=fetch){
   const r=await clientFetch('https://api.telegram.org/bot'+token+'/'+method,{
    method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(params),signal:ctrl.signal});
   const j=await r.json();
-  if(!r.ok||!j||typeof j!=='object'||j.ok!==true)
-   throw Error('telegram_'+method+'_failed: '+(Number.isSafeInteger(j?.error_code)?j.error_code:r.status||'invalid_response'));
+  if(!r.ok||!j||typeof j!=='object'||j.ok!==true){
+   const error=Error('telegram_'+method+'_failed: '+(Number.isSafeInteger(j?.error_code)?j.error_code:r.status||'invalid_response'));
+   if(method==='editMessageReplyMarkup'&&r.status===400&&j?.error_code===400&&j.ok===false&&
+    j.description==='Bad Request: message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message')
+    error.category='reply_markup_not_modified';
+   throw error;
+  }
   if(j.result===undefined||j.result===null)throw Error('telegram_'+method+'_result_missing');
   return j.result;
  }finally{clearTimeout(timer);}
@@ -166,6 +171,10 @@ export function createAudienceService({telegramApi=botRequest,store=null,botToke
    let server_receipt;
    try{server_receipt=await receipts.summary(x.date_moscow);}
    catch{server_receipt={status:'storage_unavailable',automatic_retry_allowed:false};}
+   const known=x.telegram_publication||server_receipt;
+   if(server_receipt.feedback_confirmation&&(server_receipt.feedback_confirmation.message_id!==known.article_message_id||
+    known.telegram_chat_id!==undefined&&server_receipt.feedback_confirmation.chat_id!==known.telegram_chat_id))
+    server_receipt={...server_receipt,feedback_confirmation:null};
    entries.push({
     date:x.date_moscow,title:x.title,state:x.state,
     scheduled_at:x.scheduled_at,telegram_publication:x.telegram_publication||null,server_receipt
@@ -178,18 +187,43 @@ export function createAudienceService({telegramApi=botRequest,store=null,botToke
   if(confirm!==true)throw Error('confirmation_required');
   if(typeof date_moscow!=='string'||!/^20\d{2}-\d\d-\d\d$/.test(date_moscow))throw Error('invalid_date');
   const info=await telegramApi('getWebhookInfo');
-  if(info.url!==endpoint)throw Error('interactive_webhook_not_active');
+  if(!feedbackWebhookActive(info,endpoint))throw Error('interactive_webhook_not_active');
   const ledger=await publicationJournal({limit:40});
   const entry=ledger.entries.find(x=>x.date===date_moscow);
-  if(!entry||entry.state!=='published')throw Error('article_not_confirmed_published');
-  const p=entry.telegram_publication;
+  if(!entry)throw Error('article_not_confirmed_published');
+  const partial=entry.server_receipt;
+  const repairable=partial?.status==='partial_or_uncertain'&&Number.isSafeInteger(partial.cover_message_id)&&partial.cover_message_id>0&&
+   Number.isSafeInteger(partial.article_message_id)&&partial.article_message_id>0&&Number.isSafeInteger(partial.telegram_chat_id);
+  if(entry.state!=='published'&&!repairable)throw Error('article_not_confirmed_published');
+  const p=entry.state==='published'?entry.telegram_publication:partial;
   const n=p?.article_message_id??p?.rich_message_id??p?.article?.message_id??p?.rich?.message_id;
   if(!Number.isSafeInteger(n)||n<1)throw Error('verified_article_message_id_missing');
+  const {channelId}=await context();
+  if(p.telegram_chat_id!==undefined&&p.telegram_chat_id!==channelId)throw Error('channel_identity_unverified');
   const mark=date_moscow.replaceAll('-','');
-  const result=await telegramApi('editMessageReplyMarkup',{chat_id:CHANNEL,message_id:n,reply_markup:feedbackKeyboard(mark)});
-  if(result!==true&&(!Number.isSafeInteger(result?.message_id)||result.message_id!==n))throw Error('feedback_buttons_not_confirmed');
-  return {attached:true,date:date_moscow,article_message_id:n,channel:CHANNEL,
-   no_new_post_sent:true,telegram_result:typeof result==='boolean'?result:result?.message_id||null};
+  let result,unchanged=false;
+  try{result=await telegramApi('editMessageReplyMarkup',{chat_id:channelId,message_id:n,reply_markup:feedbackKeyboard(mark)});}
+  catch(error){
+   // This exact Telegram rejection confirms equality with the requested keyboard; it is not a returned Message.
+   if(error.category!=='reply_markup_not_modified')throw error;
+   unchanged=true;
+  }
+  if(!unchanged&&(result?.message_id!==n||result.chat?.id!==channelId||!feedbackKeyboardMatches(result.reply_markup,mark)))
+   throw Error('feedback_buttons_not_confirmed');
+  const confirmation_source=unchanged?'telegram_reply_markup_unchanged':'telegram_message';
+  const proof={message_id:n,chat_id:channelId,feedback_post_key:mark,feedback_buttons_confirmed:true,confirmation_source,received_at:new Date().toISOString()};
+  const receipts=publicationStore||createPublicationStore();
+  let confirmation_persisted=false;
+  try{
+   const prior=await receipts.read(date_moscow,'feedback_result');
+   if(!prior)await receipts.write(date_moscow,'feedback_result',proof);
+   const saved=await receipts.read(date_moscow,'feedback_result');
+   confirmation_persisted=saved?.message_id===n&&saved.chat_id===channelId&&saved.feedback_post_key===mark&&saved.feedback_buttons_confirmed===true;
+  }catch{/* Telegram confirmed the edit; report persistence separately and never resend the article. */}
+  return {attached:true,date:date_moscow,article_message_id:n,channel:CHANNEL,telegram_chat_id:channelId,
+   feedback_buttons_confirmed:true,feedback_post_key:mark,confirmation_source,confirmed_at:proof.received_at,confirmation_persisted,
+   ...(!confirmation_persisted?{warning:'feedback_receipt_not_persisted'}:{}),
+   no_new_post_sent:true,telegram_result:result?.message_id||null};
  }
  async function memberTrend({month,limit=150}={}){
   const m=month||new Date().toISOString().slice(0,7);

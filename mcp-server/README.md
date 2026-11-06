@@ -1,4 +1,4 @@
-# Money Psy Telegram MCP — Superbot v2.5.1
+# Money Psy Telegram MCP — Superbot v2.5.2
 
 **Production:** https://money-psy-telegram-mcp.vercel.app/mcp
 **Bot:** @MyGptSparks_bot
@@ -31,7 +31,9 @@ Node.js syntax checks and 10 mocked unit tests passed in a Vercel sandbox. Verce
 
 Maintenance 2.5.1 removes the unused legacy relay, its five obsolete tests and a stale skill copy, and shares one argument-validator implementation. All 60 tool names and the existing App connection are preserved.
 
-Current regression command: `node --test tests/*.test.mjs`. Version 2.5.1 passed 266 local tests on 2026-11-06, including mock execution and dispatch/scope checks for all 60 named functions. Live read checks and real mutations are different evidence; the audit records this distinction.
+Version 2.5.2 fixes daily button delivery and confirmation; all 277 local regression tests passed on 2026-11-06. See `docs/publication-pipeline.md`.
+
+Regression command: `node --test tests/*.test.mjs`. Version 2.5.1 passed 266 local tests on 2026-11-06, including mock execution and dispatch/scope checks for all 60 named functions. Live read checks and real mutations are different evidence; the audit records this distinction.
 
 ## Limits
 
@@ -46,7 +48,7 @@ Code is deployed independently of enabling Telegram inbound updates.
 - Nine added MCP commands: get_interaction_status, get_reader_feedback, suggest_reader_topics, get_publication_journal, get_member_trend, enable_reader_feedback, disable_reader_feedback, attach_feedback_buttons, capture_member_snapshot.
 - Incoming webhook POST /api/updates requires a constant-time verified X-Telegram-Bot-Api-Secret-Token derived from the existing bot token. It processes only updates scoped to @psy_money1 and its confirmed linked discussion group; unknown chats are ignored.
 - Reader identifiers are HMAC-pseudonymized, snippets bounded, phone/email/URL redacted best-effort (not a guarantee of perfect PII removal). Data is stored in private Vercel Blob; full Telegram history is not collected.
-- Three inline feedback buttons are attached with editMessageReplyMarkup to an existing confirmed published article; no extra channel post is sent. Comments and topic ranking use explicit low-confidence heuristics, NOT an LLM.
+- Daily rich articles include three feedback buttons atomically, and publication receipts require the exact keyboard confirmation. `editMessageReplyMarkup` repairs an existing confirmed article without a new post; message, channel and keyboard are verified and a separate feedback receipt is persisted. Comments and topic ranking use explicit low-confidence heuristics, NOT an LLM.
 - The canonical GitHub queue remains the ONLY schedule. Publication journal is read-only and requires actual Telegram message IDs for confirmed delivery.
 - Daily Vercel Cron at 17:10 UTC (20:10 Moscow) records getChatMemberCount, protected with CRON_SECRET. This is subscriber count, NOT views or reach. Cleanup deletes old records in small bounded batches after about 70 days.
 - Telegram webhook installation is explicit opt-in using enable_reader_feedback(confirm=true). This refuses to replace a foreign webhook and does not drop pending Telegram updates. Query get_interaction_status first.

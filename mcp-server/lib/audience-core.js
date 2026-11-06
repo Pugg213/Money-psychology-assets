@@ -28,6 +28,14 @@ export function feedbackKeyboard(postKey){
   {text:'Не моя тема',callback_data:'mp:v1:'+postKey+':less'}
  ]]};
 }
+export function feedbackKeyboardMatches(markup,postKey){
+ const rows=markup?.inline_keyboard,expected=feedbackKeyboard(postKey).inline_keyboard[0];
+ return Array.isArray(rows)&&rows.length===1&&Array.isArray(rows[0])&&rows[0].length===expected.length&&
+  expected.every((b,i)=>rows[0][i]?.text===b.text&&rows[0][i]?.callback_data===b.callback_data);
+}
+export function feedbackWebhookActive(info,endpoint){
+ return info?.url===endpoint&&(!Array.isArray(info.allowed_updates)||!info.allowed_updates.length||info.allowed_updates.includes('callback_query'));
+}
 function pseudonym(id,secret){
  if(!Number.isSafeInteger(id))return null;
  return createHmac('sha256',secret).update('actor:v1:'+id).digest('hex').slice(0,24);
