@@ -41,17 +41,40 @@ export function createAudienceStore(adapter=null){
    if(typeof prefix!=='string'||!/^events\/(?:20\d{2}-\d\d\/)?$/.test(prefix))throw Error('invalid_prefix');
    limit=Math.max(1,Math.min(200,Number(limit)||100));
    const api=await sdk();
-   const page=await api.list({prefix,limit});
-   const blobs=(page.blobs||[]).slice(0,limit);
-   const events=[];
+   // Blob listing order is pathname order, not publication time. Inspect a bounded
+   // metadata sample across pages before selecting the newest uploaded events.
+   const maxScan=1000,maxPages=20,metadata=new Map(),cursors=new Set();
+   let cursor,scan_truncated=false,metadata_scanned=0;
+   for(let pages=0;pages<maxPages;pages++){
+    const remaining=maxScan-metadata_scanned;
+    const page=await api.list({prefix,limit:remaining,...(cursor?{cursor}:{})});
+    const items=Array.isArray(page.blobs)?page.blobs:[];
+    for(const item of items.slice(0,remaining)){
+     metadata_scanned++;
+     if(typeof item.pathname==='string'&&item.pathname.startsWith(prefix))metadata.set(item.pathname,item);
+    }
+    if(items.length>remaining)scan_truncated=true;
+    if(!page.hasMore)break;
+    if(metadata_scanned>=maxScan||pages===maxPages-1||typeof page.cursor!=='string'||
+       !page.cursor||cursors.has(page.cursor)){scan_truncated=true;break;}
+    cursor=page.cursor;cursors.add(cursor);
+   }
+   const time=value=>{const n=value instanceof Date?value.getTime():Date.parse(value);return Number.isFinite(n)?n:0;};
+   const rows=[...metadata.values()].sort((a,b)=>time(b.uploadedAt)-time(a.uploadedAt)||a.pathname.localeCompare(b.pathname));
+   const blobs=rows.slice(0,limit),events=[];
+   let skipped=0;
    for(const blob of blobs){
     const item=await api.get(blob.pathname,{access:'private',useCache:false});
-    if(!item||item.statusCode!==200||!item.stream)continue;
+    if(!item||item.statusCode!==200||!item.stream){skipped++;continue;}
     const source=await new Response(item.stream).text();
-    if(source.length>12000)continue;
-    try{events.push(JSON.parse(source));}catch{}
+    if(source.length>12000){skipped++;continue;}
+    try{const event=JSON.parse(source);if(!event||typeof event!=='object'||Array.isArray(event))throw Error('invalid_event');events.push(event);}catch{skipped++;}
    }
-   return {events,hasMore:!!page.hasMore,count:events.length,truncated:!!page.hasMore};
+   events.sort((a,b)=>time(a.observed_at)-time(b.observed_at)||(Number(a.update_id)||0)-(Number(b.update_id)||0));
+   const hasMore=scan_truncated||rows.length>limit||skipped>0;
+   return {events,hasMore,count:events.length,truncated:hasMore,sample_truncated:hasMore,
+    metadata_scanned,scan_truncated,skipped_records:skipped,
+    recency_fully_ordered:!scan_truncated&&rows.every(x=>time(x.uploadedAt)>0)};
   },
   async purgeBefore(isoDate,{maxDelete=100}={}){
    if(!/^\d{4}-\d{2}-\d{2}$/.test(isoDate))throw Error('invalid_cutoff');
