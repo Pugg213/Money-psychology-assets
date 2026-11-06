@@ -99,3 +99,10 @@ test('a browser form carrying a long Unicode state remains submitable as URL-enc
  const out=await call('authorize',body,s,'POST',{'content-type':'application/x-www-form-urlencoded',cookie:r.headers['set-cookie'].split(';')[0],origin:base});
  assert.equal(out.statusCode,303);assert.equal(new URL(out.headers.location).searchParams.get('state'),p.state);
 });
+test('legacy grants bound to the signed client ID survive migration and rotate into the local format',async()=>{
+ const s=memory(),ts=epoch(),id=sign({t:'client',iat:ts-100,exp:ts+86400,redirects:[redirect],jti:randomUUID()});
+ const old=sign({t:'refresh',aud:base+'/mcp',scope:'telegram:read',client:id,iat:ts-10,exp:ts+3600});
+ const r=await call('token',{grant_type:'refresh_token',client_id:id,refresh_token:old},s);assert.equal(r.statusCode,200);
+ const next=JSON.parse(r.body).refresh_token;
+ assert.equal((await call('token',{grant_type:'refresh_token',client_id:id,refresh_token:next},s)).statusCode,200);
+});

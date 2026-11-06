@@ -23,7 +23,7 @@
 
 ## Проверка
 
-Локально: **270 passed, 0 failed, 0 skipped**, включая независимые проверки OAuth, конкурентного replay, CSRF, PKCE, scope, storage failure, Unicode формы и существующих 60 функций. Отдельная проверка кода не выявила дополнительного обхода client/PKCE/scope или refresh-family logic после исправлений.
+Локально: **271 passed, 0 failed, 0 skipped**, включая независимые проверки OAuth, конкурентного replay, CSRF, PKCE, scope, storage failure, Unicode формы и существующих 60 функций. Отдельная проверка кода не выявила дополнительного обхода client/PKCE/scope или refresh-family logic после исправлений.
 
 Скрипт `mcp-server/scripts/server-integration-check.mjs` исполняется только явно в среде этого Vercel-проекта. Он проверяет настоящую авторизацию, обмен кода, MCP-доступ, refresh, replay и совместимость с зашифрованным краткоживущим legacy fixture. Fixture удаляется после проверки; секреты и private IDs не печатаются. Итог действующего развёртывания фиксируется в `oauth-completion-live-2026-11-06.json`.
 

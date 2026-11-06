@@ -95,10 +95,11 @@ export default async function handler(req,res,{state=createOAuthState()}={}){
    res.setHeader('Set-Cookie',COOKIE+'=; Secure; HttpOnly; SameSite=Lax; Path=/; Max-Age=0');res.setHeader('Location',location.href);return res.status(303).end();
   }
   const client=verify(p.client_id,'client');if(!client||typeof client.jti!=='string')return error('invalid_client',401);
+  const boundToClient=c=>c.client===client.jti||c.client===p.client_id;
   if(p.resource!==undefined&&p.resource!==RESOURCE)return error('invalid_target');
   if(p.grant_type==='authorization_code'){
    const c=verify(p.code,'code');
-   if(!c||c.client!==client.jti||c.aud!==RESOURCE||c.redirect!==p.redirect_uri||!client.redirects?.includes(p.redirect_uri)||!validRedirect(p.redirect_uri)||
+   if(!c||!boundToClient(c)||c.aud!==RESOURCE||c.redirect!==p.redirect_uri||!client.redirects?.includes(p.redirect_uri)||!validRedirect(p.redirect_uri)||
     !/^[A-Za-z0-9._~-]{43,128}$/.test(p.code_verifier||'')||!equal(s256(p.code_verifier),c.challenge)||!scope(c.scope))return error('invalid_grant');
    const family=c.family||c.jti||hash(p.code);
    if(!await state.consume('code',p.code,c.exp)){await state.revoke(family,now()+30*86400);return error('invalid_grant');}
@@ -106,7 +107,7 @@ export default async function handler(req,res,{state=createOAuthState()}={}){
   }
   if(p.grant_type==='refresh_token'){
    const c=verify(p.refresh_token,'refresh');
-   if(!c||c.client!==client.jti||c.aud!==RESOURCE||!scope(c.scope))return error('invalid_grant');
+   if(!c||!boundToClient(c)||c.aud!==RESOURCE||!scope(c.scope))return error('invalid_grant');
    const next=p.scope===undefined?scope(c.scope):scope(p.scope);
    if(!next||next.split(' ').some(s=>!scope(c.scope).split(' ').includes(s)))return error('invalid_scope');
    const family=c.family||hash(p.refresh_token);
