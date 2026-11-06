@@ -78,7 +78,11 @@ export async function executeBusinessTool(name,a={},s=createBusinessService()){
    return {connections,owners_configured:ids.length>0,partial};
   }
   case 'business_connection_info':return s.connection(id);
-  case 'business_chats':return s.chats(id,a.limit||100);
+  case 'business_chats':{
+   const result=await s.chats(id,a.limit||100);
+   return {...result,observation_status:result.chats.length?'captured_business_chats':'waiting_for_first_business_message',
+    ...(!result.chats.length?{note:'Telegram does not provide the configured selected-chat list or old history. Chats appear only after new Business message updates are received; an active connection alone does not create chat records.'}:{})};
+  }
   case 'business_messages':return s.messages(id,chatId,{limit:a.limit||30,query:a.query||''});
   case 'business_send_message':{
    confirmed(a.confirm);

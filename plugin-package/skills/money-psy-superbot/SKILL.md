@@ -3,7 +3,7 @@ name: money-psy-superbot
 description: Manage Money Psychology Telegram channel publishing, feedback and opted-in Telegram Business private chats through authenticated MCP, including a compatibility bridge for cached ChatGPT tools.
 ---
 
-# Money Psy Telegram MCP v2.4.0: Channel + Business
+# Money Psy Telegram MCP v2.5.0: Channel + Business
 
 **App and server:** `@MyGptSparks_bot`, OAuth-authenticated MCP at `https://money-psy-telegram-mcp.vercel.app/mcp`. There are two independent modes: (1) publishing/moderating `@psy_money1`; (2) Telegram Business delegation into selected private chats with user-granted permissions. A Telegram Business connection does not grant access to all chat histories, subscriptions, or conversations. Never expose server-side `TELEGRAM_BOT_TOKEN`, OAuth tokens, private connection IDs to third parties, or private media URLs.
 
@@ -40,7 +40,7 @@ Do not send a test message unless expressly requested. Read-only calls do not re
 
 ## Audited execution and compatibility
 
-- All 60 MCP functions, tool discovery, initialization and OAuth scope checks execute locally. OAuth login/refresh retains the established compatibility backend; do not claim its full source or successful credential exchange was audited merely from public metadata.
+- All 60 MCP functions, discovery, initialization, scope enforcement and OAuth login/refresh execute locally. OAuth preserves existing client IDs and access/refresh token signatures. Consent forms and codes are single-use; refresh tokens rotate and detected reuse revokes the refresh family. Existing access tokens expire normally within one hour. Old generated deployment URLs must remain behind Vercel Standard Protection; only the canonical production address should be used for MCP and OAuth. Do not claim a live credential exchange from metadata alone; consult the recorded server-side integration results.
 - Use the existing native tool when available. The legacy `delete_post` alias now requires `confirm=true`; if the cached host schema lacks it, call `delete_channel_message({message_id: VERIFIED_ID, confirm:true})` after explicit user authorization.
 - For `send_poll`, cached `correct_option_id` is adapted to current Telegram `correct_option_ids`. Use the array only when the exposed host schema supports it; do not pass both. Respect current poll constraints and the bot's chat rights.
 - Inspect `get_capabilities.method_policy`: the generic `special` list is disabled. Multipart photo-setting functions and Business-only checklists are not implemented by the JSON channel gateway. Forum/group methods require an explicitly allowed compatible chat and its rights; generic method names are not a promise that every configured channel supports them.
@@ -48,6 +48,7 @@ Do not send a test message unless expressly requested. Read-only calls do not re
 - A malformed response, HTTP5xx or missing Telegram confirmation is an unknown outcome, never a successful send. Preserve actual returned IDs and do not automatically repeat a mutation.
 - Daily `publish_cover_then_article` requires the exact fresh GitHub claim and content-bound editorial review. Private day locks and separate cover/article receipts survive request retries. Read `get_publication_journal.server_receipt` to reconcile already confirmed IDs without sending again. Never clear the lock or reset an uncertain entry to queued.
 - Enable/disable reader feedback and Business updates independently. Preserve existing unrelated subscriptions and pending updates; configured owner IDs alone are not permission to re-enable Business capture.
+- An active Business connection is distinct from an observed chat. Empty `business_chats` results report `waiting_for_first_business_message`: Telegram does not provide the selected-chat list or old history, and new real Business message events are needed. Never invent chats or send test messages to create observations.
 - Business data updates use version-checked writes and deletion tombstones. Reports expose bounded sampling; disabling text capture must also suppress previously captured text in read results.
 - Distinguish live read checks, mocked execution and real authorized mutation tests. Passing mocks or deployment READY does not prove all Telegram writes, OAuth refresh or client rendering.
 

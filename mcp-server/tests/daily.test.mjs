@@ -11,3 +11,8 @@ const opts={secret:key,telegramApi:async(method,p)=>{assert.equal(method,'getCha
 test('daily stats requires cron secret',async()=>{let r=resp();await daily(request('wrong'),r,opts);assert.equal(r.statusCode,401);assert.equal(events.length,0);});
 test('daily cron writes only subscriber count, not views',async()=>{let r=resp();await daily(request(key),r,opts);assert.equal(r.statusCode,200);assert.equal(events[0].member_count,987);assert.equal(events[0].views,undefined);});
 test('disabled cron with no secret fails closed',async()=>{let r=resp();await daily(request(key),r,{...opts,secret:''});assert.equal(r.statusCode,503);});
+test('a failed OAuth cleanup does not lose the subscriber snapshot or expose storage details',async()=>{
+ const r=resp();await daily(request(key),r,{...opts,oauthState:{async purgeExpired(){throw Error('private-storage-secret');}}});
+ assert.equal(r.statusCode,200);assert.equal(r.payload.recorded,true);assert.equal(r.payload.oauth_retention.retry_next_run,true);
+ assert.ok(!JSON.stringify(r.payload).includes('private-storage-secret'));
+});

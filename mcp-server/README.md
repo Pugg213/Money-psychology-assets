@@ -1,4 +1,4 @@
-# Money Psy Telegram MCP — Superbot v2.4.0
+# Money Psy Telegram MCP — Superbot v2.5.0
 
 **Production:** https://money-psy-telegram-mcp.vercel.app/mcp
 **Bot:** @MyGptSparks_bot
@@ -9,7 +9,7 @@
 
 The MCP endpoint executes all 60 named functions locally: 7 compatibility commands, 28 channel tools, 9 reader-feedback tools, 15 Business tools and the guarded daily publication command. Tool discovery, OAuth scope enforcement, modern per-request MCP metadata and legacy initialization are local. Existing OAuth access tokens remain recognized.
 
-OAuth login and refresh still use the established immutable compatibility deployment. Its full source is not present here, and successful valid code/refresh exchange was not exercised in this audit. This is a remaining operational dependency, not a completed source migration. See [the full audit](../docs/full-plugin-audit-2026-11-06.md) and [all 60 functions](../docs/full-plugin-function-matrix.json).
+OAuth login and refresh now run locally in `api/oauth.js`, preserving the established bot-derived HMAC format and registered-client IDs. Codes and consent forms are single-use; refresh tokens rotate, and detected reuse revokes their refresh family. Private Blob holds hashed replay barriers, not plaintext credentials. Previously issued access tokens retain their normal one-hour lifetime. Old generated deployment URLs must be protected with Vercel Standard Protection so they cannot act as alternate issuers. See [the completion audit](../docs/oauth-completion-2026-11-06.md), [the earlier full audit](../docs/full-plugin-audit-2026-11-06.md) and [all 60 functions](../docs/full-plugin-function-matrix.json).
 
 The 28 new tools are: get_capabilities, validate_rich_message, get_channel_overview, get_chat_info, get_member_count, get_chat_admins, get_chat_member_info, get_webhook_status, get_bot_profile, get_bot_stars, get_telegram_message_link, send_rich_message, send_media, send_album, send_poll, send_buttons, edit_caption, edit_buttons, set_reaction, pin_message, unpin_message, copy_channel_message, delete_channel_message, set_channel_description, create_invite_link, revoke_invite_link, get_file_metadata and bot_api_call.
 
@@ -29,7 +29,7 @@ Low-level bot_api_call supports an allowlist of standard Bot API read, send, edi
 
 Node.js syntax checks and 10 mocked unit tests passed in a Vercel sandbox. Vercel preview and production deployments became READY. OAuth discovery, health and the old ChatGPT check_access were checked again after deployment; the bot remained an administrator with post/edit rights. New MCP tools were not yet shown in the existing chat session's cached tool list and live sends were deliberately not performed. Do not claim real end-to-end publication validation for the new tools.
 
-Current regression command: `node --test tests/*.test.mjs`. Version 2.4.0 passed 251 local tests on 2026-11-06, including mock execution and dispatch/scope checks for all 60 named functions. Live read checks and real mutations are different evidence; the audit records this distinction.
+Current regression command: `node --test tests/*.test.mjs`. Version 2.5.0 passed 270 local tests on 2026-11-06, including mock execution and dispatch/scope checks for all 60 named functions. Live read checks and real mutations are different evidence; the audit records this distinction.
 
 ## Limits
 
