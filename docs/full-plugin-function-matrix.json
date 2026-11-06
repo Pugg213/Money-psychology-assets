@@ -815,5 +815,6 @@
       "live_status": "mutation_not_run; mocked_execution_passed"
     }
   ],
-  "oauth_implementation": "local_oauth_v1"
+  "oauth_implementation": "local_oauth_v1",
+  "latest_live_verification": "oauth-completion-live-2026-11-06.json"
 }

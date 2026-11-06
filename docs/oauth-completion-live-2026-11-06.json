@@ -1,0 +1,314 @@
+{
+  "date": "2026-11-06",
+  "timezone": "Europe/Moscow",
+  "version": "2.5.0",
+  "production": {
+    "deployment_id": "dpl_2sYJ2RGZ2WwiqxGjHzGQuYmCY5f3",
+    "state": "READY",
+    "source_commit": "2a15a15cd2b5b8e9c465fe84a6cbda29d2a89413",
+    "canonical_endpoint": "https://money-psy-telegram-mcp.vercel.app/mcp",
+    "oauth_implementation": "local_oauth_v1",
+    "node": "22.x"
+  },
+  "plugin": {
+    "version": "2.5.0",
+    "release_id": "pluginrel_6aedd84345088191bce9c53cd052255c",
+    "app_binding_unchanged": true,
+    "interface_unchanged": true,
+    "audience_unchanged": true
+  },
+  "tests": {
+    "total": 271,
+    "passed": 271,
+    "failed": 0,
+    "skipped": 0,
+    "pr_ci_runs": [
+      42226330027,
+      42226797819
+    ],
+    "main_ci_run": 42226928319,
+    "ci_conclusion": "success",
+    "canonical_queue": "passed",
+    "original_jpeg_integrity": "passed"
+  },
+  "live_oauth": {
+    "ok": true,
+    "telegram_mutations": false,
+    "private_message_bodies_read": false,
+    "checks": {
+      "valid_login": true,
+      "valid_code_exchange": true,
+      "authenticated_mcp": true,
+      "valid_refresh": true,
+      "refresh_replay_rejected": true,
+      "code_replay_rejected": true,
+      "refresh_descendant_revoked": true,
+      "legacy_refresh_compatible": true
+    },
+    "legacy_claim_shapes": {
+      "client": {
+        "t": "string",
+        "iat": "number",
+        "exp": "number",
+        "redirects": "array",
+        "jti": "string"
+      },
+      "access": {
+        "aud": "string",
+        "scope": "string",
+        "client": "string",
+        "iat": "number",
+        "t": "string",
+        "exp": "number"
+      },
+      "refresh": {
+        "aud": "string",
+        "scope": "string",
+        "client": "string",
+        "iat": "number",
+        "t": "string",
+        "exp": "number",
+        "jti": "string",
+        "family": "string"
+      },
+      "code": {
+        "t": "string",
+        "iat": "number",
+        "exp": "number",
+        "aud": "string",
+        "client": "string",
+        "redirect": "string",
+        "challenge": "string",
+        "scope": "string",
+        "jti": "string",
+        "family": "string"
+      }
+    },
+    "client_binding_kind": "registration_jti",
+    "business_inventory": {
+      "chats": {
+        "count_in_sample": 0,
+        "partial": false
+      },
+      "messages": {
+        "count_in_sample": 0,
+        "partial": false
+      },
+      "forget-markers": {
+        "count_in_sample": 0,
+        "partial": false
+      }
+    },
+    "legacy_fixture_deleted_after_verification": true,
+    "real_credentials_executed_inside_vercel": true,
+    "secrets_logged": false
+  },
+  "public_oauth_checks": {
+    "ok": true,
+    "checks": [
+      [
+        "discovery",
+        200
+      ],
+      [
+        "resource",
+        200
+      ],
+      [
+        "invalid_refresh_rejected",
+        401
+      ],
+      [
+        "invalid_code_rejected",
+        401
+      ],
+      [
+        "public_client_registration",
+        201
+      ],
+      [
+        "pkce_plain_rejected",
+        400
+      ],
+      [
+        "redirect_mismatch_rejected",
+        400
+      ],
+      [
+        "wrong_resource_rejected",
+        400
+      ],
+      [
+        "invalid_scope_rejected",
+        400
+      ],
+      [
+        "authorization_password_form",
+        200
+      ],
+      [
+        "invalid_bot_credential_rejected_without_reflection",
+        401
+      ]
+    ],
+    "real_bot_token_used": false,
+    "telegram_mutations": false,
+    "valid_code_exchange_tested": false,
+    "valid_refresh_tested": false
+  },
+  "old_deployment_protection": {
+    "mode": "prod_deployment_urls_and_all_previews",
+    "historical_ready_deployments_checked": 42,
+    "protected": 42,
+    "public_oauth_issuers": 0,
+    "unknown": 0,
+    "canonical_production_endpoint_public": true
+  },
+  "read_checks": [
+    {
+      "tool": "get_capabilities",
+      "ok": true
+    },
+    {
+      "tool": "check_access",
+      "ok": true
+    },
+    {
+      "tool": "get_channel_overview",
+      "ok": true,
+      "partial": false
+    },
+    {
+      "tool": "get_chat_info",
+      "ok": true
+    },
+    {
+      "tool": "get_member_count",
+      "ok": true
+    },
+    {
+      "tool": "get_chat_admins",
+      "ok": true
+    },
+    {
+      "tool": "get_webhook_status",
+      "ok": true
+    },
+    {
+      "tool": "get_bot_profile",
+      "ok": true,
+      "partial": false
+    },
+    {
+      "tool": "get_bot_stars",
+      "ok": true
+    },
+    {
+      "tool": "get_interaction_status",
+      "ok": true
+    },
+    {
+      "tool": "get_reader_feedback",
+      "ok": true
+    },
+    {
+      "tool": "suggest_reader_topics",
+      "ok": true
+    },
+    {
+      "tool": "get_publication_journal",
+      "ok": true
+    },
+    {
+      "tool": "get_member_trend",
+      "ok": true
+    },
+    {
+      "tool": "get_telegram_message_link",
+      "ok": true
+    },
+    {
+      "tool": "validate_rich_message",
+      "ok": true
+    },
+    {
+      "tool": "business_connections",
+      "ok": true,
+      "partial": false
+    },
+    {
+      "tool": "business_status",
+      "ok": true
+    },
+    {
+      "tool": "bot_api_call",
+      "ok": true
+    },
+    {
+      "tool": "get_chat_member_info",
+      "ok": true
+    },
+    {
+      "tool": "get_file_metadata",
+      "ok": true
+    },
+    {
+      "tool": "business_connection_info",
+      "ok": true,
+      "enabled": true
+    },
+    {
+      "tool": "business_chats",
+      "ok": true,
+      "count": 0,
+      "observation_status": "waiting_for_first_business_message"
+    },
+    {
+      "tool": "business_gifts",
+      "ok": false,
+      "error": "business_right_missing: can_view_gifts_and_stars"
+    }
+  ],
+  "target_rejection_checks": [
+    {
+      "case": "foreign_chat",
+      "rejected": true,
+      "error": "chat_not_allowed: chat_id must match configured channel or TELEGRAM_ALLOWED_CHATS"
+    },
+    {
+      "case": "raw_business",
+      "rejected": true,
+      "error": "business_connection_requires_dedicated_tool"
+    },
+    {
+      "case": "unchecked_business",
+      "rejected": true,
+      "error": "method_disabled_for_safety: getBusinessConnection (requires a separately reviewed integration)"
+    },
+    {
+      "case": "inline_target",
+      "rejected": true,
+      "error": "unscoped_target_not_allowed: inline_message_id"
+    }
+  ],
+  "business": {
+    "active_connections": 1,
+    "observed_chats": 0,
+    "chat_records": 0,
+    "message_records": 0,
+    "forget_markers": 0,
+    "text_capture_enabled": false,
+    "observation_status": "waiting_for_first_business_message",
+    "historical_loss_confirmed": false,
+    "private_message_bodies_read": false,
+    "gifts_permission_denial_expected": true
+  },
+  "telegram_mutations_performed": false,
+  "bounds": [
+    "Real Telegram sends, deletes, profile changes and read markers were not performed for testing.",
+    "A real new Business update is needed to verify an observed private chat; Bot API cannot fetch its old history.",
+    "Existing access tokens expire normally within one hour; refresh-family revocation prevents further refresh.",
+    "The former stateless issuer's historical use ledger cannot be reconstructed; compatible legacy refresh is protected after its first local exchange.",
+    "Retired generated deployments must remain protected."
+  ]
+}

@@ -66,5 +66,5 @@ try{
  console.log('MONEY_PSY_INTEGRATION '+JSON.stringify({ok:true,...summary}));
 }catch(e){
  // Assertion diagnostics only: never print response bodies, URLs, tokens or SDK exceptions.
- console.log('MONEY_PSY_INTEGRATION '+JSON.stringify({ok:false,...summary,failed_check:e.code==='ERR_ASSERTION'?e.message:'transport_or_storage_failure'}));process.exitCode=1;
+ console.log('MONEY_PSY_INTEGRATION '+JSON.stringify({ok:false,...summary,failed_check:e.code==='ERR_ASSERTION'?'integration_assertion_failed':'transport_or_storage_failure'}));process.exitCode=1;
 }

@@ -14,6 +14,8 @@ for(const [label,change] of [['pkce_plain',{code_challenge_method:'plain'}],['re
 }
 x=await call('/oauth/authorize?'+new URLSearchParams(params));assert.equal(x.r.status,200);assert.ok(/type=["']password["']/i.test(x.text));results.push(['authorization_password_form',200]);
 const fields={};let passwordName;for(const match of x.text.matchAll(/<input\b[^>]*>/gi)){const attrs={};for(const a of match[0].matchAll(/([a-z_-]+)\s*=\s*(["'])(.*?)\2/gi))attrs[a[1].toLowerCase()]=a[3].replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#39;/g,"'");if(attrs.name)fields[attrs.name]=attrs.value||'';if(attrs.type==='password')passwordName=attrs.name;}
+const consentCookie=(x.r.headers.get('set-cookie')||'').split(';')[0];
 assert.ok(passwordName);fields[passwordName]='000000:InvalidAuditTokenNeverARealSecret';fields.approve='yes';
-x=await call('/oauth/authorize',form({...params,...fields}));assert.ok([400,401,403].includes(x.r.status));assert.ok(!x.text.includes('000000:InvalidAuditTokenNeverARealSecret'));results.push(['invalid_bot_credential_rejected_without_reflection',x.r.status]);
+const invalidLogin=form({...params,...fields});if(consentCookie)invalidLogin.headers.cookie=consentCookie;invalidLogin.headers.origin=base;
+x=await call('/oauth/authorize',invalidLogin);assert.equal(x.r.status,401);assert.ok(!x.text.includes('000000:InvalidAuditTokenNeverARealSecret'));results.push(['invalid_bot_credential_rejected_without_reflection',x.r.status]);
 console.log(JSON.stringify({ok:true,checks:results,real_bot_token_used:false,telegram_mutations:false,valid_code_exchange_tested:false,valid_refresh_tested:false}));})().catch(e=>{console.log(JSON.stringify({ok:false,error:e.message}));process.exitCode=1;});
