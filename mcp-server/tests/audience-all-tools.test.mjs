@@ -2,13 +2,13 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {audienceTools,executeAudienceTool} from '../lib/audience-tools.js';
 import {createAudienceService,botRequest,UPDATE_TYPES} from '../lib/audience-service.js';
-import {aggregateAudience,normalizeEvent} from '../lib/audience-core.js';
+import {aggregateAudience,normalizeEvent,feedbackKeyboard} from '../lib/audience-core.js';
 import {privateStoreKey,createAudienceStore} from '../lib/audience-store.js';
 
 const TOKEN='123456:AbCdEfGhIjKlMnOpQrStUvWxYz012345',BASE='https://money-psy-telegram-mcp.vercel.app';
 const channelId=-100111,discussionId=-100222;
 process.env.TELEGRAM_BUSINESS_OWNER_IDS='';
-function fixture(){
+function fixture({editResult,writeFailure=false,updates=UPDATE_TYPES,serverReceipt=null}={}){
  const calls=[],saved=[],events=[
   {type:'discussion_comment',observed_at:'2026-11-05T09:00:01Z',post_message_id:382,text:'Почему комиссия?',topics:['инвестиции'],is_question:true},
   {type:'feedback_vote',observed_at:'2026-11-05T09:00:02Z',post_key:'20261105',message_id:382,choice:'useful'},
@@ -21,20 +21,22 @@ function fixture(){
   async readRecent(o){calls.push({store:'readRecent',params:o});return {events,hasMore:true,scan_truncated:false};}};
  const telegramApi=async(method,params)=>{
   calls.push({method,params});
-  if(method==='getWebhookInfo')return {url:webhook,allowed_updates:UPDATE_TYPES};
+  if(method==='getWebhookInfo')return {url:webhook,allowed_updates:updates};
   if(method==='getChat')return {id:channelId,linked_chat_id:discussionId};
   if(method==='setWebhook'){webhook=params.url;return true;}
   if(method==='deleteWebhook'){webhook='';return true;}
   if(method==='getChatMemberCount')return 457;
-  if(method==='editMessageReplyMarkup')return {message_id:params.message_id};
+  if(method==='editMessageReplyMarkup')return editResult?editResult(params):{message_id:params.message_id,chat:{id:channelId},reply_markup:params.reply_markup};
   throw Error('unexpected method '+method);
  };
  const queue={entries:[{date_moscow:'2026-11-05',title:'test',state:'published',scheduled_at:'2026-11-05T12:00:00+03:00',
   telegram_publication:{article_message_id:382,cover_message_id:381}}]};
+ const receipts=new Map();
  const service=createAudienceService({telegramApi,store,botToken:TOKEN,
   editorialSource:{async readQueue(){return {queue,commit:'a'.repeat(40)};}},
-  publicationStore:{async summary(){return {status:'no_server_attempt_record'};}}});
- return {service,calls,saved,events,setWebhook(value){webhook=value;}};
+  publicationStore:{async summary(){return {...(serverReceipt||{status:'no_server_attempt_record'}),feedback_confirmation:receipts.get('feedback_result')||null};},
+   async read(d,s){return receipts.get(s)||null;},async write(d,s,r){if(writeFailure===true||typeof writeFailure==='function'&&writeFailure())throw Error('storage failed');receipts.set(s,r);}}});
+ return {service,calls,saved,events,receipts,queue,setWebhook(value){webhook=value;}};
 }
 const cases={
  get_interaction_status:{args:{},verify:r=>{assert.equal(r.safe_to_enable,true);assert.equal(r.discussion_group_id,discussionId);}},
@@ -130,4 +132,69 @@ test('reader feedback enable never implicitly opts into Business and disable pre
  webhook={url:BASE+'/api/updates',allowed_updates:['message','callback_query']};calls=[];
  await service.disable({confirm:true});assert.equal(calls[0].method,'deleteWebhook');
  process.env.TELEGRAM_BUSINESS_OWNER_IDS='';
+});
+
+test('button repair requires actual message, channel and exact keyboard confirmation',async()=>{
+ for(const editResult of [()=>true,p=>({message_id:p.message_id}),p=>({message_id:p.message_id,chat:{id:999},reply_markup:p.reply_markup}),
+  p=>({message_id:p.message_id,chat:{id:channelId},reply_markup:feedbackKeyboard('20261106')})]){
+  const f=fixture({editResult});f.setWebhook(BASE+'/api/updates');
+  await assert.rejects(()=>f.service.attachButtons({date_moscow:'2026-11-05',confirm:true}),/feedback_buttons_not_confirmed/);
+  assert.equal(f.receipts.size,0);
+ }
+});
+test('button repair persists proof and journal exposes it without inventing a historical send receipt',async()=>{
+ const f=fixture();f.setWebhook(BASE+'/api/updates');
+ const r=await f.service.attachButtons({date_moscow:'2026-11-05',confirm:true});
+ assert.equal(r.feedback_buttons_confirmed,true);assert.equal(r.confirmation_persisted,true);
+ assert.equal(f.receipts.get('feedback_result').message_id,382);
+ const journal=await f.service.publicationJournal();
+ assert.equal(journal.entries[0].server_receipt.status,'no_server_attempt_record');
+ assert.equal(journal.entries[0].server_receipt.feedback_confirmation.message_id,382);
+});
+test('repair receipt failure is reported separately from confirmed Telegram keyboard, no extra posts',async()=>{
+ const f=fixture({writeFailure:true});f.setWebhook(BASE+'/api/updates');
+ const r=await f.service.attachButtons({date_moscow:'2026-11-05',confirm:true});
+ assert.equal(r.feedback_buttons_confirmed,true);assert.equal(r.confirmation_persisted,false);
+ assert.equal(r.warning,'feedback_receipt_not_persisted');
+ assert.equal(f.calls.filter(x=>x.method==='editMessageReplyMarkup').length,1);
+});
+
+test('confirmed partial delivery can repair its existing article without marking or resending it',async()=>{
+ const receipt={status:'partial_or_uncertain',cover_message_id:381,article_message_id:382,telegram_chat_id:channelId};
+ const f=fixture({serverReceipt:receipt});f.queue.entries[0].state='sending';f.queue.entries[0].telegram_publication=null;
+ f.setWebhook(BASE+'/api/updates');
+ const r=await f.service.attachButtons({date_moscow:'2026-11-05',confirm:true});
+ assert.equal(r.article_message_id,382);assert.equal(r.feedback_buttons_confirmed,true);
+ assert.equal(f.queue.entries[0].state,'sending');
+ assert.equal(f.calls.filter(x=>x.method?.startsWith('send')).length,0);
+ const missing=fixture();missing.queue.entries[0].state='sending';missing.queue.entries[0].telegram_publication=null;
+ missing.setWebhook(BASE+'/api/updates');
+ await assert.rejects(()=>missing.service.attachButtons({date_moscow:'2026-11-05',confirm:true}),/article_not_confirmed/);
+ assert.equal(missing.calls.filter(x=>x.method==='editMessageReplyMarkup').length,0);
+});
+test('manual attachment refuses webhook without callback subscription',async()=>{
+ const f=fixture({updates:['message']});f.setWebhook(BASE+'/api/updates');
+ await assert.rejects(()=>f.service.attachButtons({date_moscow:'2026-11-05',confirm:true}),/interactive_webhook_not_active/);
+ assert.equal(f.calls.filter(x=>x.method==='editMessageReplyMarkup').length,0);
+});
+
+test('repair retry recovers persistence after Telegram reports that the exact keyboard is unchanged',async()=>{
+ let edits=0,writes=0;
+ const f=fixture({writeFailure:()=>++writes===1,editResult:p=>{
+  if(++edits===2)throw Object.assign(Error('telegram_editMessageReplyMarkup_failed: 400'),{category:'reply_markup_not_modified'});
+  return {message_id:p.message_id,chat:{id:channelId},reply_markup:p.reply_markup};
+ }});f.setWebhook(BASE+'/api/updates');
+ const first=await f.service.attachButtons({date_moscow:'2026-11-05',confirm:true});assert.equal(first.confirmation_persisted,false);
+ const second=await f.service.attachButtons({date_moscow:'2026-11-05',confirm:true});
+ assert.equal(second.confirmation_persisted,true);assert.equal(second.confirmation_source,'telegram_reply_markup_unchanged');
+ assert.equal(second.telegram_result,null);assert.equal(f.calls.filter(x=>x.method?.startsWith('send')).length,0);
+});
+test('only exact Telegram not-modified rejection for reply-markup edits receives a safe category',async()=>{
+ process.env.TELEGRAM_BOT_TOKEN=TOKEN;
+ const description='Bad Request: message is not modified: specified new message content and reply markup are exactly the same as a current content and reply markup of the message';
+ const response=(desc,code=400)=>async()=>({ok:false,status:code,json:async()=>({ok:false,error_code:code,description:desc})});
+ await assert.rejects(()=>botRequest('editMessageReplyMarkup',{},response(description)),e=>e.category==='reply_markup_not_modified'&&!e.message.includes(description));
+ for(const [method,desc,code] of [['editMessageText',description,400],['editMessageReplyMarkup','Bad Request: not enough rights',400],
+  ['editMessageReplyMarkup',description,500]])
+  await assert.rejects(()=>botRequest(method,{},response(desc,code)),e=>!e.category);
 });

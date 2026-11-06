@@ -1,3 +1,4 @@
+import {feedbackKeyboard,feedbackKeyboardMatches,feedbackWebhookActive} from './audience-core.js';
 import {randomUUID} from 'node:crypto';
 import {createEditorialSource,publicationDate,payloadHash,verifyEntryAsset} from './editorial-source.js';
 import {createPublicationStore} from './publication-store.js';
@@ -55,11 +56,13 @@ export function createPublicationService({source=createEditorialSource(),store=c
    throw Error('unexpected_publishing_channel');
   const own=await telegram('getChatMember',{chat_id:chat.id,user_id:me.id});
   if(own?.status!=='administrator'||own.can_post_messages!==true)throw Error('publishing_right_missing');
+  const webhook=await telegram('getWebhookInfo',{});
+  if(!feedbackWebhookActive(webhook,'https://money-psy-telegram-mcp.vercel.app/api/updates'))throw Error('interactive_webhook_not_active');
   if(publicationDate(clock())!==day)throw Error('publication_date_changed_before_claim');
   const claim={attempt_id:id(),payload_hash:fingerprint,claimed_at:clock().toISOString(),
    started_at:started.toISOString(),github_claimed_at:entry.send_claimed_at,
    scheduled_at:entry.scheduled_at,date_moscow:day,source_commit:commit,telegram_chat_id:chat.id,
-   cover_blob_sha:asset.github_blob_sha};
+   cover_blob_sha:asset.github_blob_sha,feedback_required:true};
   try{await store.write(day,'claim',claim);}
   catch{
    // Any ambiguous storage response is a hard stop. A confirmed competing claim may be inspected only.
@@ -83,13 +86,17 @@ export function createPublicationService({source=createEditorialSource(),store=c
    await store.write(day,'cover_result',cover);
    stage='article';telegramConfirmed=false;
    await store.write(day,'article_started',stamp());
-   article=receipt(await telegram('sendRichMessage',{chat_id:chat.id,rich_message:{[entry.format]:entry.content},
-    reply_parameters:{message_id:cover.message_id,allow_sending_without_reply:false}}));
+   const postKey=day.replaceAll('-','');
+   const message=await telegram('sendRichMessage',{chat_id:chat.id,rich_message:{[entry.format]:entry.content},
+    reply_markup:feedbackKeyboard(postKey),
+    reply_parameters:{message_id:cover.message_id,allow_sending_without_reply:false}});
+   article={...receipt(message),feedback_post_key:postKey,feedback_buttons_confirmed:feedbackKeyboardMatches(message.reply_markup,postKey)};
    telegramConfirmed=true;
    await store.write(day,'article_result',article);
+   if(!article.feedback_buttons_confirmed)throw Object.assign(Error('feedback_buttons_not_confirmed'),{category:'feedback_unconfirmed'});
    return result(claim,cover,article,false);
   }catch(error){
-   const category=telegramConfirmed?'receipt_storage_failed':error.category||'storage_failed';
+   const category=error.category||(telegramConfirmed?'receipt_storage_failed':'storage_failed');
    const failure={...stamp(),stage,category,status:cover||article||category==='transport_unknown'?
     'partial_or_uncertain':'failed_without_retry',api_code:error.api_code||null,retry_after:error.retry_after||null,
     cover_message_id:cover?.message_id||null,article_message_id:article?.message_id||null,automatic_retry_allowed:false};
@@ -111,6 +118,7 @@ function messageResult(receipt){return {ok:true,message_id:receipt.message_id,ch
  message_url:'https://t.me/psy_money1/'+receipt.message_id};}
 function result(claim,cover,article,replayed){return {ok:true,status:'published',attempt_id:claim.attempt_id,
  payload_hash:claim.payload_hash,source_commit:claim.source_commit,scheduled_at:claim.scheduled_at,
+ feedback_buttons_confirmed:article.feedback_buttons_confirmed,feedback_post_key:article.feedback_post_key,
  completed_at:article.received_at,telegram_chat_id:claim.telegram_chat_id,
  cover:messageResult(cover),article:messageResult(article),cover_message_id:cover.message_id,
  article_message_id:article.message_id,cover_message_url:'https://t.me/psy_money1/'+cover.message_id,

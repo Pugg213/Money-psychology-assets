@@ -209,7 +209,7 @@ test('disabling reader feedback keeps Business webhook if owner allowlist exists
 test('capability discovery advertises Business tools separately from channel-only generic gateway',async()=>{
  const {executeTool}=await import('../lib/extensions.js');
  const capabilities=await executeTool('get_capabilities');
- assert.equal(capabilities.version,'2.5.1');
+ assert.equal(capabilities.version,'2.5.2');
  assert.equal(capabilities.business.available,true);
  assert.equal(capabilities.business.requires_explicit_activation,true);
  assert.ok(capabilities.typed_tools.includes('business_status'));
