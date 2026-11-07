@@ -180,6 +180,45 @@
       "editorial_pixel_review": "PASS: original ChatGPT PNG visually reviewed; preserved scene into JPEG 950x1187; Warm documentary morning scene: father holding child near daycare and city bus, clearly relates to childcare/work constraints; no text or numeric claims.",
       "user_approval_evidence": "SPECIFIC IMAGE NOT EXPLICITLY APPROVED BY USER; editorial acceptance only",
       "provenance_note": "Original image was generated in this chat and source PNG SHA256 obtained from its mounted bytes. JPEG binary converted from that original, Git blob SHA and size verified. Exact live Historical publication link/asset checked. Telegram delivered bytes not yet independently known."
+    },
+    {
+      "date_moscow": "2026-11-09",
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-09-auto-loan-total-cost-original.jpg",
+      "github_path": "telegram/2026-11/2026-11-09-auto-loan-total-cost-original.jpg",
+      "github_blob_sha": "06905dbabf2f6db3457dab5125a677d6e85f6da4",
+      "github_size_bytes": 18006,
+      "visual_review": "approved",
+      "original_source_sha": "sha256:7a68ee07ac1e82d9c7c9e085bbcd62433403faeba44ad9d76659e3667039c965",
+      "jpeg_sha256": "7a68ee07ac1e82d9c7c9e085bbcd62433403faeba44ad9d76659e3667039c965",
+      "provenance_note": "Original bespoke digital illustration authored specifically for this date via Pillow raster drawing. Final JPEG pixels directly viewed, 900x1125; no SVG, stock media or reused cover. No separately archived pre-conversion image; image is stylized raster, not a photograph.",
+      "editorial_pixel_review": "PASS: visually displayed full JPEG pixels in session 2026-11-07; theme matches, unique composition, no readable factual claims; softness of illustration limits visual score to 1/2.",
+      "user_approval_evidence": "EDITORIAL APPROVAL ONLY; individual user artwork approval not recorded"
+    },
+    {
+      "date_moscow": "2026-11-10",
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-10-checkout-hidden-price-original.jpg",
+      "github_path": "telegram/2026-11/2026-11-10-checkout-hidden-price-original.jpg",
+      "github_blob_sha": "a6aafd32fc1423581eebcfd46758c33839e1588e",
+      "github_size_bytes": 15354,
+      "visual_review": "approved",
+      "original_source_sha": "sha256:a12e229a8f8963d006cb996efe47485d01c64d0b9db90048b2fc50de74c36895",
+      "jpeg_sha256": "a12e229a8f8963d006cb996efe47485d01c64d0b9db90048b2fc50de74c36895",
+      "provenance_note": "Original bespoke digital illustration authored specifically for this date via Pillow raster drawing. Final JPEG pixels directly viewed, 900x1125; no SVG, stock media or reused cover. No separately archived pre-conversion image; image is stylized raster, not a photograph.",
+      "editorial_pixel_review": "PASS: visually displayed full JPEG pixels in session 2026-11-07; theme matches, unique composition, no readable factual claims; softness of illustration limits visual score to 1/2.",
+      "user_approval_evidence": "EDITORIAL APPROVAL ONLY; individual user artwork approval not recorded"
+    },
+    {
+      "date_moscow": "2026-11-11",
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-11-prompt-payment-discount-original.jpg",
+      "github_path": "telegram/2026-11/2026-11-11-prompt-payment-discount-original.jpg",
+      "github_blob_sha": "6373eddaefa7fefc6d01e8f504816ed41f80c231",
+      "github_size_bytes": 18118,
+      "visual_review": "approved",
+      "original_source_sha": "sha256:0bc101faa21efc3c2a1669c251994b633f52149272f82366746d153419adca1e",
+      "jpeg_sha256": "0bc101faa21efc3c2a1669c251994b633f52149272f82366746d153419adca1e",
+      "provenance_note": "Original bespoke digital illustration authored specifically for this date via Pillow raster drawing. Final JPEG pixels directly viewed, 900x1125; no SVG, stock media or reused cover. No separately archived pre-conversion image; image is stylized raster, not a photograph.",
+      "editorial_pixel_review": "PASS: visually displayed full JPEG pixels in session 2026-11-07; theme matches, unique composition, no readable factual claims; softness of illustration limits visual score to 1/2.",
+      "user_approval_evidence": "EDITORIAL APPROVAL ONLY; individual user artwork approval not recorded"
     }
   ]
 }
