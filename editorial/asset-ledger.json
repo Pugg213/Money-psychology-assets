@@ -219,6 +219,45 @@
       "provenance_note": "Original bespoke digital illustration authored specifically for this date via Pillow raster drawing. Final JPEG pixels directly viewed, 900x1125; no SVG, stock media or reused cover. No separately archived pre-conversion image; image is stylized raster, not a photograph.",
       "editorial_pixel_review": "PASS: visually displayed full JPEG pixels in session 2026-11-07; theme matches, unique composition, no readable factual claims; softness of illustration limits visual score to 1/2.",
       "user_approval_evidence": "EDITORIAL APPROVAL ONLY; individual user artwork approval not recorded"
+    },
+    {
+      "date_moscow": "2026-11-12",
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-12-emergency-fund-glass-vault-original.jpg",
+      "github_path": "telegram/2026-11/2026-11-12-emergency-fund-glass-vault-original.jpg",
+      "github_blob_sha": "c8c887294a45b6d7c05d03345a9c51112da74c11",
+      "github_size_bytes": 23455,
+      "visual_review": "approved",
+      "original_source_sha": "sha256:e88e1314618e4ae80f7527b5b3f4213bb3c1bbabea30dce7e4efd88dcca8efaf",
+      "jpeg_sha256": "e88e1314618e4ae80f7527b5b3f4213bb3c1bbabea30dce7e4efd88dcca8efaf",
+      "provenance_note": "Issue-specific original one-off raster art drawn through Pillow in sandbox. Actual 900x1125 JPEG pixels shown to editor. Original illustration not photo; no template, SVG, stock image, placeholder or re-used image.",
+      "editorial_pixel_review": "PASS: visually inspected actual complete JPEG pixels 2026-11-07; concrete theme match, unique shapes; flat/soft illustrative quality justifies visual 1 of 2.",
+      "user_approval_evidence": "EDITORIAL REVIEW ONLY; no explicit individual end-user artwork approval"
+    },
+    {
+      "date_moscow": "2026-11-13",
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-13-savings-default-two-paths-original.jpg",
+      "github_path": "telegram/2026-11/2026-11-13-savings-default-two-paths-original.jpg",
+      "github_blob_sha": "50e9b671cf1915baf74da69e9448c25b306842ad",
+      "github_size_bytes": 24031,
+      "visual_review": "approved",
+      "original_source_sha": "sha256:ca13af79ad8a09f06383db371b83d02bdaf305297bcb77cad855e0c6df161b9b",
+      "jpeg_sha256": "ca13af79ad8a09f06383db371b83d02bdaf305297bcb77cad855e0c6df161b9b",
+      "provenance_note": "Issue-specific original one-off raster art drawn through Pillow in sandbox. Actual 900x1125 JPEG pixels shown to editor. Original illustration not photo; no template, SVG, stock image, placeholder or re-used image.",
+      "editorial_pixel_review": "PASS: visually inspected actual complete JPEG pixels 2026-11-07; concrete theme match, unique shapes; flat/soft illustrative quality justifies visual 1 of 2.",
+      "user_approval_evidence": "EDITORIAL REVIEW ONLY; no explicit individual end-user artwork approval"
+    },
+    {
+      "date_moscow": "2026-11-14",
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-14-personal-inflation-weighted-basket-original.jpg",
+      "github_path": "telegram/2026-11/2026-11-14-personal-inflation-weighted-basket-original.jpg",
+      "github_blob_sha": "7cdea03995547bf5dd24e274097300073012d231",
+      "github_size_bytes": 23180,
+      "visual_review": "approved",
+      "original_source_sha": "sha256:2c0c86d881140c9de8c2842715d681eb254aa2a376fd5117f2915ea7d848838b",
+      "jpeg_sha256": "2c0c86d881140c9de8c2842715d681eb254aa2a376fd5117f2915ea7d848838b",
+      "provenance_note": "Issue-specific original one-off raster art drawn through Pillow in sandbox. Actual 900x1125 JPEG pixels shown to editor. Original illustration not photo; no template, SVG, stock image, placeholder or re-used image.",
+      "editorial_pixel_review": "PASS: visually inspected actual complete JPEG pixels 2026-11-07; concrete theme match, unique shapes; flat/soft illustrative quality justifies visual 1 of 2.",
+      "user_approval_evidence": "EDITORIAL REVIEW ONLY; no explicit individual end-user artwork approval"
     }
   ]
 }
