@@ -35,10 +35,11 @@ The Bot API does not provide a transaction spanning photo and article. A process
 
 ## Schedules and verification
 
-- 09:00 preparation: fill the earliest gap, maintain a target reserve of seven complete future days; prioritize tomorrow. Missing or low-quality assets must be reported rather than substituted.
+- 09:00 and 18:00 preparation: the existing same ChatGPT preparation task fills the earliest gap, at most three original fully reviewed articles per run, and maintains a target reserve of seven complete *future* Moscow dates. If a JPEG does not exist, produce and inspect an original before queueing; do not terminate merely because no pre-existing JPEG was found. Missing or low-quality assets must be reported rather than substituted.
 - 11:00 preflight: check and, only after actual editorial work, update the bound review. Never alter published or sending payloads.
 - 12:00 single publisher: wait in <=30-second intervals if the task starts early; late same-day starts proceed after validation. A scheduled task is not a wall-clock SLA; record actual start, send and completion times.
 - 12:30 controller: independently compare GitHub and server receipts; reconcile confirmed results only. Never send. Alert on missing/partial delivery, >5-minute lateness, missing tomorrow or reserve <3 days. Successful runs remain quiet.
+- 10:15 and 19:15 reserve-watch via the existing GitHub workflow: read-only check of the next seven full future Moscow dates. Report exact earliest gap and quality-invalid entries. If fewer than three continuous fully prepared future days remain, fail the job; 3–6 days produces an explicit warning. This monitor never generates assets, mutates queue or sends Telegram.
 - Monday 10:00 editorial review: audit seven past/future days, sources, diversity and actually captured reader feedback.
 
 CI runs on queue, article, ledger, media, script and server changes. It checks all 14 registered JPEGs, queue uniqueness and ID integrity, article/cover/caption copies, runtime JPEG validation, exact review binding and every `tests/*.test.mjs` test. These checks do not prove a Telegram client render or pixel quality; those are separate observations.

@@ -9,6 +9,7 @@ on:
       - 'editorial/articles/**'
       - 'scripts/verify_publication_queue.mjs'
       - 'scripts/verify_asset_ledger.py'
+      - 'scripts/check_editorial_reserve.mjs'
       - '.github/workflows/**'
       - 'mcp-server/**'
   pull_request:
@@ -19,13 +20,18 @@ on:
       - 'editorial/articles/**'
       - 'scripts/verify_publication_queue.mjs'
       - 'scripts/verify_asset_ledger.py'
+      - 'scripts/check_editorial_reserve.mjs'
       - '.github/workflows/**'
       - 'mcp-server/**'
   workflow_dispatch:
+  schedule:
+    # GitHub cron is UTC; Moscow stays UTC+03:00 year-round.
+    - cron: '15 7,16 * * *' # 10:15 and 19:15 Europe/Moscow
 permissions:
   contents: read
 jobs:
   asset-integrity:
+    if: github.event_name != 'schedule'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -36,6 +42,7 @@ jobs:
         run: python scripts/verify_asset_ledger.py
 
   telegram-mcp-regression:
+    if: github.event_name != 'schedule'
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -52,3 +59,13 @@ jobs:
         run: node ../scripts/verify_publication_queue.mjs
       - name: Run every regression test (no Telegram sends)
         run: node --test tests/*.test.mjs
+
+  reserve-watch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check next seven complete Moscow dates (never send Telegram)
+        run: node scripts/check_editorial_reserve.mjs
