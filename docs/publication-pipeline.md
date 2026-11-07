@@ -33,6 +33,14 @@ No additional publisher, fallback bot or delivery schedule is introduced.
 No TTL unlock, new date substitution, stale claim reset, invented ID or constructed URL counts as recovery.
 The Bot API does not provide a transaction spanning photo and article. A process can stop between Telegram accepting a message and persisting its receipt. Such a result remains uncertain and requires reconciliation; this system does not promise exactly-once delivery under every network failure.
 
+## Cover generation for new editions
+
+- Use ChatGPT's **native image generator (`image_gen`)** for the creative generation of every *new* Money Psychology cover. Do not generate cover artwork with Pillow, programmatic raster drawing, Apixel, SVG, icon compositions, stock images or template/fallback graphics. Technical conversion of a generated image to a JPEG is permitted only if it preserves the generated artwork.
+- Art-direct each cover around the article's specific mechanism: independent concept, composition, lighting and subject. Prefer polished editorial photography or high-end original visual storytelling over simplistic diagrams and repetitive literal symbols. Do not include fabricated charts, figures, brand marks or unsupported claims in the image.
+- Require the **actual generated image**, accessible bytes of the final standalone JPEG, direct pixel inspection of that JPEG, unique media path, exact Git blob SHA and size, and accurate provenance in `editorial/asset-ledger.json`. `visual_review=approved` is an editorial judgment only after direct inspection; it is not a claim of reader/user approval. Never fabricate a generation ID or original source hash.
+- If native generation is inaccessible in a scheduled run, or the output cannot be retrieved as real image bytes and committed to GitHub, report the blocker and **do not create a queued issue**. A generation-start notification, render preview alone, invented file path or alternative-image fallback is not an approved asset.
+- This rule is prospective: existing `published`, `sending`, `partial_or_uncertain`, `failed_without_retry` and approved `queued` payloads and covers are never silently replaced. Continue all other editorial, preflight, single-publisher and CI guarantees unchanged.
+
 ## Schedules and verification
 
 - 09:00 and 18:00 preparation: the existing same ChatGPT preparation task fills the earliest gap, at most three original fully reviewed articles per run, and maintains a target reserve of seven complete *future* Moscow dates. If a JPEG does not exist, produce and inspect an original before queueing; do not terminate merely because no pre-existing JPEG was found. Missing or low-quality assets must be reported rather than substituted.
@@ -42,7 +50,7 @@ The Bot API does not provide a transaction spanning photo and article. A process
 - 10:15 and 19:15 reserve-watch via the existing GitHub workflow: read-only check of the next seven full future Moscow dates. Report exact earliest gap and quality-invalid entries. If fewer than three continuous fully prepared future days remain, fail the job; 3–6 days produces an explicit warning. This monitor never generates assets, mutates queue or sends Telegram.
 - Monday 10:00 editorial review: audit seven past/future days, sources, diversity and actually captured reader feedback.
 
-CI runs on queue, article, ledger, media, script and server changes. It checks all 14 registered JPEGs, queue uniqueness and ID integrity, article/cover/caption copies, runtime JPEG validation, exact review binding and every `tests/*.test.mjs` test. These checks do not prove a Telegram client render or pixel quality; those are separate observations.
+CI runs on queue, article, ledger, media, script and server changes. It checks all registered JPEGs, queue uniqueness and ID integrity, article/cover/caption copies, runtime JPEG validation, exact review binding and every `tests/*.test.mjs` test. These checks do not prove a Telegram client render or pixel quality; those are separate observations.
 
 ## Audit evidence: 2026-11-06
 
