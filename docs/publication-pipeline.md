@@ -33,6 +33,14 @@ No additional publisher, fallback bot or delivery schedule is introduced.
 No TTL unlock, new date substitution, stale claim reset, invented ID or constructed URL counts as recovery.
 The Bot API does not provide a transaction spanning photo and article. A process can stop between Telegram accepting a message and persisting its receipt. Such a result remains uncertain and requires reconciliation; this system does not promise exactly-once delivery under every network failure.
 
+## Editorial voice, factual discipline and mobile readability
+
+- Lead each edition with a **specific decision, tension or credible hypothetical situation**. Show a concrete consequence before definitions and extensive source context. The brand Money Psychology combines economics with an identifiable behavioral mechanism; do not claim a mental cause has been experimentally established when it is only an editorial interpretation.
+- Cite directly relevant **primary evidence** for empirical claims. Separate cited findings (sample, population, year and jurisdiction) from invented teaching examples and the editor's conclusions. Avoid off-topic surveys, excessive disclaimers, false precision, unsupported promises and legal generalizations across jurisdictions.
+- Check cross-paragraph arithmetic, not just individual formulas: first paragraph, headline, photo caption, tables, chronology and conclusion must agree. Explicitly distinguish accessible cash by a deadline from total savings, recurring annualized rates from actually attainable yields, and gross sticker prices from total payable amounts.
+- Include a usable reader action: the question to ask a lender, the exact budget calculation, the contract term to inspect or a small operational checklist. Vary opening formats, paragraph length, section headings and conclusions to prevent repetitive textbook templates; optimize for phone screens, avoiding gratuitous tables.
+- Editorial ratings are judgments, not laboratory measurements. A weak or blurry image cannot receive visual 2/2 merely because it exists, and a mechanically valid Markdown check does not establish a strong Telegram reading experience. Never change locked or published posts to satisfy aesthetic preferences.
+
 ## Cover generation for new editions
 
 - Use ChatGPT's **native image generator (`image_gen`)** for the creative generation of every *new* Money Psychology cover. Do not generate cover artwork with Pillow, programmatic raster drawing, Apixel, SVG, icon compositions, stock images or template/fallback graphics. Technical conversion of a generated image to a JPEG is permitted only if it preserves the generated artwork.
