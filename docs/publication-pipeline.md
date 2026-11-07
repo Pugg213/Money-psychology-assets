@@ -5,6 +5,9 @@ Bot: `@MyGptSparks_bot`; channel: `@psy_money1`; timezone: `Europe/Moscow`.
 Only the existing daily ChatGPT automation invokes the MCP tool `publish_cover_then_article`.
 No additional publisher, fallback bot or delivery schedule is introduced.
 
+
+Current production, resumable drafts, independent release review and native source schema: [editorial-production-contract.md](editorial-production-contract.md). The stricter release contract applies from November 8 and archived native source checks from November 9.
+
 ## Delivery contract
 
 1. Preparation writes a unique date, original approved JPEG, article copy and content-bound editorial review. A review scores originality, evidence, depth, language, practical value and visual relevance from 0 to 2; require total >=10/12 and no zeros. This remains an editorial judgment, not a proof of truth. Record opened primary sources, verified claims, arithmetic and limitations. `pipeline_review.payload_hash` is SHA-256 of UTF-8 `JSON.stringify([photo_url, photo_caption || '', content, format])`; `asset_blob_sha` is the ledger's Git blob SHA.
@@ -66,6 +69,10 @@ CI runs on queue, article, ledger, media, script and server changes. It checks a
 - Before this change, the preflight task was disabled, `publish_cover_then_article` relayed to an immutable legacy deployment without local stage receipts, CI ignored queue/article-only changes and omitted daily/editorial/webhook test files, and the legacy timeout ended at HTTP headers.
 - Reader reporting previously selected the first storage page, and rich delivery digests used empty text instead of rich payload metadata. Both mechanisms are corrected with bounded coverage reporting.
 - November 5 confirmed historical IDs: cover 381, article 382; November 6: cover 383, article 384. No new or duplicate channel post was sent during this audit. November 7 and 8 payloads, source claims, arithmetic and exact JPEG pixels were reviewed; their new review metadata is bound to the unchanged payloads.
-- Actual future reserve at audit: two days. Seven days remains a target, not an accomplished backlog. The next scheduled end-to-end delivery is a future observation; test success and deployment READY alone must not be described as proof of it.
+- Historical future reserve at the November 6 audit: two days. Seven days remains a target, not an accomplished backlog. The next scheduled end-to-end delivery is a future observation; test success and deployment READY alone must not be described as proof of it.
 
 Official API references: [Telegram sendRichMessage](https://core.telegram.org/bots/api#sendrichmessage), [Telegram sendPhoto](https://core.telegram.org/bots/api#sendphoto), [Vercel Blob SDK](https://vercel.com/docs/vercel-blob/using-blob-sdk).
+
+## Completion evidence: 2026-11-07
+
+Today’s existing delivery was independently recovered from the private receipt: cover 385, article 386, feedback confirmed, completed 12:00:27 Moscow. The repair preserves those records and sends no Telegram messages. Six native image originals and final JPEGs for November 9–14 were recovered from the unfinished audit and independently hashed and viewed. Seven future texts have separate editorial acceptance with actual limits and recalculated examples; their release records replace uniform writer-only scores. Live scheduled producer execution and Telegram client render require separate future observations.

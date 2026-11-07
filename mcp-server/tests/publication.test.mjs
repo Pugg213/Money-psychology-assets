@@ -8,11 +8,18 @@ import {feedbackKeyboard} from '../lib/audience-core.js';
 import mcp from '../api/mcp.js';
 import {readFileSync} from 'node:fs';
 
-const fixture=JSON.parse(readFileSync(new URL('../../editorial/rich-telegram-queue.json',import.meta.url)));
+const sourceFixture=JSON.parse(readFileSync(new URL('../../editorial/rich-telegram-queue.json',import.meta.url)));
 const assets=JSON.parse(readFileSync(new URL('../../editorial/asset-ledger.json',import.meta.url)));
 const day='2026-11-07',now=new Date(day+'T12:00:01+03:00'),commit='a'.repeat(40),chatId=-1003639946241;
+function freshQueue(){
+ const queue=structuredClone(sourceFixture),entry=queue.entries.find(x=>x.date_moscow===day);
+ // Retain the real reviewed payload; delivery history belongs to each test.
+ queue.entries=[entry];entry.state='queued';entry.telegram_publication=null;
+ delete entry.send_attempts;delete entry.send_claimed_at;
+ return queue;
+}
 function setup({failStage,telegramFailure,claimError,clock=()=>now,modifyEntry,articleMarkup,webhook}={}){
- const queue=structuredClone(fixture),entry=queue.entries.find(x=>x.date_moscow===day);
+ const queue=freshQueue(),entry=queue.entries[0];
  entry.state='sending';entry.send_attempts=1;entry.send_claimed_at=day+'T12:00:00+03:00';
  if(modifyEntry)modifyEntry(entry);
  const args={photo_url:entry.photo_url,caption:entry.photo_caption,content:entry.content,format:entry.format};
@@ -114,11 +121,19 @@ test('wrong bot, missing rights and unapproved image fail before the day lock or
  assert.throws(()=>verifyEntryAsset(f.entry,ledger),/approval_failed/);
 });
 test('queue checks detect duplicate dates, reused Telegram IDs, invalid claims and modified asset bindings',()=>{
- let q=structuredClone(fixture);q.entries.push(q.entries[0]);assert.throws(()=>validateQueue(q),/duplicate_date/);
- q=structuredClone(fixture);q.entries[1].telegram_publication.cover_message_id=381;
+ let q=freshQueue();q.entries.push(structuredClone(q.entries[0]));assert.throws(()=>validateQueue(q),/duplicate_date/);
+ q=freshQueue();const template=q.entries[0];
+ q.entries=[5,6].map((n,i)=>{
+  const e=structuredClone(template),date='2026-11-0'+n;
+  Object.assign(e,{date_moscow:date,scheduled_at:date+'T12:00:00+03:00',state:'published',
+   telegram_publication:{status:'published',publisher:'Money Psy Telegram MCP',telegram_chat_id:chatId,
+    published_at_moscow:date+'T12:00:01+03:00',cover_message_id:701,article_message_id:702+i,
+    cover_message_url:'https://t.me/psy_money1/701',article_message_url:'https://t.me/psy_money1/'+(702+i)}});
+  return e;
+ });
  assert.throws(()=>validateQueue(q),/duplicate_telegram_id/);
- q=structuredClone(fixture);q.entries[2].send_attempts=1;assert.throws(()=>validateQueue(q),/queued_entry_has_attempt/);
- const e=structuredClone(fixture.entries[2]);e.photo_url+='?replacement';assert.throws(()=>verifyEntryAsset(e,assets),/identity_or_approval/);
+ q=freshQueue();q.entries[0].send_attempts=1;assert.throws(()=>validateQueue(q),/queued_entry_has_attempt/);
+ const e=freshQueue().entries[0];e.photo_url+='?replacement';assert.throws(()=>verifyEntryAsset(e,assets),/identity_or_approval/);
  assert.equal(publicationDate(new Date('2026-11-06T22:00:00Z')),day);
 });
 test('Telegram transport rejects malformed or lost responses as unknown and never leaks upstream text',async()=>{
@@ -151,15 +166,15 @@ test('private receipt adapter uses create-only writes and uncached reads; empty 
 test('source resolves main once and reads queue and ledger from the same pinned revision',async()=>{
  const calls=[];const source=createEditorialSource(async(url)=>{
   calls.push(url);return {ok:true,json:async()=>url.includes('/git/ref/')?{object:{sha:commit}}:
-   url.endsWith('rich-telegram-queue.json')?fixture:assets};
+   url.endsWith('rich-telegram-queue.json')?freshQueue():assets};
  });
  const s=await source.snapshot();assert.equal(s.commit,commit);assert.equal(calls.length,3);
  assert.ok(calls.slice(1).every(url=>url.startsWith(RAW+commit+'/')));
 });
 test('review is bound to the exact article, caption, cover and minimum score',()=>{
- const e=structuredClone(fixture.entries[2]);verifyEntryAsset(e,assets);
+ const e=freshQueue().entries[0];verifyEntryAsset(e,assets);
  e.content+='\nChanged';assert.throws(()=>verifyEntryAsset(e,assets),/binding_or_score/);
- const other=structuredClone(fixture.entries[2]);other.editorial_review.pipeline_review.scores.evidence=0;
+ const other=freshQueue().entries[0];other.editorial_review.pipeline_review.scores.evidence=0;
  assert.throws(()=>verifyEntryAsset(other,assets),/binding_or_score/);
 });
 test('media verification checks real bytes and rejects marker-only JPEG even with a matching ledger hash',async()=>{

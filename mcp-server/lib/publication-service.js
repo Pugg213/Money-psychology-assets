@@ -1,3 +1,4 @@
+import {verifyProductionReadiness} from './editorial-production.js';
 import {feedbackKeyboard,feedbackKeyboardMatches,feedbackWebhookActive} from './audience-core.js';
 import {randomUUID} from 'node:crypto';
 import {createEditorialSource,publicationDate,payloadHash,verifyEntryAsset} from './editorial-source.js';
@@ -48,6 +49,7 @@ export function createPublicationService({source=createEditorialSource(),store=c
   if(!Number.isFinite(claimed)||claimed<Date.parse(entry.scheduled_at)||claimed>started.getTime()+30000||
      started.getTime()-claimed>15*60000)throw Error('invalid_or_stale_github_claim');
   const asset=verifyEntryAsset(entry,ledger);
+  verifyProductionReadiness(entry,asset,{clock});
   const photo=await source.verifyMedia(asset,commit);
   const me=await telegram('getMe',{});
   if(me?.username!=='MyGptSparks_bot'||!Number.isSafeInteger(me.id))throw Error('unexpected_publishing_bot');

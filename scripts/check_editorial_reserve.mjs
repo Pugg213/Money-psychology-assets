@@ -5,6 +5,8 @@
  * Checks the seven complete future Moscow dates (tomorrow...day+7).
  * Publication-day checks remain the responsibility of preflight/controller.
  */
+import {createHash} from 'node:crypto';
+import {verifyProductionReadiness} from '../mcp-server/lib/editorial-production.js';
 import {readFileSync} from 'node:fs';
 import {resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -37,8 +39,20 @@ try {
   if(e.state!=='queued'){if(!earliestGap){earliestGap=future;reason='state_'+e.state;} continue;}
   try{
    const asset=verifyEntryAsset(e,ledger);
+   verifyProductionReadiness(e,asset);
    const jpg=readFileSync(resolve(root,asset.github_path));
    validateJpeg(jpg);
+   const sha=createHash('sha1').update('blob '+jpg.length+'\0').update(jpg).digest('hex');
+   if(sha!==asset.github_blob_sha||jpg.length!==asset.github_size_bytes)throw Error('jpeg_identity_mismatch');
+   if(asset.generation){
+    const ref=asset.generation.source_ref;
+    if(!/^editorial\/originals\/[A-Za-z0-9_-]+\.png$/.test(ref))throw Error('original_source_ref_invalid');
+    let png;
+    try{png=readFileSync(resolve(root,ref));}catch{throw Error('original_source_unavailable');}
+    if(png.length>8*1024*1024||!png.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10]))||
+       createHash('sha256').update(png).digest('hex')!==asset.generation.source_sha256)
+     throw Error('original_source_integrity_failed');
+   }
    const article=readFileSync(resolve(root,'editorial/articles/'+future+'.md'),'utf8');
    const expected='![Обложка выпуска]('+e.photo_url+')\n\n*'+e.photo_caption+'*\n\n---\n\n'+e.content;
    if(article.trim()!==expected.trim())throw Error('article_copy_mismatch');

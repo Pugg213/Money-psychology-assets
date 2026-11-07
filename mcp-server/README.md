@@ -1,4 +1,4 @@
-# Money Psy Telegram MCP — Superbot v2.5.2
+# Money Psy Telegram MCP — Superbot v2.6.0
 
 **Production:** https://money-psy-telegram-mcp.vercel.app/mcp
 **Bot:** @MyGptSparks_bot
@@ -62,3 +62,5 @@ Verification: Node test runner passed 30/30 simulated unit tests; preview health
 Telegram Business support is implemented as a separate owner-allowlisted module. It provides 15 scoped MCP tools, Business event capture via the existing verified webhook, private Blob-backed observed-chat records, and permission-checked messages, read markers, deletion, basic profile edits and read-only gifts/Stars. The existing channel publishing and reader-feedback routes remain supported. No business chat is connected and no automatic AI response is activated by deployment alone.
 
 **Activation and security:** [docs/telegram-business.md](docs/telegram-business.md). Configure `TELEGRAM_BUSINESS_OWNER_IDS`, enable Business Mode through BotFather, opt into Business events, and connect the bot in Telegram Business settings. Message text is **not stored by default**. Disconnecting or changing chat selection does not automatically erase previously stored content; use the explicit local forget operation if needed. No arbitrary personal Telegram history can be fetched through Bot API.
+
+Version 2.6.0 adds pinned read-only JPEG preflight, resumable drafts, separate release review, archived native PNG integrity and reserve checks. See `../docs/editorial-production-contract.md`.

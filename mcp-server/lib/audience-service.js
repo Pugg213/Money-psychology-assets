@@ -176,7 +176,7 @@ export function createAudienceService({telegramApi=botRequest,store=null,botToke
     known.telegram_chat_id!==undefined&&server_receipt.feedback_confirmation.chat_id!==known.telegram_chat_id))
     server_receipt={...server_receipt,feedback_confirmation:null};
    entries.push({
-    date:x.date_moscow,title:x.title,state:x.state,
+    date:x.date_moscow,title:x.title,state:x.state,production:x.production||null,
     scheduled_at:x.scheduled_at,telegram_publication:x.telegram_publication||null,server_receipt
    });
   }

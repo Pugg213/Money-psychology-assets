@@ -183,81 +183,171 @@
     },
     {
       "date_moscow": "2026-11-09",
-      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-09-auto-loan-total-cost-original.jpg",
-      "github_path": "telegram/2026-11/2026-11-09-auto-loan-total-cost-original.jpg",
-      "github_blob_sha": "06905dbabf2f6db3457dab5125a677d6e85f6da4",
-      "github_size_bytes": 18006,
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-09-imagegen-v2.jpg",
+      "github_path": "telegram/2026-11/2026-11-09-imagegen-v2.jpg",
+      "github_blob_sha": "a804192fdaaaa37f14e35424ee2a7010219ef09e",
+      "github_size_bytes": 309421,
       "visual_review": "approved",
-      "original_source_sha": "sha256:7a68ee07ac1e82d9c7c9e085bbcd62433403faeba44ad9d76659e3667039c965",
-      "jpeg_sha256": "7a68ee07ac1e82d9c7c9e085bbcd62433403faeba44ad9d76659e3667039c965",
-      "provenance_note": "Original bespoke digital illustration authored specifically for this date via Pillow raster drawing. Final JPEG pixels directly viewed, 900x1125; no SVG, stock media or reused cover. No separately archived pre-conversion image; image is stylized raster, not a photograph.",
-      "editorial_pixel_review": "PASS: visually displayed full JPEG pixels in session 2026-11-07; theme matches, unique composition, no readable factual claims; softness of illustration limits visual score to 1/2.",
-      "user_approval_evidence": "EDITORIAL APPROVAL ONLY; individual user artwork approval not recorded"
+      "original_source_sha": "sha256:c4944d17ac3ce2f153400d25334930904b0399d482a19f28c0cebf2d8973d139",
+      "jpeg_sha256": "1af197e8ca472b18e63e2b613d18fc7e32465c187813116dfbd31ac7120fa040",
+      "provenance_note": "Recovered native ChatGPT-generated original from previous audit, archived unchanged. JPEG conversion preserves dimensions and artwork. Original and final hashes independently recomputed; final JPEG directly inspected in this continuation.",
+      "editorial_pixel_review": "Full JPEG viewed: detailed blue car and long blank paper road express longer loan duration; no numeric or textual promises. Distinct cobalt/ivory studio composition.",
+      "user_approval_evidence": "Editorial approval only; no individual user artwork approval claimed.",
+      "generation": {
+        "method": "chatgpt_image_gen",
+        "source_ref": "editorial/originals/2026-11-09-imagegen.png",
+        "source_sha256": "c4944d17ac3ce2f153400d25334930904b0399d482a19f28c0cebf2d8973d139",
+        "generated_at": "2026-11-07T08:39:19.364Z",
+        "prompt": "Use case: stylized-concept. A single premium editorial cover for a Russian financial psychology column about a car loan: a lower monthly payment hides a much longer, costlier debt. Portrait 4:5, high resolution. Surreal physically crafted studio photograph: a beautifully detailed midnight-blue unbranded modern car small in the upper third, parked on a pristine cream showroom floor; from beneath it a single extremely long blank ivory paper ribbon coils into deep perspective and fills the foreground like a winding road. Sculptural, tactile, dramatic cobalt and warm ivory with a precise vermilion accent. Sophisticated contemporary financial magazine, art-directed cinematic side lighting, strong depth, clean composition, real materials, sharp craftsmanship. No words, letters, numbers, currency symbols, logo, UI, charts, watermark or collage. The paper must be blank; do not invent financial figures. One scene.",
+        "evidence_note": "Recovered exact PNG and prompt/hash manifest from unfinished prior audit; not regenerated in this continuation."
+      },
+      "pixel_review": {
+        "decision": "approved",
+        "asset_blob_sha": "a804192fdaaaa37f14e35424ee2a7010219ef09e",
+        "checked_at": "2026-11-07T09:47:27.245Z",
+        "reviewer_run_id": "/root:66c5e455b265",
+        "assessment": "Full JPEG viewed: detailed blue car and long blank paper road express longer loan duration; no numeric or textual promises. Distinct cobalt/ivory studio composition."
+      }
     },
     {
       "date_moscow": "2026-11-10",
-      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-10-checkout-hidden-price-original.jpg",
-      "github_path": "telegram/2026-11/2026-11-10-checkout-hidden-price-original.jpg",
-      "github_blob_sha": "a6aafd32fc1423581eebcfd46758c33839e1588e",
-      "github_size_bytes": 15354,
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-10-imagegen-v2.jpg",
+      "github_path": "telegram/2026-11/2026-11-10-imagegen-v2.jpg",
+      "github_blob_sha": "e3010ca8757a183a01d1bc249de9019c07059738",
+      "github_size_bytes": 537190,
       "visual_review": "approved",
-      "original_source_sha": "sha256:a12e229a8f8963d006cb996efe47485d01c64d0b9db90048b2fc50de74c36895",
-      "jpeg_sha256": "a12e229a8f8963d006cb996efe47485d01c64d0b9db90048b2fc50de74c36895",
-      "provenance_note": "Original bespoke digital illustration authored specifically for this date via Pillow raster drawing. Final JPEG pixels directly viewed, 900x1125; no SVG, stock media or reused cover. No separately archived pre-conversion image; image is stylized raster, not a photograph.",
-      "editorial_pixel_review": "PASS: visually displayed full JPEG pixels in session 2026-11-07; theme matches, unique composition, no readable factual claims; softness of illustration limits visual score to 1/2.",
-      "user_approval_evidence": "EDITORIAL APPROVAL ONLY; individual user artwork approval not recorded"
+      "original_source_sha": "sha256:e78b2906823c3ffb490a6e235c8daacdf647270ce98cb5babc1610d4b945f14f",
+      "jpeg_sha256": "c73047406db7c2f56a0731285a3287df59e7c9a6d571551ecb754bc1f5bb7ade",
+      "provenance_note": "Recovered native ChatGPT-generated original from previous audit, archived unchanged. JPEG conversion preserves dimensions and artwork. Original and final hashes independently recomputed; final JPEG directly inspected in this continuation.",
+      "editorial_pixel_review": "Full JPEG viewed: small coral basket with oversized laden shadow expresses final hidden cost; deliberate conceptual shadow, no figures or lettering. Mint/aubergine overhead composition.",
+      "user_approval_evidence": "Editorial approval only; no individual user artwork approval claimed.",
+      "generation": {
+        "method": "chatgpt_image_gen",
+        "source_ref": "editorial/originals/2026-11-10-imagegen.png",
+        "source_sha256": "e78b2906823c3ffb490a6e235c8daacdf647270ce98cb5babc1610d4b945f14f",
+        "generated_at": "2026-11-07T08:37:44.393Z",
+        "prompt": "Use case: stylized-concept. Single sophisticated financial magazine cover about hidden fees at online checkout and the psychological cost of already-invested time. Portrait4:5 high resolution. Top-down studio still-life: one small elegant shopping basket in matte terracotta with one plain white box, casting an unexpectedly enormous, crisp sculptural shadow shaped like a heavy overflowing basket. Pale mint stone background, deep aubergine shadows, restrained coral accents. Visually surprising, minimalist but materially rich, premium editorial photography with subtle grain and exact realistic lighting. The same small purchase has a much larger final cost. No text, numbers, logos, receipt writing, coins, generic screens, charts, watermark, multi-panel layout. One scene, not a calendar.",
+        "evidence_note": "Recovered exact PNG and prompt/hash manifest from unfinished prior audit; not regenerated in this continuation."
+      },
+      "pixel_review": {
+        "decision": "approved",
+        "asset_blob_sha": "e3010ca8757a183a01d1bc249de9019c07059738",
+        "checked_at": "2026-11-07T09:47:27.245Z",
+        "reviewer_run_id": "/root:66c5e455b265",
+        "assessment": "Full JPEG viewed: small coral basket with oversized laden shadow expresses final hidden cost; deliberate conceptual shadow, no figures or lettering. Mint/aubergine overhead composition."
+      }
     },
     {
       "date_moscow": "2026-11-11",
-      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-11-prompt-payment-discount-original.jpg",
-      "github_path": "telegram/2026-11/2026-11-11-prompt-payment-discount-original.jpg",
-      "github_blob_sha": "6373eddaefa7fefc6d01e8f504816ed41f80c231",
-      "github_size_bytes": 18118,
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-11-imagegen-v2.jpg",
+      "github_path": "telegram/2026-11/2026-11-11-imagegen-v2.jpg",
+      "github_blob_sha": "16fd8d8c8be89deeaffc16fd4ec49245bd2b4d4b",
+      "github_size_bytes": 580306,
       "visual_review": "approved",
-      "original_source_sha": "sha256:0bc101faa21efc3c2a1669c251994b633f52149272f82366746d153419adca1e",
-      "jpeg_sha256": "0bc101faa21efc3c2a1669c251994b633f52149272f82366746d153419adca1e",
-      "provenance_note": "Original bespoke digital illustration authored specifically for this date via Pillow raster drawing. Final JPEG pixels directly viewed, 900x1125; no SVG, stock media or reused cover. No separately archived pre-conversion image; image is stylized raster, not a photograph.",
-      "editorial_pixel_review": "PASS: visually displayed full JPEG pixels in session 2026-11-07; theme matches, unique composition, no readable factual claims; softness of illustration limits visual score to 1/2.",
-      "user_approval_evidence": "EDITORIAL APPROVAL ONLY; individual user artwork approval not recorded"
+      "original_source_sha": "sha256:906ec3b6dce5833de93c23e4a06dcf746eb1fac337bcc6d7130d21e28661f4ce",
+      "jpeg_sha256": "9b54fc5f178fe7cf7a11977c8303cd1712b82995a9fc3fa6728dd0bf7ba3f890",
+      "provenance_note": "Recovered native ChatGPT-generated original from previous audit, archived unchanged. JPEG conversion preserves dimensions and artwork. Original and final hashes independently recomputed; final JPEG directly inspected in this continuation.",
+      "editorial_pixel_review": "Full JPEG viewed: supplier workshop, blank invoices, brass hourglass and natural hand express liquidity/timing choice; no unsupported terms or numbers. Green/amber documentary still life.",
+      "user_approval_evidence": "Editorial approval only; no individual user artwork approval claimed.",
+      "generation": {
+        "method": "chatgpt_image_gen",
+        "source_ref": "editorial/originals/2026-11-11-imagegen.png",
+        "source_sha256": "906ec3b6dce5833de93c23e4a06dcf746eb1fac337bcc6d7130d21e28661f4ce",
+        "generated_at": "2026-11-07T08:36:49.129Z",
+        "prompt": "Use case: photorealistic-natural/editorial conceptual still life. Single premium cover about a small business deciding whether to pay a supplier early for a discount versus keeping working capital. Portrait4:5 high resolution. Quiet sunlit workshop packing table with two crisp stacks of entirely blank ivory invoice sheets, an elegant mechanical hourglass between them, one stack being held down by a small solid brass weight while neatly packed parcels wait in the background. A hand reaches thoughtfully toward one stack, only a natural single hand visible. Amber glass, forest green industrial backdrop, dramatic warm diagonal daylight, sophisticated tactile materials, cinematic depth, intelligent financial magazine art direction, excellent detail. No words, numbers, readable marks, logos, charts, coins, money bundles, watermark or collage. Do not depict a real named business.",
+        "evidence_note": "Recovered exact PNG and prompt/hash manifest from unfinished prior audit; not regenerated in this continuation."
+      },
+      "pixel_review": {
+        "decision": "approved",
+        "asset_blob_sha": "16fd8d8c8be89deeaffc16fd4ec49245bd2b4d4b",
+        "checked_at": "2026-11-07T09:47:27.245Z",
+        "reviewer_run_id": "/root:66c5e455b265",
+        "assessment": "Full JPEG viewed: supplier workshop, blank invoices, brass hourglass and natural hand express liquidity/timing choice; no unsupported terms or numbers. Green/amber documentary still life."
+      }
     },
     {
       "date_moscow": "2026-11-12",
-      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-12-emergency-fund-glass-vault-original.jpg",
-      "github_path": "telegram/2026-11/2026-11-12-emergency-fund-glass-vault-original.jpg",
-      "github_blob_sha": "c8c887294a45b6d7c05d03345a9c51112da74c11",
-      "github_size_bytes": 23455,
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-12-imagegen-v2.jpg",
+      "github_path": "telegram/2026-11/2026-11-12-imagegen-v2.jpg",
+      "github_blob_sha": "a666df89fd3a6d027fd25eaf4187e91cf26fd7c6",
+      "github_size_bytes": 591303,
       "visual_review": "approved",
-      "original_source_sha": "sha256:e88e1314618e4ae80f7527b5b3f4213bb3c1bbabea30dce7e4efd88dcca8efaf",
-      "jpeg_sha256": "e88e1314618e4ae80f7527b5b3f4213bb3c1bbabea30dce7e4efd88dcca8efaf",
-      "provenance_note": "Issue-specific original one-off raster art drawn through Pillow in sandbox. Actual 900x1125 JPEG pixels shown to editor. Original illustration not photo; no template, SVG, stock image, placeholder or re-used image.",
-      "editorial_pixel_review": "PASS: visually inspected actual complete JPEG pixels 2026-11-07; concrete theme match, unique shapes; flat/soft illustrative quality justifies visual 1 of 2.",
-      "user_approval_evidence": "EDITORIAL REVIEW ONLY; no explicit individual end-user artwork approval"
+      "original_source_sha": "sha256:396ecb227a6d954294610b3e9261d8a79ba8888d04191336eeaf8402a9164c68",
+      "jpeg_sha256": "753f6739fa535fc47501595fa848b24b6809e2641a5924d36df06cd9fc103bcc",
+      "provenance_note": "Recovered native ChatGPT-generated original from previous audit, archived unchanged. JPEG conversion preserves dimensions and artwork. Original and final hashes independently recomputed; final JPEG directly inspected in this continuation.",
+      "editorial_pixel_review": "Full JPEG viewed: equal glass chambers, available tap versus locked chamber express accessibility rather than different total balances; no measured data. Turquoise/navy glass composition.",
+      "user_approval_evidence": "Editorial approval only; no individual user artwork approval claimed.",
+      "generation": {
+        "method": "chatgpt_image_gen",
+        "source_ref": "editorial/originals/2026-11-12-imagegen.png",
+        "source_sha256": "396ecb227a6d954294610b3e9261d8a79ba8888d04191336eeaf8402a9164c68",
+        "generated_at": "2026-11-07T08:38:16.497Z",
+        "prompt": "Use case: stylized-concept. A single luxurious editorial cover about emergency savings: accessibility matters as well as total balance. Portrait4:5 high resolution. Surreal high-end studio photograph: a clear rectangular glass reservoir on a dark blue stone plinth divided into two equal chambers, both filled with luminous turquoise water; one chamber has an open functional small brass tap with a clear droplet suspended, the other chamber is visibly locked behind a frosted translucent glass panel. Elegant but unmistakable contrast between available reserves and inaccessible reserves. Deep midnight-blue background, turquoise caustics, warm small brass highlights, ultra-fine glass detail, physically credible light and refraction, strong central composition, premium financial magazine. No cash, coins, words, digits, charts, UI, logo, watermark or decorative typography. This is a conceptual image, not a technical diagram.",
+        "evidence_note": "Recovered exact PNG and prompt/hash manifest from unfinished prior audit; not regenerated in this continuation."
+      },
+      "pixel_review": {
+        "decision": "approved",
+        "asset_blob_sha": "a666df89fd3a6d027fd25eaf4187e91cf26fd7c6",
+        "checked_at": "2026-11-07T09:47:27.245Z",
+        "reviewer_run_id": "/root:66c5e455b265",
+        "assessment": "Full JPEG viewed: equal glass chambers, available tap versus locked chamber express accessibility rather than different total balances; no measured data. Turquoise/navy glass composition."
+      }
     },
     {
       "date_moscow": "2026-11-13",
-      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-13-savings-default-two-paths-original.jpg",
-      "github_path": "telegram/2026-11/2026-11-13-savings-default-two-paths-original.jpg",
-      "github_blob_sha": "50e9b671cf1915baf74da69e9448c25b306842ad",
-      "github_size_bytes": 24031,
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-13-imagegen-v2.jpg",
+      "github_path": "telegram/2026-11/2026-11-13-imagegen-v2.jpg",
+      "github_blob_sha": "0f486e2e3d7169f7c19df892122e3cf46b2643d1",
+      "github_size_bytes": 553249,
       "visual_review": "approved",
-      "original_source_sha": "sha256:ca13af79ad8a09f06383db371b83d02bdaf305297bcb77cad855e0c6df161b9b",
-      "jpeg_sha256": "ca13af79ad8a09f06383db371b83d02bdaf305297bcb77cad855e0c6df161b9b",
-      "provenance_note": "Issue-specific original one-off raster art drawn through Pillow in sandbox. Actual 900x1125 JPEG pixels shown to editor. Original illustration not photo; no template, SVG, stock image, placeholder or re-used image.",
-      "editorial_pixel_review": "PASS: visually inspected actual complete JPEG pixels 2026-11-07; concrete theme match, unique shapes; flat/soft illustrative quality justifies visual 1 of 2.",
-      "user_approval_evidence": "EDITORIAL REVIEW ONLY; no explicit individual end-user artwork approval"
+      "original_source_sha": "sha256:b158ffeb1a8af1307b616ffdb1ee6992af23d83d0daaad09c8a9ac033b5a29fd",
+      "jpeg_sha256": "9e5a82b675aa49c83768cdd54f17a0779d9461b370e9d50cd8f64f05b033f4e7",
+      "provenance_note": "Recovered native ChatGPT-generated original from previous audit, archived unchanged. JPEG conversion preserves dimensions and artwork. Original and final hashes independently recomputed; final JPEG directly inspected in this continuation.",
+      "editorial_pixel_review": "Full JPEG viewed: sphere on grooved default route and deliberate brass switch express inertia; conceptual sculpture rather than a real interface or investment guarantee. Pink/cobalt composition.",
+      "user_approval_evidence": "Editorial approval only; no individual user artwork approval claimed.",
+      "generation": {
+        "method": "chatgpt_image_gen",
+        "source_ref": "editorial/originals/2026-11-13-imagegen.png",
+        "source_sha256": "b158ffeb1a8af1307b616ffdb1ee6992af23d83d0daaad09c8a9ac033b5a29fd",
+        "generated_at": "2026-11-07T08:37:15.853Z",
+        "prompt": "Use case: stylized-concept. Single contemporary financial psychology magazine cover on default choices and savings inertia. Portrait4:5 high resolution. Sculptural tabletop photograph of a polished red sphere on a beautiful pale pink grooved track that splits into two paths: the smooth broad default route continues naturally downwards, while a short deliberate switch to a second raised cobalt-blue route requires moving a small precision brass lever. A subtle human fingertip close to lever, no whole person. The picture tells a story of effortless default versus conscious choice; no judgment or numeric claims. Brutalist pastel sculptural architecture, meticulous manufactured textures, hard Mediterranean sunlight, crisp shadows, generous confident composition. No words, letters, numbers, bank branding, actual interfaces, cash, coins, chart arrows, watermark or collage.",
+        "evidence_note": "Recovered exact PNG and prompt/hash manifest from unfinished prior audit; not regenerated in this continuation."
+      },
+      "pixel_review": {
+        "decision": "approved",
+        "asset_blob_sha": "0f486e2e3d7169f7c19df892122e3cf46b2643d1",
+        "checked_at": "2026-11-07T09:47:27.245Z",
+        "reviewer_run_id": "/root:66c5e455b265",
+        "assessment": "Full JPEG viewed: sphere on grooved default route and deliberate brass switch express inertia; conceptual sculpture rather than a real interface or investment guarantee. Pink/cobalt composition."
+      }
     },
     {
       "date_moscow": "2026-11-14",
-      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-14-personal-inflation-weighted-basket-original.jpg",
-      "github_path": "telegram/2026-11/2026-11-14-personal-inflation-weighted-basket-original.jpg",
-      "github_blob_sha": "7cdea03995547bf5dd24e274097300073012d231",
-      "github_size_bytes": 23180,
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-14-imagegen-v2.jpg",
+      "github_path": "telegram/2026-11/2026-11-14-imagegen-v2.jpg",
+      "github_blob_sha": "83a9651677f80f667dc8e2c02a333047dbdcac54",
+      "github_size_bytes": 433471,
       "visual_review": "approved",
-      "original_source_sha": "sha256:2c0c86d881140c9de8c2842715d681eb254aa2a376fd5117f2915ea7d848838b",
-      "jpeg_sha256": "2c0c86d881140c9de8c2842715d681eb254aa2a376fd5117f2915ea7d848838b",
-      "provenance_note": "Issue-specific original one-off raster art drawn through Pillow in sandbox. Actual 900x1125 JPEG pixels shown to editor. Original illustration not photo; no template, SVG, stock image, placeholder or re-used image.",
-      "editorial_pixel_review": "PASS: visually inspected actual complete JPEG pixels 2026-11-07; concrete theme match, unique shapes; flat/soft illustrative quality justifies visual 1 of 2.",
-      "user_approval_evidence": "EDITORIAL REVIEW ONLY; no explicit individual end-user artwork approval"
+      "original_source_sha": "sha256:e06c7f992a32e313a24a7f5d792cc01b5b47891e7ecbea2bb5f3daf34fe41430",
+      "jpeg_sha256": "59019b205142b095919090d3bd100c6f55717f3c4be3cabdb9ecface695e1e7e",
+      "provenance_note": "Recovered native ChatGPT-generated original from previous audit, archived unchanged. JPEG conversion preserves dimensions and artwork. Original and final hashes independently recomputed; final JPEG directly inspected in this continuation.",
+      "editorial_pixel_review": "Full JPEG viewed: different grocery mixes on a balance express differing expenditure weights; no official data or claimed precise inflation measurement. Burgundy, brass and tactile food still life.",
+      "user_approval_evidence": "Editorial approval only; no individual user artwork approval claimed.",
+      "generation": {
+        "method": "chatgpt_image_gen",
+        "source_ref": "editorial/originals/2026-11-14-imagegen.png",
+        "source_sha256": "e06c7f992a32e313a24a7f5d792cc01b5b47891e7ecbea2bb5f3daf34fe41430",
+        "generated_at": "2026-11-07T08:36:13.657Z",
+        "prompt": "Use case: photorealistic-natural conceptual editorial. Single premium financial magazine cover on why personal inflation depends on the mix and quantities of purchases. Portrait4:5 high resolution. Art-directed close-up still life of two different real grocery baskets, one foreground filled mostly with bread, apples and milk in completely blank unbranded glass bottle, the other slightly further back with different proportions of produce and a plain wrapped household item. Both sit on the two broad pans of a refined sculptural balance with visibly different loads, carefully natural and clean, no coins. Rich burgundy background with sage green and warm cream groceries, soft directional studio light, beautiful food and woven material textures, sophisticated quiet visual tension, credible objects, selective depth of field. No text, logos, numbers, price labels, graph overlays, currency symbols, watermark, infographic or collage. No suggestion of precise measured inflation figures.",
+        "evidence_note": "Recovered exact PNG and prompt/hash manifest from unfinished prior audit; not regenerated in this continuation."
+      },
+      "pixel_review": {
+        "decision": "approved",
+        "asset_blob_sha": "83a9651677f80f667dc8e2c02a333047dbdcac54",
+        "checked_at": "2026-11-07T09:47:27.245Z",
+        "reviewer_run_id": "/root:66c5e455b265",
+        "assessment": "Full JPEG viewed: different grocery mixes on a balance express differing expenditure weights; no official data or claimed precise inflation measurement. Burgundy, brass and tactile food still life."
+      }
     }
   ]
 }

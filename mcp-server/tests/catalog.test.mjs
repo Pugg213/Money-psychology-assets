@@ -19,15 +19,15 @@ function value(schema){
  return 'example';
 }
 const rpc=(name,args)=>({jsonrpc:'2.0',id:1,method:'tools/call',params:{name,arguments:args}});
-test('catalog contains60 unique typed functions with valid object input schemas',()=>{
- assert.equal(allTools.length,60);assert.equal(new Set(allTools.map(t=>t.name)).size,60);
+test('catalog contains61 unique typed functions with valid object input schemas',()=>{
+ assert.equal(allTools.length,61);assert.equal(new Set(allTools.map(t=>t.name)).size,61);
  for(const t of allTools){assert.equal(t.inputSchema.type,'object');assert.equal(t.inputSchema.additionalProperties,false);}
 });
 for(const t of allTools)test('MCP dispatch and read/write OAuth boundary: '+t.name,async()=>{
  const args=t.name==='bot_api_call'?{method:'getMe'}:value(t.inputSchema),calls=[];
  const execute=async(name,a)=>{calls.push({name,a});return {ok:true};};
  const services={businessExecutor:execute,coreExecutor:execute,audienceExecutor:execute,extensionExecutor:execute,
-  publicationService:{publish:a=>execute('publish_cover_then_article',a)}};
+  preflightService:{run:a=>execute('preflight_publication',a)},publicationService:{publish:a=>execute('publish_cover_then_article',a)}};
  let r=res();await mcp(request(rpc(t.name,args)),r,services);
  assert.equal(r.statusCode,200,t.name);assert.equal(JSON.parse(r.body).result.isError,false,t.name);assert.equal(calls.length,1,t.name);
  const read=t.annotations.readOnlyHint===true||t.name==='bot_api_call';
@@ -43,7 +43,7 @@ test('MCP initialization, discovery, ping, list, unknown methods and GET are han
   }
   for(const method of ['tools/list','ping','server/discover']){
    const r=res();await mcp(request({jsonrpc:'2.0',id:1,method}),r);assert.equal(r.statusCode,200);
-   if(method==='tools/list')assert.equal(JSON.parse(r.body).result.tools.length,60);
+   if(method==='tools/list')assert.equal(JSON.parse(r.body).result.tools.length,61);
   }
   let r=res();await mcp({...request({}),method:'GET'},r);assert.equal(r.statusCode,405);
   r=res();await mcp(request({jsonrpc:'2.0',id:1,method:'unknown'}),r);assert.equal(JSON.parse(r.body).error.code,-32601);
@@ -62,7 +62,7 @@ test('modern MCP request metadata, discovery and result fields',async()=>{
  for(const method of ['tools/list','server/discover','ping']){
   const r=res();await mcp(modern(method),r);const body=JSON.parse(r.body);
   assert.equal(r.statusCode,200);assert.equal(body.result.resultType,'complete');
-  assert.equal(body.result._meta['io.modelcontextprotocol/serverInfo'].version,'2.5.2');
+  assert.equal(body.result._meta['io.modelcontextprotocol/serverInfo'].version,'2.6.0');
   if(method!=='ping'){assert.equal(body.result.ttlMs,0);assert.equal(body.result.cacheScope,'private');}
  }
  const r=res();await mcp(modern('unknown'),r);assert.equal(r.statusCode,404);

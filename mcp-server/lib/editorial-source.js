@@ -23,7 +23,15 @@ export function validateQueue(queue){
   dates.add(d);
   if(e.scheduled_at!==d+'T12:00:00+03:00')throw Error('invalid_publication_time');
   if(e.publisher!=='Money Psy Telegram MCP'||e.migrated_and_deduplicated!==true)throw Error('wrong_publisher');
-  if(!['queued','sending','published','partial_or_uncertain','failed_without_retry'].includes(e.state))throw Error('invalid_publication_state');
+  if(!['draft','queued','sending','published','partial_or_uncertain','failed_without_retry'].includes(e.state))throw Error('invalid_publication_state');
+  if(e.state==='draft'){
+   const p=e.production;
+   if(e.telegram_publication!==null||e.send_attempts||e.send_claimed_at)throw Error('draft_has_delivery_attempt');
+   if(!p||!['research','writing','art','review','blocked'].includes(p.stage)||typeof p.run_id!=='string'||!p.run_id||
+    !Number.isSafeInteger(p.attempts)||p.attempts<0||!Number.isFinite(Date.parse(p.updated_at))||
+    typeof e.title!=='string'||!e.title.trim())throw Error('invalid_production_checkpoint');
+   continue;
+  }
   if(e.format!=='markdown'||typeof e.content!=='string'||!e.content.trim()||Buffer.byteLength(e.content)>32768||
     typeof e.photo_caption!=='string'||e.photo_caption.length>1024||typeof e.title!=='string'||!e.title.trim())
    throw Error('invalid_publication_content');
@@ -46,16 +54,21 @@ export function validateQueue(queue){
  }
  return queue;
 }
-export function verifyEntryAsset(entry,ledger){
+export function verifyAssetIdentity(entry,ledger){
  if(ledger?.channel!=='@psy_money1'||!Array.isArray(ledger.entries))throw Error('invalid_asset_ledger');
  const rows=ledger.entries.filter(x=>x.date_moscow===entry.date_moscow);
  if(rows.length!==1)throw Error('missing_or_duplicate_asset');
  const asset=rows[0];
  if(!/^telegram\/[a-zA-Z0-9/_-]+\.jpg$/.test(asset.github_path)||
     entry.photo_url!==RAW+'main/'+asset.github_path||entry.photo_url!==asset.media_url||
-    asset.visual_review!=='approved'||!/^[a-f0-9]{40}$/.test(asset.github_blob_sha)||
+    !/^[a-f0-9]{40}$/.test(asset.github_blob_sha)||
     !Number.isSafeInteger(asset.github_size_bytes)||asset.github_size_bytes<1||asset.github_size_bytes>10*1024*1024)
   throw Error('asset_identity_or_approval_failed');
+ return asset;
+}
+export function verifyEntryAsset(entry,ledger){
+ const asset=verifyAssetIdentity(entry,ledger);
+ if(asset.visual_review!=='approved')throw Error('asset_identity_or_approval_failed');
  if(!entry.editorial_review?.status?.startsWith('text_review_passed')||
     !entry.editorial_review.math_check?.startsWith('passed')||
     !entry.editorial_review.markdown_static_check?.startsWith('passed')||!entry.image_review)
@@ -96,7 +109,7 @@ export function createEditorialSource(clientFetch=fetch){
   validateQueue(queue);
   return {queue,ledger,commit};
  }
- async function verifyMedia(asset,commit){
+ async function inspectMedia(asset,commit){
   const url=RAW+commit+'/'+asset.github_path;
   const response=await clientFetch(url,{cache:'no-store',signal:AbortSignal.timeout(8000),redirect:'error'});
   if(!response.ok)throw Error('original_jpeg_unavailable');
@@ -105,8 +118,28 @@ export function createEditorialSource(clientFetch=fetch){
   if(bytes.length!==asset.github_size_bytes||sha!==asset.github_blob_sha||
      bytes[0]!==255||bytes[1]!==216||bytes.at(-2)!==255||bytes.at(-1)!==217)
    throw Error('original_jpeg_integrity_failed');
-  validateJpeg(bytes);
-  return url;
+  const dimensions=validateJpeg(bytes);
+  let source_evidence=null;
+  if(asset.generation){
+   const ref=asset.generation.source_ref;
+   if(!/^editorial\/originals\/[A-Za-z0-9_-]+\.png$/.test(ref))throw Error('original_source_ref_invalid');
+   const original=await clientFetch(RAW+commit+'/'+ref,{cache:'no-store',signal:AbortSignal.timeout(8000),redirect:'error'});
+   if(!original.ok)throw Error('original_source_unavailable');
+   const png=Buffer.from(await original.arrayBuffer()),hash=createHash('sha256').update(png).digest('hex');
+   if(png.length>8*1024*1024||!png.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10]))||
+    hash!==asset.generation.source_sha256)throw Error('original_source_integrity_failed');
+   source_evidence={source_ref:ref,source_sha256:hash,size_bytes:png.length};
+  }
+  return {url,github_blob_sha:sha,jpeg_sha256:createHash('sha256').update(bytes).digest('hex'),
+   source_evidence,size_bytes:bytes.length,width:dimensions.width,height:dimensions.height,image_base64:bytes.toString('base64')};
  }
- return {readQueue,snapshot,verifyMedia};
+ async function verifyMedia(asset,commit){return (await inspectMedia(asset,commit)).url;}
+ async function readArticle(day,commit){
+  if(!/^20\d{2}-\d{2}-\d{2}$/.test(day)||!/^[a-f0-9]{40}$/.test(commit))throw Error('invalid_article_revision');
+  const response=await clientFetch(RAW+commit+'/editorial/articles/'+day+'.md',
+   {cache:'no-store',signal:AbortSignal.timeout(8000),redirect:'error'});
+  if(!response.ok)throw Error('article_copy_unavailable');
+  const body=await response.text();if(Buffer.byteLength(body)>40000)throw Error('article_copy_too_large');return body;
+ }
+ return {readQueue,snapshot,verifyMedia,inspectMedia,readArticle};
 }

@@ -93,6 +93,19 @@ def validate(data):
                 errors.append(f"{day}: low resolution {width}x{height}")
         except ValueError as e:
             errors.append(f"{day}: invalid JPG: {e}")
+        if day >= "2026-11-09" and item.get("visual_review") == "approved":
+            generation = item.get("generation", {})
+            ref = generation.get("source_ref", "")
+            if generation.get("method") != "chatgpt_image_gen" or not re.fullmatch(r"editorial/originals/[A-Za-z0-9_-]+\.png", ref):
+                errors.append(f"{day}: native image provenance missing or forbidden generation method")
+            elif not (ROOT / ref).is_file():
+                errors.append(f"{day}: native original PNG missing")
+            else:
+                original = (ROOT / ref).read_bytes()
+                if not original.startswith(b"\x89PNG\r\n\x1a\n") or hashlib.sha256(original).hexdigest() != generation.get("source_sha256"):
+                    errors.append(f"{day}: native original PNG hash mismatch")
+            if hashlib.sha256(payload).hexdigest() != item.get("jpeg_sha256"):
+                errors.append(f"{day}: JPEG SHA256 mismatch")
         print(f"{day}: {path} blob={blob_sha[:12]} status={item.get('visual_review')}")
     if list((ROOT / "sources").rglob("*.svg")):
         errors.append("SVG source files reintroduced; reject fallback workflow")

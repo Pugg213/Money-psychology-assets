@@ -4,11 +4,13 @@ import {audienceTools,isAudienceTool,executeAudienceTool} from '../lib/audience-
 import {businessTools,isBusinessTool,executeBusinessTool} from '../lib/business-tools.js';
 import {coreTools,isCoreTool,executeCoreTool} from '../lib/core-tools.js';
 import {createPublicationService} from '../lib/publication-service.js';
+import {createPublicationPreflight} from '../lib/publication-preflight.js';
 import {validateToolArgs} from '../lib/tool-schema.js';
 const publicationTool={name:'publish_cover_then_article',
  description:'Publish the claimed canonical daily cover and linked rich article once. Durable stage receipts; retries never send again.',
  inputSchema:{type:'object',properties:{photo_url:{type:'string'},caption:{type:'string'},content:{type:'string'},
  format:{type:'string',enum:['markdown','html']}},required:['photo_url','content','format'],additionalProperties:false},annotations:{}};
+const preflightTool={name:'preflight_publication',description:'Read-only canonical integrity preflight: pinned article, payload/JPEG hashes, exact image pixels; semantic approval remains a separate editor task.',inputSchema:{type:'object',properties:{date_moscow:{type:'string'},include_image:{type:'boolean'}},additionalProperties:false},annotations:{readOnlyHint:true}};
 const BASE='https://money-psy-telegram-mcp.vercel.app';
 const RESOURCE=BASE+'/mcp';
 function checkToken(req){
@@ -35,7 +37,7 @@ function checkToken(req){
 }
 function respond(req,res,payload,code=200){
  if(req.modernMcp&&payload.result)payload.result={...payload.result,resultType:'complete',
-  _meta:{...payload.result._meta,'io.modelcontextprotocol/serverInfo':{name:'money-psy-telegram',version:'2.5.2'}}};
+  _meta:{...payload.result._meta,'io.modelcontextprotocol/serverInfo':{name:'money-psy-telegram',version:'2.6.0'}}};
  res.statusCode=code;
  res.setHeader('Cache-Control','no-store');
  res.setHeader('X-Content-Type-Options','nosniff');
@@ -53,7 +55,7 @@ function readRpc(req){
  if(typeof req.body==='string')return JSON.parse(req.body);
  return req.body;
 }
-export const allTools=[...coreTools,...extensions,...audienceTools,...businessTools,publicationTool];
+export const allTools=[...coreTools,...extensions,...audienceTools,...businessTools,publicationTool,preflightTool];
 const VERSIONS=['2026-07-28','2025-11-25','2025-06-18','2025-03-26'];
 const object=x=>x!==null&&typeof x==='object'&&!Array.isArray(x);
 function header(req,name){return Object.entries(req.headers||{}).find(([k])=>k.toLowerCase()===name)?.[1];}
@@ -110,7 +112,7 @@ function safeToolError(error){
  return message.replace(/(?:bot)?\d{5,}:[A-Za-z0-9_-]{20,}/g,'[redacted]')
   .replace(/Bearer\s+[^\s"']+/gi,'Bearer [redacted]').slice(0,500);
 }
-export default async function handler(req,res,{businessExecutor=executeBusinessTool,publicationService=null,
+export default async function handler(req,res,{businessExecutor=executeBusinessTool,publicationService=null,preflightService=null,
  coreExecutor=executeCoreTool,extensionExecutor=executeTool,audienceExecutor=executeAudienceTool}={}){
  res.setHeader('Cache-Control','no-store');
  if(!validOrigin(req))return res.status(403).json({error:'invalid_origin'});
@@ -149,25 +151,26 @@ export default async function handler(req,res,{businessExecutor=executeBusinessT
  // continue through the unchanged chat allowlist and method-security validator.
  const businessCompatibility=payload?.method==='tools/call'&&name==='bot_api_call'
    &&typeof argumentsObject.method==='string'&&isBusinessTool(argumentsObject.method);
- const effectiveName=businessCompatibility?argumentsObject.method:name;
+ const preflightCompatibility=payload?.method==='tools/call'&&name==='bot_api_call'&&argumentsObject.method===preflightTool.name;
+ const effectiveName=businessCompatibility||preflightCompatibility?argumentsObject.method:name;
  if(payload.method==='initialize'){
   if(req.modernMcp)return respond(req,res,{jsonrpc:'2.0',id:payload.id,error:{code:-32601,
    message:'Modern MCP uses per-request metadata; initialize is available for legacy versions'}},404);
   const requested=payload.params?.protocolVersion;
   return respond(req,res,{jsonrpc:'2.0',id:payload.id,result:{protocolVersion:VERSIONS.includes(requested)&&requested!=='2026-07-28'?requested:'2025-11-25',
-   serverInfo:{name:'money-psy-telegram',version:'2.5.2'},capabilities:{tools:{}},
+   serverInfo:{name:'money-psy-telegram',version:'2.6.0'},capabilities:{tools:{}},
    instructions:'Manage the configured Telegram channel and explicitly connected Business chats; mutations execute immediately. Daily publication uses the canonical queue and durable once-only guard.'}});
  }
  if(payload.method==='server/discover')return respond(req,res,{jsonrpc:'2.0',id:payload.id,
-  result:{supportedVersions:VERSIONS,serverInfo:{name:'money-psy-telegram',version:'2.5.2'},capabilities:{tools:{}},ttlMs:0,cacheScope:'private'}});
+  result:{supportedVersions:VERSIONS,serverInfo:{name:'money-psy-telegram',version:'2.6.0'},capabilities:{tools:{}},ttlMs:0,cacheScope:'private'}});
  if(payload.method==='ping')return respond(req,res,{jsonrpc:'2.0',id:payload.id,result:{}});
  if(payload?.method==='tools/list'){
   return respond(req,res,{jsonrpc:'2.0',id:payload.id,result:{tools:allTools,...(req.modernMcp?{ttlMs:0,cacheScope:'private'}:{})}});
  }
- if(payload?.method==='tools/call' && (isCoreTool(name)||isExtension(name)||isAudienceTool(name)||isBusinessTool(name)||name===publicationTool.name)){
+ if(payload?.method==='tools/call' && (isCoreTool(name)||isExtension(name)||isAudienceTool(name)||isBusinessTool(name)||name===publicationTool.name||name===preflightTool.name)){
   const toolDefinition=extensions.find(x=>x.name===effectiveName)||
     audienceTools.find(x=>x.name===effectiveName)||
-    businessTools.find(x=>x.name===effectiveName)||coreTools.find(x=>x.name===effectiveName)||(name===publicationTool.name?publicationTool:null);
+    businessTools.find(x=>x.name===effectiveName)||coreTools.find(x=>x.name===effectiveName)||(effectiveName===publicationTool.name?publicationTool:effectiveName===preflightTool.name?preflightTool:null);
   const genericRead=name==='bot_api_call'&&!businessCompatibility&&security.isReadOnlyGenericCall?.(argumentsObject)===true;
   if(!auth.scopes.has('telegram:write') && !toolDefinition?.annotations?.readOnlyHint&&!genericRead){
    return respond(req,res,{jsonrpc:'2.0',id:payload.id,error:{code:-32003,message:'insufficient_scope'}},403);
@@ -175,10 +178,12 @@ export default async function handler(req,res,{businessExecutor=executeBusinessT
   try{
    const outerDefinition=extensions.find(x=>x.name===name)||toolDefinition;
    validateToolArgs(outerDefinition,argumentsObject);
-   if(businessCompatibility)validateToolArgs(toolDefinition,argumentsObject.params||{});
+   if(businessCompatibility||preflightCompatibility)validateToolArgs(toolDefinition,argumentsObject.params||{});
    if(businessCompatibility&&!toolDefinition?.annotations?.readOnlyHint&&argumentsObject.confirm_dangerous!==true)
     throw Error('business_compatibility_write_requires_confirm_dangerous');
-   let result=name===publicationTool.name
+   let result=effectiveName===preflightTool.name
+    ?await (preflightService||createPublicationPreflight()).run(preflightCompatibility?argumentsObject.params||{}:argumentsObject)
+    :name===publicationTool.name
     ?await (publicationService||createPublicationService()).publish(argumentsObject)
     :businessCompatibility
     ?await businessExecutor(effectiveName,argumentsObject.params||{})
@@ -186,9 +191,11 @@ export default async function handler(req,res,{businessExecutor=executeBusinessT
     :isAudienceTool(name)?await audienceExecutor(name,argumentsObject)
     :isCoreTool(name)?await coreExecutor(name,argumentsObject)
     :await extensionExecutor(name,argumentsObject);
-   if(name==='get_capabilities')result={...result,version:'2.5.2',typed_tools:allTools.map(x=>x.name),
-    typed_tool_count:allTools.length,mcp_implementation:'local_all_tools_v1',oauth_implementation:'local_oauth_v1'};
-   return respond(req,res,{jsonrpc:'2.0',id:payload.id,result:{content:[{type:'text',text:JSON.stringify(result)}],isError:result?.ok===false}});
+   if(name==='get_capabilities')result={...result,version:'2.6.0',typed_tools:allTools.map(x=>x.name),
+    typed_tool_count:allTools.length,editorial_preflight:{tool:'preflight_publication',compatibility:{tool:'bot_api_call',method:'preflight_publication'},verified_image_content:true,semantic_approval:'separate_independent_review'},mcp_implementation:'local_all_tools_v1',oauth_implementation:'local_oauth_v1'};
+   const {image_content,...textResult}=result||{};
+   return respond(req,res,{jsonrpc:'2.0',id:payload.id,result:{content:[{type:'text',text:JSON.stringify(textResult)},
+    ...(effectiveName===preflightTool.name&&image_content?[image_content]:[])],isError:result?.ok===false}});
   }catch(e){
    // Secrets must never enter model-visible error messages.
    const message=name===publicationTool.name
