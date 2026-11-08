@@ -213,9 +213,9 @@
           "version": 1,
           "decision": "approved",
           "reviewer_role": "independent_editor",
-          "reviewer_run_id": "/root/review_editorial",
+          "reviewer_run_id": "Money Psychology preflight | 2026-11-08 | automation turn 2",
           "writer_run_id": "/root:66c5e455b265",
-          "checked_at": "2026-11-07T09:47:27.245Z",
+          "checked_at": "2026-11-08T08:14:10.937Z",
           "payload_hash": "f3afadefe6eb2a21eceec5e6ad3946835c2870eeb8a59b2491e554a5d70349f8",
           "asset_blob_sha": "44349d55273f970d293d7564c5ffb798589b502b",
           "scores": {
@@ -226,54 +226,58 @@
             "practical_value": 2,
             "visual": 2
           },
-          "assessment": "Текст различает ежедневное несовпадение графиков и институциональный childcare gap, корректно маркирует вымышленный пример и даёт семейный расчёт с маршрутом и запасными сценариями. Оригинальность умеренная: стандартный разбор доступности работы. Глубина ограничена переносом общего принципа из международного показателя без данных о ежедневном разрыве; этот предел в статье обозначен. Continuation independent reviewer accepted the final article bodies with minor limitations; root inspected final JPEG. Review identities are references, not authenticated signatures.",
+          "assessment": "Независимое редакционное чтение в отдельном запуске 08.11.2026. Реальный OECD Education at a Glance 2026 повторно открыт: childcare gap = конец оплачиваемого отпуска до гарантированного места ECEC, ≈2 года в среднем, 13 из 44 стран без разрыва; это не ежедневное несовпадение часов и не российская оценка. Гипотетические 20 дней × 1 час, 12 000 / 20 и +10 000 − 12 000 проверены; условность ясно указана. Точный JPEG GitHub повторно декодирован, проверены Git blob SHA, SHA256=5b521e86a521f4b7bf4ff65068239e0ff5118f08a12ee6881fe67f2122bb0875, 220853 bytes и визуально осмотрены: родитель с ребёнком у входа в детсад, автобус и часы; тема соответствует, заметных дефектов нет. 10/12: тема не радикально нова, а количественный OECD индикатор не измеряет ежедневный gap; язык, польза и cover сильные. Проверка Markdown статическая, не живой рендер Telegram. Ответ отдельного серверного preflight_pubication через совместимый шлюз не отобразился; технический release_readiness этим обзором не подтверждён.",
           "source_checks": [
             {
-              "url": "https://www.oecd.org/en/publications/education-at-a-glance-2026_b4968bbc-en/full-report/how-has-participation-in-early-childhood-education-and-care-evolved-across-age-groups-and-countries_ea5deac7.html",
-              "claim": "Childcare gap averages around two years across OECD countries;13 out of44 countries have no gap. Legal entitlement, provision, affordability, opening hours and eligibility are distinct factors.",
-              "scope": "Successfully opened full chapter and relevant highlights/analysis/definitions. Source data reference2024; indicator is end of paid parental leave to legally guaranteed publicly supportedECEC, not the daily closing-time gap or a Russian estimate.",
-              "checked_at": "2026-11-07",
               "kind": "primary_source",
-              "review_evidence": "Prior audit source-check record plus independent continuation review where available; scope/access limits retained."
+              "url": "https://www.oecd.org/en/publications/education-at-a-glance-2026_b4968bbc-en/full-report/how-has-participation-in-early-childhood-education-and-care-evolved-across-age-groups-and-countries_ea5deac7.html",
+              "checked_at": "2026-11-08T08:14:10.937Z",
+              "claim": "В среднем childcare gap ≈2 года, в 13 из 44 стран он отсутствует; это интервал между концом оплачиваемого родительского отпуска и юридически гарантированным доступом к ECEC.",
+              "scope": "OECD Education at a Glance 2026, глава B1, данные преимущественно за 2024; другие страны и правовые системы; доступ к услугам зависит также от мест, стоимости, часов работы и условий; не показатель ежедневного разрыва 19:00–18:00 и не российская статистика."
             }
           ],
-          "findings": [],
+          "findings": [
+            {
+              "severity": "informational",
+              "description": "Независимый live Telegram render отсутствует. С совместимого серверного read-only preflight получен пустой объект без release_readiness; его PASS не заявляется."
+            }
+          ],
           "calculations": [
             {
-              "label": "Hours of additional care",
+              "label": "Дополнительный уход за 20 рабочих дней",
               "operator": "product",
               "inputs": [
                 20,
                 1
               ],
               "expected": 20,
-              "tolerance": 0.01,
+              "tolerance": 0,
               "excerpt": "20 часов в месяц"
             },
             {
-              "label": "Hourly care cost",
+              "label": "Цена часа ухода в условном примере",
               "operator": "ratio",
               "inputs": [
                 12000,
                 20
               ],
               "expected": 600,
-              "tolerance": 0.01,
+              "tolerance": 0,
               "excerpt": "600 ₽ за час"
             },
             {
-              "label": "Monthly net difference",
+              "label": "Чистая разница в семейном бюджете",
               "operator": "difference",
               "inputs": [
                 10000,
                 12000
               ],
               "expected": -2000,
-              "tolerance": 0.01,
+              "tolerance": 0,
               "excerpt": "−2 000 ₽ в месяц"
             }
           ],
-          "visual_reviewer_run_id": "/root:66c5e455b265",
+          "visual_reviewer_run_id": "Money Psychology preflight | 2026-11-08 | automation turn 2",
           "live_telegram_render": "not_tested"
         }
       },
