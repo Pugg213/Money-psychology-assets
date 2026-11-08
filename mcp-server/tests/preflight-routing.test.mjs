@@ -37,3 +37,13 @@ test('source inspection hashes actual JPEG bytes and returns the same bytes for 
  assert.equal(await source.readArticle('2026-11-08','a'.repeat(40)),'article');
  assert.ok(calls.every(url=>url.includes('/'+'a'.repeat(40)+'/')));
 });
+
+test('cached connector receives readiness in structured JSON as well as text',async()=>{
+ const result={ok:true,date_moscow:'2026-11-08',release_readiness:{status:'reviewed'},image_content:{type:'image',mimeType:'image/jpeg',data:'pixels'}};
+ const r=response();await mcp(req('bot_api_call',{method:'preflight_publication',params:{date_moscow:'2026-11-08',include_image:false}}),r,
+  {preflightService:{async run(){return result;}}});
+ assert.equal(r.body.result.structuredContent.ok,true);
+ assert.deepEqual(r.body.result.structuredContent.release_readiness,{status:'reviewed'});
+ assert.equal(r.body.result.structuredContent.image_content,undefined);
+ assert.deepEqual(JSON.parse(r.body.result.content[0].text),r.body.result.structuredContent);
+});

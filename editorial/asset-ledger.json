@@ -348,6 +348,35 @@
         "reviewer_run_id": "/root:66c5e455b265",
         "assessment": "Full JPEG viewed: different grocery mixes on a balance express differing expenditure weights; no official data or claimed precise inflation measurement. Burgundy, brass and tactile food still life."
       }
+    },
+    {
+      "date_moscow": "2026-11-15",
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-15-imagegen.jpg",
+      "github_path": "telegram/2026-11/2026-11-15-imagegen.jpg",
+      "github_blob_sha": "129a223564bf3b28d8ae77ac75f38113cb5a3c03",
+      "github_size_bytes": 306804,
+      "jpeg_sha256": "d59fa5893d4c232230cc12b7035ddf1c7c49d4081b2fc046555e2c77016638d0",
+      "visual_review": "approved",
+      "original_source_sha": "sha256:fc8a0936c5f656727f1270d808d6faf5eae30fe977145eefc2774c2126e5ecb6",
+      "generation": {
+        "method": "chatgpt_image_gen",
+        "source_ref": "editorial/originals/2026-11-15-imagegen.png",
+        "source_sha256": "fc8a0936c5f656727f1270d808d6faf5eae30fe977145eefc2774c2126e5ecb6",
+        "observed_at": "2026-11-08T06:11:54.851Z",
+        "source_run_id": "39fb3d4a-92a8-8327-a14a-f937e5365602",
+        "source_file_ref": "file_00000000ac7c81f5ba0a654fb0655c73",
+        "generation_id": "655e06a3-3254-41db-a22d-42cdec063f7c",
+        "prompt_unavailable_reason": "Original scheduled run retained no input prompt and image tool returned an empty prompt; exact generation time unknown. observed_at is the actual saved image checkpoint, not claimed generation time."
+      },
+      "pixel_review": {
+        "decision": "approved",
+        "asset_blob_sha": "129a223564bf3b28d8ae77ac75f38113cb5a3c03",
+        "checked_at": "2026-11-08T09:17:17.297Z",
+        "reviewer_run_id": "/root",
+        "assessment": "Directly viewed recovered final JPEG: two houses, complete versus partial glass cover and rain; sharp miniature still life; no labels or numeric claims. The image is a metaphor for retained insurance risk, not an illustration of a literal policy or exclusion."
+      },
+      "provenance_note": "Recovered exact native output through its actual tool file IDs; original PNG and final JPEG hashes independently matched the scheduled-run checkpoint and GitHub create_blob results. No replacement image generated.",
+      "user_approval_evidence": "Editorial approval; individual artwork approval not claimed."
     }
   ]
 }

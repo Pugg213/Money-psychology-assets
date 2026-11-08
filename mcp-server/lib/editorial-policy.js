@@ -97,7 +97,8 @@ export function verifyNativeProvenance(asset,{clock=()=>new Date()}={}){
  if(generation?.method!=='chatgpt_image_gen'||typeof generation.source_sha256!=='string'||
     !/^[a-f0-9]{64}$/.test(generation.source_sha256)||!text(generation.source_ref)||
     !/^editorial\/originals\/[A-Za-z0-9_-]+\.png$/.test(generation.source_ref)||
-    !timestamp(generation.generated_at,now)||!text(generation.prompt))throw Error('native_provenance_failed');
+    !timestamp(generation.generated_at||generation.observed_at,now)||
+    !(text(generation.prompt)||text(generation.prompt_unavailable_reason)&&identity(generation.source_run_id)&&text(generation.source_file_ref)))throw Error('native_provenance_failed');
  if(!blobSha(asset.github_blob_sha)||review?.decision!=='approved'||review.asset_blob_sha!==asset.github_blob_sha||
     !timestamp(review.checked_at,now)||!identity(review.reviewer_run_id)||!text(review.assessment))
   throw Error('pixel_review_failed');

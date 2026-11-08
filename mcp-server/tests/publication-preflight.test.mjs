@@ -32,10 +32,10 @@ function fixture(){
 }
 test('preflight pins one snapshot and returns computed payload, bytes evidence and exact article for review without Telegram',async()=>{
  const f=fixture(),service=createPublicationPreflight({source:f.source,clock:()=>new Date('2026-11-06T22:00:00Z')});
- const r=await service.run();
+ const r=await service.run({include_content:true});
  assert.equal(r.ok,true);assert.equal(r.date_moscow,day);assert.equal(r.source_commit,commit);
  assert.equal(r.payload_hash,f.hash);assert.equal(r.title,f.entry.title);assert.equal(r.content,f.entry.content);
- assert.equal(r.full_markdown,f.markdown);assert.equal(r.asset_pinned_url,RAW+commit+'/'+f.asset.github_path);
+ assert.equal(r.full_markdown,undefined);assert.equal(r.asset_pinned_url,RAW+commit+'/'+f.asset.github_path);
  assert.deepEqual(r.media_evidence,{url:r.asset_pinned_url,github_blob_sha:blob,jpeg_sha256:jpeg,source_evidence:null,size_bytes:12345,width:900,height:1125});
  assert.equal(r.checks.article_copy.status,'passed');assert.equal(r.checks.semantic_review,'not_performed');
  assert.equal(r.checks.pixel_review,'not_performed');assert.equal(f.calls.filter(x=>x==='snapshot').length,1);
@@ -110,7 +110,7 @@ test('unreviewed media remains available as verified JPEG bytes without allowing
  f.source.inspectMedia=mediaSource.inspectMedia;
  assert.equal(verifyAssetIdentity(f.entry,f.ledger),f.asset);
  assert.throws(()=>verifyEntryAsset(f.entry,f.ledger),/asset_identity_or_approval_failed/);
- const r=await createPublicationPreflight({source:f.source}).run({date_moscow:day});
+ const r=await createPublicationPreflight({source:f.source}).run({date_moscow:day,include_image:true});
  assert.equal(r.ok,false);assert.equal(r.checks.asset_identity.status,'passed');
  assert.equal(r.checks.recorded_editorial_binding.status,'failed');
  assert.equal(r.release_readiness.status,'not_released');assert.equal(r.checks.media.status,'passed');
@@ -123,4 +123,10 @@ test('invalid asset identity cannot fetch or expose media even for read-only rev
  const r=await createPublicationPreflight({source:f.source}).run({date_moscow:day});
  assert.equal(r.ok,false);assert.equal(inspected,false);assert.equal(r.image_content,undefined);
  assert.equal(r.checks.asset_identity.status,'failed');assert.equal(r.checks.media.status,'blocked');
+});
+
+test('default preflight keeps readiness and byte evidence without duplicating editorial payload',async()=>{
+ const f=fixture();f.entry.content='x'.repeat(20000);const r=await createPublicationPreflight({source:f.source}).run({date_moscow:day,include_image:false});
+ assert.equal(r.content,undefined);assert.equal(r.full_markdown,undefined);assert.equal(r.canonical_entry,undefined);assert.equal(r.asset_record,undefined);
+ assert.ok(r.media_evidence);assert.ok(r.source_commit);assert.ok(JSON.stringify(r).length<9000);
 });

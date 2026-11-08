@@ -10,7 +10,7 @@ const publicationTool={name:'publish_cover_then_article',
  description:'Publish the claimed canonical daily cover and linked rich article once. Durable stage receipts; retries never send again.',
  inputSchema:{type:'object',properties:{photo_url:{type:'string'},caption:{type:'string'},content:{type:'string'},
  format:{type:'string',enum:['markdown','html']}},required:['photo_url','content','format'],additionalProperties:false},annotations:{}};
-const preflightTool={name:'preflight_publication',description:'Read-only canonical integrity preflight: pinned article, payload/JPEG hashes, exact image pixels; semantic approval remains a separate editor task.',inputSchema:{type:'object',properties:{date_moscow:{type:'string'},include_image:{type:'boolean'}},additionalProperties:false},annotations:{readOnlyHint:true}};
+const preflightTool={name:'preflight_publication',description:'Read-only canonical integrity preflight: pinned article, payload/JPEG hashes, exact image pixels; semantic approval remains a separate editor task.',inputSchema:{type:'object',properties:{date_moscow:{type:'string'},include_image:{type:'boolean'},include_content:{type:'boolean'}},additionalProperties:false},annotations:{readOnlyHint:true}};
 const BASE='https://money-psy-telegram-mcp.vercel.app';
 const RESOURCE=BASE+'/mcp';
 function checkToken(req){
@@ -37,7 +37,7 @@ function checkToken(req){
 }
 function respond(req,res,payload,code=200){
  if(req.modernMcp&&payload.result)payload.result={...payload.result,resultType:'complete',
-  _meta:{...payload.result._meta,'io.modelcontextprotocol/serverInfo':{name:'money-psy-telegram',version:'2.6.0'}}};
+  _meta:{...payload.result._meta,'io.modelcontextprotocol/serverInfo':{name:'money-psy-telegram',version:'2.6.1'}}};
  res.statusCode=code;
  res.setHeader('Cache-Control','no-store');
  res.setHeader('X-Content-Type-Options','nosniff');
@@ -158,11 +158,11 @@ export default async function handler(req,res,{businessExecutor=executeBusinessT
    message:'Modern MCP uses per-request metadata; initialize is available for legacy versions'}},404);
   const requested=payload.params?.protocolVersion;
   return respond(req,res,{jsonrpc:'2.0',id:payload.id,result:{protocolVersion:VERSIONS.includes(requested)&&requested!=='2026-07-28'?requested:'2025-11-25',
-   serverInfo:{name:'money-psy-telegram',version:'2.6.0'},capabilities:{tools:{}},
+   serverInfo:{name:'money-psy-telegram',version:'2.6.1'},capabilities:{tools:{}},
    instructions:'Manage the configured Telegram channel and explicitly connected Business chats; mutations execute immediately. Daily publication uses the canonical queue and durable once-only guard.'}});
  }
  if(payload.method==='server/discover')return respond(req,res,{jsonrpc:'2.0',id:payload.id,
-  result:{supportedVersions:VERSIONS,serverInfo:{name:'money-psy-telegram',version:'2.6.0'},capabilities:{tools:{}},ttlMs:0,cacheScope:'private'}});
+  result:{supportedVersions:VERSIONS,serverInfo:{name:'money-psy-telegram',version:'2.6.1'},capabilities:{tools:{}},ttlMs:0,cacheScope:'private'}});
  if(payload.method==='ping')return respond(req,res,{jsonrpc:'2.0',id:payload.id,result:{}});
  if(payload?.method==='tools/list'){
   return respond(req,res,{jsonrpc:'2.0',id:payload.id,result:{tools:allTools,...(req.modernMcp?{ttlMs:0,cacheScope:'private'}:{})}});
@@ -191,17 +191,17 @@ export default async function handler(req,res,{businessExecutor=executeBusinessT
     :isAudienceTool(name)?await audienceExecutor(name,argumentsObject)
     :isCoreTool(name)?await coreExecutor(name,argumentsObject)
     :await extensionExecutor(name,argumentsObject);
-   if(name==='get_capabilities')result={...result,version:'2.6.0',typed_tools:allTools.map(x=>x.name),
+   if(name==='get_capabilities')result={...result,version:'2.6.1',typed_tools:allTools.map(x=>x.name),
     typed_tool_count:allTools.length,editorial_preflight:{tool:'preflight_publication',compatibility:{tool:'bot_api_call',method:'preflight_publication'},verified_image_content:true,semantic_approval:'separate_independent_review'},mcp_implementation:'local_all_tools_v1',oauth_implementation:'local_oauth_v1'};
    const {image_content,...textResult}=result||{};
    return respond(req,res,{jsonrpc:'2.0',id:payload.id,result:{content:[{type:'text',text:JSON.stringify(textResult)},
-    ...(effectiveName===preflightTool.name&&image_content?[image_content]:[])],isError:result?.ok===false}});
+    ...(effectiveName===preflightTool.name&&image_content?[image_content]:[])],structuredContent:textResult,isError:result?.ok===false}});
   }catch(e){
    // Secrets must never enter model-visible error messages.
    const message=name===publicationTool.name
     ?(/^[a-z0-9_]{1,100}$|^invalid_original_jpeg: [a-z0-9_]{1,80}$/.test(e.message||'')?e.message:'publication_guard_failed_no_automatic_retry')
     :safeToolError(e);
-   return respond(req,res,{jsonrpc:'2.0',id:payload.id,result:{content:[{type:'text',text:JSON.stringify({ok:false,error:message})}],isError:true}});
+   return respond(req,res,{jsonrpc:'2.0',id:payload.id,result:{content:[{type:'text',text:JSON.stringify({ok:false,error:message})}],structuredContent:{ok:false,error:message},isError:true}});
   }
  }
  return respond(req,res,{jsonrpc:'2.0',id:payload.id,error:{code:payload.method==='tools/call'?-32602:-32601,

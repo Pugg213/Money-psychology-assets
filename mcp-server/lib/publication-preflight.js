@@ -7,7 +7,7 @@ const markdownFor=entry=>'![Обложка выпуска]('+entry.photo_url+')\
 
 /** Read-only integrity evidence. A passed result never represents semantic or pixel approval. */
 export function createPublicationPreflight({source=createEditorialSource(),clock=()=>new Date()}={}){
- async function run({date_moscow,include_image=true}={}){
+ async function run({date_moscow,include_image=false,include_content=false}={}){
   const result={ok:false,date_moscow:date_moscow??null,checks:{semantic_review:'not_performed',pixel_review:'not_performed'},errors:[]};
   const fail=(check,error)=>{
    const message=String(error?.message||error).slice(0,500);
@@ -79,6 +79,9 @@ export function createPublicationPreflight({source=createEditorialSource(),clock
    }catch(error){fail('article_copy',error);}
   }else result.checks.article_copy={status:'not_supported'};
   result.ok=result.errors.length===0;
+  // Text and imagery are requested separately: cached clients must receive a small readiness object.
+  delete result.canonical_entry;delete result.asset_record;delete result.full_markdown;
+  if(!include_content)delete result.content;
   return result;
  }
  return {run};

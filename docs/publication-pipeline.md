@@ -76,3 +76,6 @@ Official API references: [Telegram sendRichMessage](https://core.telegram.org/bo
 ## Completion evidence: 2026-11-07
 
 Today’s existing delivery was independently recovered from the private receipt: cover 385, article 386, feedback confirmed, completed 12:00:27 Moscow. The repair preserves those records and sends no Telegram messages. Six native image originals and final JPEGs for November 9–14 were recovered from the unfinished audit and independently hashed and viewed. Seven future texts have separate editorial acceptance with actual limits and recalculated examples; their release records replace uniform writer-only scores. Live scheduled producer execution and Telegram client render require separate future observations.
+
+
+November 8 correction: the same publisher now wakes at 11:55 to prepare and wait for 12:00; only actual sending must occur at/after noon. Prefer the compact `get_publication_journal.readiness` and structuredContent preflight envelope. The updated production contract and asset transfer runbook define the repaired host compatibility and binary transfer. No second publisher was introduced.

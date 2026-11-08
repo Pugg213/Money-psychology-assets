@@ -133,3 +133,13 @@ test('binds pixel approval to the current image and nonfuture dated evidence',()
   assert.throws(()=>verifyNativeProvenance(asset,{clock}),{message:'pixel_review_failed'});
  }
 });
+
+test('recovered native output keeps missing prompt and exact generation time explicit',()=>{
+ const {asset}=fixture();delete asset.generation.prompt;
+ assert.throws(()=>verifyNativeProvenance(asset,{clock}),/native_provenance_failed/);
+ Object.assign(asset.generation,{prompt_unavailable_reason:'Original run did not retain tool input',source_run_id:'39fb3d4a-92a8-8327-a14a-f937e5365602',source_file_ref:'file_observed_original'});
+ asset.generation.observed_at=asset.generation.generated_at;delete asset.generation.generated_at;
+ assert.equal(verifyNativeProvenance(asset,{clock}),asset);
+ delete asset.generation.source_file_ref;
+ assert.throws(()=>verifyNativeProvenance(asset,{clock}),/native_provenance_failed/);
+});

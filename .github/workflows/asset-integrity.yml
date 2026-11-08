@@ -11,6 +11,7 @@ on:
       - 'scripts/verify_publication_queue.mjs'
       - 'scripts/verify_asset_ledger.py'
       - 'scripts/check_editorial_reserve.mjs'
+      - 'scripts/read_asset_base64.py'
       - '.github/workflows/**'
       - 'mcp-server/**'
   pull_request:
@@ -23,6 +24,7 @@ on:
       - 'scripts/verify_publication_queue.mjs'
       - 'scripts/verify_asset_ledger.py'
       - 'scripts/check_editorial_reserve.mjs'
+      - 'scripts/read_asset_base64.py'
       - '.github/workflows/**'
       - 'mcp-server/**'
   workflow_dispatch:

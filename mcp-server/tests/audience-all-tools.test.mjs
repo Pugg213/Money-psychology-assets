@@ -198,3 +198,10 @@ test('only exact Telegram not-modified rejection for reply-markup edits receives
   ['editMessageReplyMarkup',description,500]])
   await assert.rejects(()=>botRequest(method,{},response(desc,code)),e=>!e.category);
 });
+
+test('journal exposes explicit readiness failure instead of an empty object when preflight source fails',async()=>{
+ const source={async readQueue(){return {queue:{entries:[]},commit:'a'.repeat(40)};},async snapshot(){throw Error('source_offline');}};
+ const s=createAudienceService({editorialSource:source,publicationStore:{async summary(){throw Error('not called');}},store:{}});
+ const r=await s.publicationJournal();assert.deepEqual(r.entries,[]);
+ assert.equal(r.readiness.ok,false);assert.equal(r.readiness.errors[0].error,'source_offline');
+});

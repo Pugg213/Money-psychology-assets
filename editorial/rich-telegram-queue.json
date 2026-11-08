@@ -1179,19 +1179,19 @@
       "date_moscow": "2026-11-15",
       "scheduled_at": "2026-11-15T12:00:00+03:00",
       "title": "Полис дешевле на 30%. Какая часть ремонта теперь ваша?",
-      "photo_caption": "Полис дешевле на 12 000 ₽, но при крупном страховом случае личные расходы могут вырасти на 30 000 ₽. Считаем оба сценария на одинаковом условном покрытии.",
+      "photo_caption": "Экономия на полисе — 12 000 ₽. При покрываемом убытке 80 000 ₽ годовые расходы в нашей модели вырастут на 18 000 ₽. Сравниваем полисы с одинаковым условным покрытием.",
       "content": "# Полис дешевле на 30%. Какая часть ремонта теперь ваша?\n\nСтраховщик предлагает два полиса для квартиры: **40 000 ₽ без франшизы** или **28 000 ₽ с безусловной франшизой 30 000 ₽**. «Зачем переплачивать 12 тысяч?» — первая мысль. Но если завтра сосед затопит кухню, а покрываемый ремонт стоит **80 000 ₽**, дешёвый полис в нашем примере обойдётся на **18 000 ₽ дороже**.\n\nВсе суммы вымышлены. Это не предложения конкретной компании, а способ увидеть, как **скидка сегодня меняет расходы завтра**.\n\n## Как работает эта «скидка»\n\nФраншиза — часть покрываемого убытка, которую вы оплачиваете сами. Проект Банка России [«Финансовая культура»](https://fincult.info/article/kak-i-ot-chego-mozhno-zastrakhovat-imushchestvo/) различает **условную** и **безусловную** франшизу. При условной ущерб до установленного порога не возмещают, а при превышении порога возможно полное возмещение. При безусловной определённую сумму вычитают из покрываемого ущерба.\n\nМы считаем **фиксированную безусловную франшизу 30 000 ₽ на один случай**. Если покрываемый ущерб 80 000 ₽, страховая выплачивает **50 000 ₽**, а вы оплачиваете **30 000 ₽**. Без франшизы компания по условиям нашей модели компенсирует все 80 000 ₽.\n\nВажная оговорка: **все остальные условия полисов условно одинаковы** — риски, исключения, лимиты, способ оценки ущерба. Если один из договоров не покрывает залив, сравнение перестаёт работать. Реальный договор нужно читать целиком.\n\n## Цена полиса — не полная цена риска\n\nРазница **12 000 / 40 000 = 30%** — это скидка **на премию**, а не на возможный ремонт. Сравним личные затраты за год: премия плюс собственная часть *одного покрываемого убытка*.\n\n**Нет случая:** без франшизы — **40 000 ₽**, с франшизой — **28 000 ₽**. Второй дешевле на **12 000 ₽**.\n\n**Ущерб 10 000 ₽:** без франшизы — **40 000 ₽**, с франшизой — **28 000 + 10 000 = 38 000 ₽**. Второй дешевле лишь на **2 000 ₽**.\n\n**Ущерб 20 000 ₽:** без франшизы — **40 000 ₽**, с франшизой — **28 000 + 20 000 = 48 000 ₽**. Второй дороже на **8 000 ₽**.\n\n**Ущерб 80 000 ₽:** без франшизы — **40 000 ₽**, с франшизой — **28 000 + 30 000 = 58 000 ₽**. Второй дороже на **18 000 ₽**.\n\n**Точка равенства при одном покрываемом случае — ущерб 12 000 ₽**: 28 000 + 12 000 = 40 000. Это арифметический порог нашего примера, не статистика происшествий.\n\n## Почему обе крайности кажутся убедительными\n\n**12 000 ₽ сэкономленных денег видны прямо сейчас**. Будущая протечка абстрактна — и внимание может прилипнуть к приятной цифре «−30%». Но есть противоположная реакция: представить разрушенный ремонт так ярко, что согласиться на любую цену ради ощущения безопасности.\n\nЭто не повод называть страх ошибкой. Смысл страхования — уменьшать последствия неопределённости, а не гарантировать прибыль. В [работе Канемана и Тверски 1979 года](https://web.mit.edu/curhan/www/docs/Articles/15341_Readings/Behavioral_Decision_Theory/Kahneman_Tversky_1979_Prospect_theory.pdf) исследовались особенности выбора между гарантированными и вероятными исходами. Авторы использовали в том числе **гипотетические задачи**. Они не проверяли поведение покупателей российских полисов: применение идеи к этому примеру — **интерпретация редакции**, а не доказанный эффект именно здесь.\n\nХорошее решение не обязано быть «самым дешёвым в среднем». Если для вас 30 000 ₽ в день аварии — неподъёмная сумма, более дорогая премия может покупать полезную предсказуемость бюджета. И наоборот: при доступном резерве вы можете осознанно оставить небольшие риски себе.\n\n## Можно ли вычислить «выгодную» вероятность?\n\nТолько при реальных данных о частоте и суммах **покрываемых** потерь. Для иллюстрации возьмём искусственный мир: за год происходит либо ничего, либо **ровно один ущерб не менее 30 000 ₽**. Если вероятность события — `p`, ожидаемые личные затраты с франшизой равны **28 000 + 30 000 × p**, без неё — **40 000 ₽**. Равенство: **p = 12 000 / 30 000 = 40%**.\n\nЭто **не реальная вероятность залива** и не рекомендация выбирать тариф по этому числу. Маленькие и повторные убытки, разные покрытия и условия возмещения меняют расчёт. Отсутствующая статистика не появляется от красивой формулы.\n\n## Действия перед оплатой\n\nПопросите **два письменных предложения с одинаковыми рисками, лимитами и исключениями**. Уточните тип франшизы, применяется ли она **к каждому случаю**, и как считается ущерб при ремонте силами страховщика. Спросите, что произойдёт при убытке в 10 000 и 80 000 ₽, — пусть ответ привяжут к конкретным условиям договора.\n\nЗатем проверьте **ликвидность**, а не только размер накоплений: сможете ли вы без кредита заплатить 30 000 ₽ сразу после происшествия? Если нет, «экономия» на премии перекладывает на вас риск кассового разрыва.\n\n**Итог:** выбирайте между способами разделить риск, а не между двумя красивыми ценниками. Сначала одинаковое покрытие и сумма ваших расходов при убытке — затем скидка.\n\n**Первоисточники:** [«Финансовая культура» Банка России — страхование имущества (обновлено 17.09.2024)](https://fincult.info/article/kak-i-ot-chego-mozhno-zastrakhovat-imushchestvo/) · [Kahneman, Tversky — *Prospect Theory*, *Econometrica*, март 1979](https://web.mit.edu/curhan/www/docs/Articles/15341_Readings/Behavioral_Decision_Theory/Kahneman_Tversky_1979_Prospect_theory.pdf).\n\n*Образовательный материал: тарифы и случаи условные. Реальные выплаты определяются договором и правилами страховщика.*",
       "format": "markdown",
       "publisher": "Money Psy Telegram MCP",
       "migrated_and_deduplicated": true,
-      "state": "draft",
+      "state": "queued",
       "telegram_publication": null,
       "production": {
-        "stage": "art",
+        "stage": "reviewed",
         "run_id": "Money Psychology preparation / automation turn 2 / 2026-11-08",
         "attempts": 1,
-        "updated_at": "2026-11-08T06:11:54.851Z",
-        "blocker": "Native image_gen produced real PNG and JPEG was visually reviewed in this run, but GitHub connector has no supported way to upload local binary files from the automation container. Neither PNG nor JPEG is stored in the canonical GitHub repository; exact generator prompt was not exposed (generation response prompt was empty). Must not mark queued or approve media identity before committing real bytes and obtaining separate release_review.",
+        "updated_at": "2026-11-08T09:17:17.297Z",
+        "blocker": null,
         "image_evidence": {
           "generated_file_id": "file_00000000ac7c81f5ba0a654fb0655c73",
           "jpeg_display_file_id": "file_00000000957881f5bfe2be0e0d93e79d",
@@ -1207,33 +1207,194 @@
           ],
           "visual_inspected": true,
           "assessment": "Directly viewed the final local JPEG: two small dwellings, fully covered vs partial shelter with falling rain; readable at small scale, coherent with insurance deductible, no spurious labels or numbers. Not proof that the artwork is accessible in GitHub.",
-          "github_uploaded": false
+          "github_uploaded": true
         },
         "source_checks": [
           {
             "kind": "primary_source",
             "url": "https://fincult.info/article/kak-i-ot-chego-mozhno-zastrakhovat-imushchestvo/",
-            "checked_at": "2026-11-08T06:11:54.851Z",
+            "checked_at": "2026-11-08T09:10:05.544Z",
             "claim": "Russian central-bank financial education article distinguishes conditional and unconditional deductibles",
             "scope": "Russian property insurance, informational guidance, updated 2024-09-17"
           },
           {
             "kind": "primary_source",
             "url": "https://web.mit.edu/curhan/www/docs/Articles/15341_Readings/Behavioral_Decision_Theory/Kahneman_Tversky_1979_Prospect_theory.pdf",
-            "checked_at": "2026-11-08T06:11:54.851Z",
+            "checked_at": "2026-11-08T09:10:05.544Z",
             "claim": "1979 prospect theory original describes choice anomalies when certainty and probability are weighted, based partly on hypothetical choices",
             "scope": "Experimental hypothetical choices, not direct Russian insurance buyer data"
           }
-        ]
+        ],
+        "resolved_incident": "Binary transfer completed using exact existing file references and connected create_blob base64; missing original prompt/time kept explicit, not fabricated."
       },
       "editorial_review": {
         "status": "text_review_passed_writer_selfcheck_draft",
         "math_check": "passed_writer_arithmetic_2026_11_08",
         "markdown_static_check": "passed_mcp_validation_draft",
         "live_telegram_render": "not_tested",
-        "release_review": null,
-        "writer_self_assessment": "Two opened primary sources; all illustrative amounts arithmetically consistent. Writer's self-check only, NOT an independent release approval. No asset hash binding possible before GitHub binary upload."
-      }
+        "release_review": {
+          "version": 1,
+          "decision": "approved",
+          "reviewer_role": "independent_editor",
+          "reviewer_run_id": "/root/review_nov15",
+          "writer_run_id": "39fb3d4a-92a8-8327-a14a-f937e5365602",
+          "checked_at": "2026-11-08T09:17:17.297Z",
+          "payload_hash": "ac881f224f9eb3961f9ea81ab30906205a43cfd30477793185a84443839c70f3",
+          "asset_blob_sha": "129a223564bf3b28d8ae77ac75f38113cb5a3c03",
+          "scores": {
+            "originality": 1,
+            "evidence": 2,
+            "depth": 2,
+            "language": 2,
+            "practical_value": 2,
+            "visual": 2
+          },
+          "assessment": "Independent text approval after removing ambiguous caption: price comparison repeated across recent issues limits originality to 1. Hypothetical insurance model and psychology interpretation are clearly scoped; 9/10 text, root visual2/2.",
+          "source_checks": [
+            {
+              "kind": "primary_source",
+              "url": "https://fincult.info/article/kak-i-ot-chego-mozhno-zastrakhovat-imushchestvo/",
+              "checked_at": "2026-11-08T09:10:05.544Z",
+              "claim": "Russian central-bank financial education article distinguishes conditional and unconditional deductibles",
+              "scope": "Russian property insurance, informational guidance, updated 2024-09-17"
+            },
+            {
+              "kind": "primary_source",
+              "url": "https://web.mit.edu/curhan/www/docs/Articles/15341_Readings/Behavioral_Decision_Theory/Kahneman_Tversky_1979_Prospect_theory.pdf",
+              "checked_at": "2026-11-08T09:10:05.544Z",
+              "claim": "1979 prospect theory original describes choice anomalies when certainty and probability are weighted, based partly on hypothetical choices",
+              "scope": "Experimental hypothetical choices, not direct Russian insurance buyer data"
+            }
+          ],
+          "findings": [],
+          "calculations": [
+            {
+              "label": "Premium saving percent",
+              "operator": "percent_change",
+              "inputs": [
+                40000,
+                28000
+              ],
+              "expected": -30,
+              "tolerance": 0.001,
+              "excerpt": "30%"
+            },
+            {
+              "label": "Insurer payment",
+              "operator": "difference",
+              "inputs": [
+                80000,
+                30000
+              ],
+              "expected": 50000,
+              "tolerance": 0.001,
+              "excerpt": "50 000 ₽"
+            },
+            {
+              "label": "Annual cost with retained loss 10000",
+              "operator": "sum",
+              "inputs": [
+                28000,
+                10000
+              ],
+              "expected": 38000,
+              "tolerance": 0.001,
+              "excerpt": "38 000 ₽"
+            },
+            {
+              "label": "Annual cost with retained loss 20000",
+              "operator": "sum",
+              "inputs": [
+                28000,
+                20000
+              ],
+              "expected": 48000,
+              "tolerance": 0.001,
+              "excerpt": "48 000 ₽"
+            },
+            {
+              "label": "Annual cost with retained loss 30000",
+              "operator": "sum",
+              "inputs": [
+                28000,
+                30000
+              ],
+              "expected": 58000,
+              "tolerance": 0.001,
+              "excerpt": "58 000 ₽"
+            },
+            {
+              "label": "Annual extra expense at large loss",
+              "operator": "difference",
+              "inputs": [
+                58000,
+                40000
+              ],
+              "expected": 18000,
+              "tolerance": 0.001,
+              "excerpt": "18 000 ₽"
+            },
+            {
+              "label": "Loss break-even",
+              "operator": "difference",
+              "inputs": [
+                40000,
+                28000
+              ],
+              "expected": 12000,
+              "tolerance": 0.001,
+              "excerpt": "12 000 ₽"
+            },
+            {
+              "label": "Probability threshold",
+              "operator": "ratio",
+              "inputs": [
+                12000,
+                30000
+              ],
+              "expected": 0.4,
+              "tolerance": 0.001,
+              "excerpt": "40%"
+            }
+          ],
+          "visual_reviewer_run_id": "/root"
+        },
+        "writer_self_assessment": "Two opened primary sources; all illustrative amounts arithmetically consistent. Writer's self-check only, NOT an independent release approval. No asset hash binding possible before GitHub binary upload.",
+        "pipeline_review": {
+          "version": 1,
+          "checked_at": "2026-11-08T09:17:17.297Z",
+          "payload_hash": "ac881f224f9eb3961f9ea81ab30906205a43cfd30477793185a84443839c70f3",
+          "asset_blob_sha": "129a223564bf3b28d8ae77ac75f38113cb5a3c03",
+          "scores": {
+            "originality": 1,
+            "evidence": 2,
+            "depth": 2,
+            "language": 2,
+            "practical_value": 2,
+            "visual": 2
+          },
+          "assessment": "Writer draft and sources retained; independent editor accepted exact final body and corrected caption, root inspected recovered JPEG.",
+          "arithmetic": "Premium savings, four loss scenarios and two break-even thresholds independently recomputed. All values are hypothetical.",
+          "sources": [
+            {
+              "kind": "primary_source",
+              "url": "https://fincult.info/article/kak-i-ot-chego-mozhno-zastrakhovat-imushchestvo/",
+              "checked_at": "2026-11-08T09:10:05.544Z",
+              "claim": "Russian central-bank financial education article distinguishes conditional and unconditional deductibles",
+              "scope": "Russian property insurance, informational guidance, updated 2024-09-17"
+            },
+            {
+              "kind": "primary_source",
+              "url": "https://web.mit.edu/curhan/www/docs/Articles/15341_Readings/Behavioral_Decision_Theory/Kahneman_Tversky_1979_Prospect_theory.pdf",
+              "checked_at": "2026-11-08T09:10:05.544Z",
+              "claim": "1979 prospect theory original describes choice anomalies when certainty and probability are weighted, based partly on hypothetical choices",
+              "scope": "Experimental hypothetical choices, not direct Russian insurance buyer data"
+            }
+          ]
+        }
+      },
+      "photo_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-15-imagegen.jpg",
+      "image_review": "Directly viewed recovered final JPEG: two houses, complete versus partial glass cover and rain; sharp miniature still life; no labels or numeric claims. The image is a metaphor for retained insurance risk, not an illustration of a literal policy or exclusion."
     }
   ]
 }

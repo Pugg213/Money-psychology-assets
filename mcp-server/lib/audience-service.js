@@ -3,6 +3,7 @@ import {createAudienceStore} from './audience-store.js';
 import {createBusinessStore} from './business-store.js';
 import {BUSINESS_UPDATES,ownerIds,validateConnection} from './business-core.js';
 import {createEditorialSource} from './editorial-source.js';
+import {createPublicationPreflight} from './publication-preflight.js';
 import {createPublicationStore} from './publication-store.js';
 import {READER_UPDATES,effectiveUpdates} from './webhook-config.js';
 
@@ -163,7 +164,8 @@ export function createAudienceService({telegramApi=botRequest,store=null,botToke
    source:'Captured reader questions, heuristic topic categorization; verify sources and editorial novelty before publishing.'};
  }
  async function publicationJournal({limit=20}={}){
-  const {queue:body,commit}=await (editorialSource||createEditorialSource()).readQueue();
+  const source=editorialSource||createEditorialSource();
+  const {queue:body,commit}=await source.readQueue();
   const items=Array.isArray(body.entries)?body.entries:[];
   const receipts=publicationStore||createPublicationStore();
   const entries=[];
@@ -180,7 +182,12 @@ export function createAudienceService({telegramApi=botRequest,store=null,botToke
     scheduled_at:x.scheduled_at,telegram_publication:x.telegram_publication||null,server_receipt
    });
   }
-  return {channel:CHANNEL,source:'GitHub canonical editorial queue',source_commit:commit,
+  let readiness={ok:false,errors:[{check:'source',error:'preflight_not_supported'}]};
+  if(typeof source.snapshot==='function'){
+   try{readiness=await createPublicationPreflight({source}).run({include_image:false,include_content:false});}
+   catch{readiness={ok:false,errors:[{check:'preflight',error:'preflight_unavailable'}]};}
+  }
+  return {channel:CHANNEL,source:'GitHub canonical editorial queue',source_commit:commit,readiness,
    delivery_evidence:'GitHub confirmations and private server receipts are separate; never infer a send from a constructed URL.',entries};
  }
  async function attachButtons({date_moscow,confirm=false}={}){
