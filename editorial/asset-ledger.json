@@ -377,6 +377,36 @@
       },
       "provenance_note": "Recovered exact native output through its actual tool file IDs; original PNG and final JPEG hashes independently matched the scheduled-run checkpoint and GitHub create_blob results. No replacement image generated.",
       "user_approval_evidence": "Editorial approval; individual artwork approval not claimed."
+    },
+    {
+      "date_moscow": "2026-11-16",
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-16-imagegen.jpg",
+      "github_path": "telegram/2026-11/2026-11-16-imagegen.jpg",
+      "github_blob_sha": "17c7783b6ba6af836a5e5e3bf67963feda5700fd",
+      "github_size_bytes": 361634,
+      "jpeg_sha256": "40128272ff6cc227d9f0aaf01777e04d355aedfd33e16a7b2ba6d21a979cec5b",
+      "visual_review": "approved",
+      "original_source_sha": "sha256:7d905076ff8eae08e9c4d044b45c26b5ba18eae1c8c21f607b0fe228b165d9aa",
+      "generation": {
+        "method": "chatgpt_image_gen",
+        "source_ref": "editorial/originals/2026-11-16-imagegen.png",
+        "source_sha256": "7d905076ff8eae08e9c4d044b45c26b5ba18eae1c8c21f607b0fe228b165d9aa",
+        "observed_at": "2026-11-09T06:10:26.766Z",
+        "source_run_id": "Money Psychology preparation / 2026-11-09 09:00 Europe/Moscow",
+        "source_file_ref": "file_0000000053bc81f6b497aea5cd66da55",
+        "generation_id": "71f52663-f281-47ab-a9f2-a96c06f48270",
+        "prompt": "Премиальная оригинальная обложка к статье Money Psychology | No BS о ловушке минимального платежа кредитной карты. Только статичное изображение, портрет 4:5. Не иллюстрация цифр, а кинематографичная предметная фотосцена в духе современного арт-журнала об экономике: гигантское тяжёлое колесо из чёрного обсидиана с очень многими тонкими насечками, закреплённое в сложной бронзовой механической конструкции; к нему прижат крошечный полированный рычаг-храповик, который способен продвигать колесо лишь на один маленький шаг. Визуальная история об огромном долге, который едва сокращается маленькими обязательными платежами. Механизм должен быть физически убедительным, без сюрреалистических лишних деталей: дорогие материалы, музейная инсталляция, макрофотография, сильные диагонали и выразительная скульптурная форма. Цвет: насыщенный тёмно-индиговый, матовый графит, выверенные акценты в тёплой меди; жёсткий боковой свет, глубокие тени, тончайшие фактуры и отражения. Большое чистое тёмное пространство сверху, главный объект крупный и понятный в маленьком Telegram-превью. НИКАКИХ надписей, цифр, слов, логотипов, банковских карт, денежных знаков, часов, стеклянных домов, еды, весов, диаграмм, интерфейсов, коллажей, шаблонов, водяных знаков. Изображение должно сильно отличаться от прошлых обложек и выглядеть как эксклюзивная студийная постановка.",
+        "evidence_note": "Prompt text saved in GitHub draft before native generation. Generator returned no echo. PNG copied unchanged from real image_gen file; observed_at reflects local source-file mtime, not claimed exact generation timestamp."
+      },
+      "pixel_review": {
+        "decision": "approved",
+        "asset_blob_sha": "17c7783b6ba6af836a5e5e3bf67963feda5700fd",
+        "checked_at": "2026-11-09T06:20:47.816Z",
+        "reviewer_run_id": "Money Psychology preparation / 2026-11-09 09:00 Europe/Moscow",
+        "assessment": "Viewed exact final JPEG 1122x1402: giant dark obsidian ratchet wheel and small bronze pawl. Premium macro sculpture, legible at thumbnail scale, crisp details without words, brands, numbers or obvious artifacts. Metaphor for slow principal repayment, not a chart or bank product."
+      },
+      "provenance_note": "Verified original native PNG sha256 and computed git blob SHA on local bytes; confirmed connected GitHub create_blob returned matching Git SHA for both source PNG and derived JPEG after bounded base64 chunks. Same dimensions, RGB technical conversion only.",
+      "user_approval_evidence": "Editorial pixel approval, not individual user approval."
     }
   ]
 }

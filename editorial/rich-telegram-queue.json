@@ -1404,23 +1404,23 @@
       "telegram_publication": null,
       "publisher": "Money Psy Telegram MCP",
       "migrated_and_deduplicated": true,
-      "photo_url": null,
+      "photo_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-16-imagegen.jpg",
       "photo_caption": "Минимальный платёж помогает избежать просрочки, но не гарантирует быстрого погашения. Как маленькая цифра становится психологическим якорем?",
       "content": "# Банк просит 5 000 ₽. Почему это не план погашения долга\n\nВыписка по кредитной карте: долг **100 000 ₽**, обязательный минимальный платёж — **5 000 ₽**. Деньги на него есть. Приложение показывает, что всё в порядке: просрочки не будет.\n\n**Но сколько из этих 5 000 ₽ действительно уменьшит долг?** В условном расчёте ниже — только **2 000 ₽**. Остальные **3 000 ₽** уйдут на проценты. Вы выполнили требование банка, но погасили лишь 2% исходного долга.\n\nЭто история не о «плохих кредитках», а об опасной путанице двух задач: **избежать просрочки** и **избавиться от долга**. Цифра, которую банк просит внести, решает первую задачу. Вторую она сама по себе не гарантирует.\n\n## Когда минимум становится якорем\n\nПредставьте, что в приложении есть две суммы: «к оплате минимум — 5 000 ₽» и «задолженность — 100 000 ₽». Первая выглядит достижимой и почти автоматически превращается в месячный финансовый план. Это возможный механизм **якорения**: явно показанная цифра влияет на то, какую сумму человек считает достаточной.\n\nЕсть и эмпирическая опора, но её границы важны. Британский исследователь Нил Стюарт в статье *The Cost of Anchoring on Credit-Card Minimum Repayments* (2009) изучал влияние указания минимального платежа на выбор суммы погашения. Работа поддерживает гипотезу о психологическом якоре, **но не позволяет объявлять, что все владельцы российских карт ведут себя одинаково**. Данные другой страны и экспериментальные решения не заменяют вашу реальную выписку.\n\n[Оригинальная статья и аннотация в архиве Уорикского университета](https://wrap.warwick.ac.uk/id/eprint/2552/).\n\n## Один долг. Два разных расписания\n\nДопустим, льготный период уже закончился, **новых покупок нет**, комиссии, страхование и штрафы отсутствуют. Банк для этого учебного примера начисляет **3% на долг в начале каждого месяца**, а минимальный платёж равен **5% от долга в начале месяца**, включая уплату процентов. Проценты и платёж рассчитываются раз в месяц, без округления промежуточных сумм. Это **модель**, не тариф банка и не пересчёт рекламной годовой ставки.\n\nПервый месяц:\n\n• начисленные проценты: **100 000 × 3% = 3 000 ₽**;\n• минимальный платёж: **100 000 × 5% = 5 000 ₽**;\n• погашено основного долга: **5 000 − 3 000 = 2 000 ₽**;\n• остаток после платежа: **98 000 ₽**.\n\nЕсли все следующие 12 месяцев платить только такой **уменьшающийся минимум**, после двенадцатого платежа картина будет следующей:\n\n• всего внесено: **около 53 821 ₽**;\n• из них проценты: **около 32 292 ₽**;\n• на погашение первоначального долга ушло **около 21 528 ₽**;\n• осталось должны: **около 78 472 ₽**.\n\nВы перечислили банку более половины исходного долга, но сама задолженность уменьшилась примерно на пятую часть. Это не ошибка: **платежи и погашение основного долга — разные показатели**. Размер минимума при этом постепенно сокращается, создавая ощущение, что кредит становится всё легче.\n\n## А если отправлять 10 000 ₽ вместо минимума?\n\nОставим **тот же учебный долг и те же 3% за месяц**. Вносим **по 10 000 ₽ каждый месяц**, пока долг не закончится. При таких допущениях после 12 платежей останется примерно **656 ₽**. В тринадцатом месяце хватит последнего платежа **около 675 ₽** (включая проценты этого месяца).\n\nИтог: все выплаты составят **около 120 675 ₽**, из них **около 20 675 ₽ процентов**. По сравнению с режимом «платить только минимум» на 12-м месяце здесь требуется больше денег сейчас, зато практически закрыт долг. **Сравнивать только перечисленные суммы за первый год нечестно:** в одном сценарии остаётся 78 472 ₽ долга, в другом — 656 ₽. Сначала сравните остатки задолженности, потом накопленные проценты и нагрузку на бюджет.\n\nРазница в процентах, уплаченных **за первые 12 месяцев**, составляет примерно **11 637 ₽** в пользу фиксированного платежа. Это результат модели, а не обещанная экономия по любой кредитной карте.\n\n## Что действительно означает банковский минимум\n\nВ актуальных разъяснениях Банка России по расчёту показателя долговой нагрузки приведён пример кредитной карты с **минимальным платежом 5% задолженности**. Это пример **условия конкретного договора для расчётов регулятора**, а не обязательный для всех банков размер платежа. И это вообще другой расчёт, чем приведённая выше учебная модель.\n\n[Разъяснения Банка России к Указанию № 6579-У в редакции 2026 года](https://www.cbr.ru/explan/dfs_pdnz/dfs_pdnz_6579-u_7286-u/).\n\nВ настоящем договоре проценты могут начисляться **по дням**, у минимального платежа могут быть **нижняя граница**, отдельный порядок учёта процентов и комиссий, а у льготного периода — условия сохранения и восстановления. Для некоторых операций грейс не действует. Поэтому перенести число 3% из примера в реальную выписку нельзя. И ни одно движение по минимальному платежу не доказывает, что вы сохранили беспроцентный период.\n\n## Как не позволить приложению выбрать план за вас\n\n**Первое.** Откройте выписку и найдите три разных числа: **обязательный минимум**, **сумму для сохранения/восстановления грейса** (если он предусмотрен) и **полную задолженность**. Спросите банк, как начисляются проценты и какая часть очередного платежа пойдёт в основной долг. У разных договоров эти суммы и правила различаются.\n\n**Второе.** Назначьте собственную сумму погашения от бюджета — не ниже обязательного платежа и с учётом резервов на жизнь. Посмотрите по графику, **когда долг станет нулевым и сколько процентов будет уплачено**. Если график не удаётся получить, попросите у банка детальный расчёт по вашей ставке и остаткам. Не оплачивайте лишнее, если это оставит без денег на обязательные расходы и приведёт к новой задолженности.\n\n**Проверка за минуту:** если минимальный платёж завтра уменьшится, вы тоже автоматически уменьшите свой перевод? Если да, вероятно, сумма из приложения уже незаметно стала вашим планом.\n\n**Минимум — это порог соблюдения договора. Финансовый план начинается с даты, когда долг станет нулём.**\n\n**Первоисточники:** [Neil Stewart, *Psychological Science*, 2009 (архив автора)](https://wrap.warwick.ac.uk/id/eprint/2552/) · [Банк России, разъяснения к Указанию № 6579-У (редакция 2026)](https://www.cbr.ru/explan/dfs_pdnz/dfs_pdnz_6579-u_7286-u/).",
       "format": "markdown",
       "production": {
-        "stage": "art",
+        "stage": "review",
         "run_id": "Money Psychology preparation / 2026-11-09 09:00 Europe/Moscow",
         "attempts": 1,
-        "updated_at": "2026-11-09T06:13:47.756Z",
-        "blocker": "Asset transfer bridge absent between local /mnt/data bytes and isolated connected-tool functions.exec runtime: GitHub create_blob base64 supported, but image bytes unavailable in that runtime; native PNG and JPEG confirmed locally and file IDs preserved. Independent release editor also pending.",
+        "updated_at": "2026-11-09T06:20:47.816Z",
+        "blocker": "Native PNG/JPEG transferred and byte hashes verified; awaiting truly independent release_review from distinct editor/run (11:00 review); writer self-review is not independent.",
         "image_evidence": {
           "input_prompt": "Премиальная оригинальная обложка к статье Money Psychology | No BS о ловушке минимального платежа кредитной карты. Только статичное изображение, портрет 4:5. Не иллюстрация цифр, а кинематографичная предметная фотосцена в духе современного арт-журнала об экономике: гигантское тяжёлое колесо из чёрного обсидиана с очень многими тонкими насечками, закреплённое в сложной бронзовой механической конструкции; к нему прижат крошечный полированный рычаг-храповик, который способен продвигать колесо лишь на один маленький шаг. Визуальная история об огромном долге, который едва сокращается маленькими обязательными платежами. Механизм должен быть физически убедительным, без сюрреалистических лишних деталей: дорогие материалы, музейная инсталляция, макрофотография, сильные диагонали и выразительная скульптурная форма. Цвет: насыщенный тёмно-индиговый, матовый графит, выверенные акценты в тёплой меди; жёсткий боковой свет, глубокие тени, тончайшие фактуры и отражения. Большое чистое тёмное пространство сверху, главный объект крупный и понятный в маленьком Telegram-превью. НИКАКИХ надписей, цифр, слов, логотипов, банковских карт, денежных знаков, часов, стеклянных домов, еды, весов, диаграмм, интерфейсов, коллажей, шаблонов, водяных знаков. Изображение должно сильно отличаться от прошлых обложек и выглядеть как эксклюзивная студийная постановка.",
           "generation_method": "chatgpt_image_gen",
           "generated_file_id": "file_0000000053bc81f6b497aea5cd66da55",
           "source_png_sha256": "7d905076ff8eae08e9c4d044b45c26b5ba18eae1c8c21f607b0fe228b165d9aa",
           "jpeg_sha256": "40128272ff6cc227d9f0aaf01777e04d355aedfd33e16a7b2ba6d21a979cec5b",
-          "github_uploaded": false,
+          "github_uploaded": true,
           "jpeg_display_file_id": "file_00000000ac9481f6bbbe62fc63a7d462",
           "generation_id": "71f52663-f281-47ab-a9f2-a96c06f48270",
           "observed_at": "2026-11-09T06:10:00Z",
@@ -1436,7 +1436,12 @@
           ],
           "final_jpeg_pixel_inspected": true,
           "visual_assessment": "Directly viewed the generated original and RGB technical conversion: macro sculpture with massive obsidian ratchet wheel and small bronze pawl. At thumbnail scale still clear, no text/numbers or obvious mechanical/anatomical artifact. Unique from 9–15 Nov covers. This is editorial pixel inspection only; not a GitHub asset-readiness claim.",
-          "source_transfer_capability": "Native file bytes exist in local /mnt/data and have correct computed hashes; connected GitHub create_blob supports base64 but the isolated functions.exec code runtime has no access to local container.exec/file bytes; Files image_file returns only opaque sediment/image pointer (16-byte surrogate), Composio remote bash has no /mnt/data, and container has no DNS. Read_asset_base64 chunks cannot be carried programmatically into connected create_blob in this runtime."
+          "source_transfer_capability": "Native file bytes exist in local /mnt/data and have correct computed hashes; connected GitHub create_blob supports base64 but the isolated functions.exec code runtime has no access to local container.exec/file bytes; Files image_file returns only opaque sediment/image pointer (16-byte surrogate), Composio remote bash has no /mnt/data, and container has no DNS. Read_asset_base64 chunks cannot be carried programmatically into connected create_blob in this runtime.",
+          "source_ref": "editorial/originals/2026-11-16-imagegen.png",
+          "jpeg_github_path": "telegram/2026-11/2026-11-16-imagegen.jpg",
+          "github_png_blob_sha": "fd3ea42a7b0a9921a419019384e5d6c87f558c69",
+          "github_jpeg_blob_sha": "17c7783b6ba6af836a5e5e3bf67963feda5700fd",
+          "transfer_method": "bounded base64 chunks via Python-generated conversation files, read inside functions.exec and passed directly to connected GitHub create_blob encoding=base64"
         },
         "source_checks": [
           {
@@ -1465,6 +1470,46 @@
           "fixed_last_payment_13": 675.4668613,
           "fixed_total_interest": 20675.4668613,
           "interest_saved_during_first_12": 11636.69837056
+        }
+      },
+      "image_review": "Directly viewed the generated original and RGB technical conversion: macro sculpture with massive obsidian ratchet wheel and small bronze pawl. At thumbnail scale still clear, no text/numbers or obvious mechanical/anatomical artifact. Unique from 9–15 Nov covers. This is editorial pixel inspection only; not a GitHub asset-readiness claim.",
+      "editorial_review": {
+        "status": "text_review_passed_writer_preliminary_2026_11_09",
+        "math_check": "passed_writer_independent_formula_calculation_2026_11_09",
+        "markdown_static_check": "passed_mcp_validate_rich_message_2026_11_09",
+        "live_telegram_render": "not_tested",
+        "writer_self_assessment": "Writer's arithmetic and source check; independent release editor has not yet read this payload. Do not mark queued.",
+        "pipeline_review": {
+          "version": 1,
+          "checked_at": "2026-11-09T06:20:47.816Z",
+          "payload_hash": "b8813e9294bd70d4869570ff5f9da29b0750a83bd2190d99a06986eed10f620e",
+          "asset_blob_sha": "17c7783b6ba6af836a5e5e3bf67963feda5700fd",
+          "scores": {
+            "originality": 1,
+            "evidence": 1,
+            "depth": 2,
+            "language": 2,
+            "practical_value": 2,
+            "visual": 2
+          },
+          "assessment": "Writer score 10/12: original minimum-payment example and visually distinctive sculptural image, but another lending topic appeared recently (originality 1), and original UK study abstract does not establish behavior in Russia (evidence 1). Conditional loan model deliberately diverges from bank-specific daily-accrual tariffs. Text not yet independently approved, no Telegram render tested.",
+          "arithmetic": "Model: B0=100000; interest 3%*start balance; shrinking minimum 5%*start balance, so B_{n+1}=0.98B_n. After 12 B=78471.6704, payments=53820.8191, interest=32292.4914. For 10000 fixed: 12 remaining 655.7931; month13 final =675.4669; total interest=20675.4669. Difference in first 12-month interest = 32292.4914-20655.7931=11636.6984, rounded to 11637. Assumes no fees, purchases, daily accrual or intermediate rounding.",
+          "sources": [
+            {
+              "kind": "primary_source",
+              "url": "https://wrap.warwick.ac.uk/id/eprint/2552/",
+              "checked_at": "2026-11-09T06:09:03.829Z",
+              "claim": "Stewart 2009 abstract: displaying minimum repayments acts as a psychological anchor",
+              "scope": "UK credit-card repayment behavior; no generalization to all Russian borrowers; bibliographic/abstract evidence only"
+            },
+            {
+              "kind": "primary_source",
+              "url": "https://www.cbr.ru/explan/dfs_pdnz/dfs_pdnz_6579-u_7286-u/",
+              "checked_at": "2026-11-09T06:09:03.829Z",
+              "claim": "CBR explains a 5% minimum payment as a conditional example in a debt-burden calculation",
+              "scope": "Russia, regulatory explanation updated 2026-05-08; not universal credit-card terms"
+            }
+          ]
         }
       }
     }
