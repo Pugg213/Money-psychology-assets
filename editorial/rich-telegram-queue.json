@@ -1412,15 +1412,31 @@
         "stage": "art",
         "run_id": "Money Psychology preparation / 2026-11-09 09:00 Europe/Moscow",
         "attempts": 1,
-        "updated_at": "2026-11-09T06:09:03.829Z",
-        "blocker": "Awaiting native ChatGPT image generation and verified PNG/JPEG GitHub transfer; separate release reviewer required.",
+        "updated_at": "2026-11-09T06:13:47.756Z",
+        "blocker": "Asset transfer bridge absent between local /mnt/data bytes and isolated connected-tool functions.exec runtime: GitHub create_blob base64 supported, but image bytes unavailable in that runtime; native PNG and JPEG confirmed locally and file IDs preserved. Independent release editor also pending.",
         "image_evidence": {
           "input_prompt": "Премиальная оригинальная обложка к статье Money Psychology | No BS о ловушке минимального платежа кредитной карты. Только статичное изображение, портрет 4:5. Не иллюстрация цифр, а кинематографичная предметная фотосцена в духе современного арт-журнала об экономике: гигантское тяжёлое колесо из чёрного обсидиана с очень многими тонкими насечками, закреплённое в сложной бронзовой механической конструкции; к нему прижат крошечный полированный рычаг-храповик, который способен продвигать колесо лишь на один маленький шаг. Визуальная история об огромном долге, который едва сокращается маленькими обязательными платежами. Механизм должен быть физически убедительным, без сюрреалистических лишних деталей: дорогие материалы, музейная инсталляция, макрофотография, сильные диагонали и выразительная скульптурная форма. Цвет: насыщенный тёмно-индиговый, матовый графит, выверенные акценты в тёплой меди; жёсткий боковой свет, глубокие тени, тончайшие фактуры и отражения. Большое чистое тёмное пространство сверху, главный объект крупный и понятный в маленьком Telegram-превью. НИКАКИХ надписей, цифр, слов, логотипов, банковских карт, денежных знаков, часов, стеклянных домов, еды, весов, диаграмм, интерфейсов, коллажей, шаблонов, водяных знаков. Изображение должно сильно отличаться от прошлых обложек и выглядеть как эксклюзивная студийная постановка.",
           "generation_method": "chatgpt_image_gen",
-          "generated_file_id": null,
-          "source_png_sha256": null,
-          "jpeg_sha256": null,
-          "github_uploaded": false
+          "generated_file_id": "file_0000000053bc81f6b497aea5cd66da55",
+          "source_png_sha256": "7d905076ff8eae08e9c4d044b45c26b5ba18eae1c8c21f607b0fe228b165d9aa",
+          "jpeg_sha256": "40128272ff6cc227d9f0aaf01777e04d355aedfd33e16a7b2ba6d21a979cec5b",
+          "github_uploaded": false,
+          "jpeg_display_file_id": "file_00000000ac9481f6bbbe62fc63a7d462",
+          "generation_id": "71f52663-f281-47ab-a9f2-a96c06f48270",
+          "observed_at": "2026-11-09T06:10:00Z",
+          "source_local_path": "/mnt/data/money_psy_2026-11-16/2026-11-16-imagegen.png",
+          "jpeg_local_path": "/mnt/data/money_psy_2026-11-16/2026-11-16-imagegen.jpg",
+          "source_png_git_blob_sha": "fd3ea42a7b0a9921a419019384e5d6c87f558c69",
+          "source_png_size_bytes": 2182384,
+          "jpeg_git_blob_sha": "17c7783b6ba6af836a5e5e3bf67963feda5700fd",
+          "jpeg_size_bytes": 361634,
+          "image_dimensions": [
+            1122,
+            1402
+          ],
+          "final_jpeg_pixel_inspected": true,
+          "visual_assessment": "Directly viewed the generated original and RGB technical conversion: macro sculpture with massive obsidian ratchet wheel and small bronze pawl. At thumbnail scale still clear, no text/numbers or obvious mechanical/anatomical artifact. Unique from 9–15 Nov covers. This is editorial pixel inspection only; not a GitHub asset-readiness claim.",
+          "source_transfer_capability": "Native file bytes exist in local /mnt/data and have correct computed hashes; connected GitHub create_blob supports base64 but the isolated functions.exec code runtime has no access to local container.exec/file bytes; Files image_file returns only opaque sediment/image pointer (16-byte surrogate), Composio remote bash has no /mnt/data, and container has no DNS. Read_asset_base64 chunks cannot be carried programmatically into connected create_blob in this runtime."
         },
         "source_checks": [
           {
@@ -1435,7 +1451,21 @@
             "claim": "CBR explains a 5% minimum payment as a conditional example in a debt-burden calculation",
             "scope": "Russia, regulatory explanation updated 2026-05-08; not universal credit-card terms"
           }
-        ]
+        ],
+        "arithmetic_check": {
+          "assumptions": "B0=100000, monthly 0.03 interest on start balance, minimum=0.05*start balance, no new charges/rounding; fixed=10000 until payoff.",
+          "first_interest": 3000,
+          "first_payment": 5000,
+          "first_principal": 2000,
+          "first_balance": 98000,
+          "min_after_12": 78471.67037348,
+          "min_paid_12": 53820.8190663,
+          "min_interest_12": 32292.49143978,
+          "fixed_balance_12": 655.7930692249,
+          "fixed_last_payment_13": 675.4668613,
+          "fixed_total_interest": 20675.4668613,
+          "interest_saved_during_first_12": 11636.69837056
+        }
       }
     }
   ]
