@@ -1400,7 +1400,7 @@
       "date_moscow": "2026-11-16",
       "scheduled_at": "2026-11-16T12:00:00+03:00",
       "title": "Банк просит 5 000 ₽. Почему это не план погашения долга",
-      "state": "draft",
+      "state": "queued",
       "telegram_publication": null,
       "publisher": "Money Psy Telegram MCP",
       "migrated_and_deduplicated": true,
@@ -1409,11 +1409,11 @@
       "content": "# Банк просит 5 000 ₽. Почему это не план погашения долга\n\nВыписка по кредитной карте: долг **100 000 ₽**, обязательный минимальный платёж — **5 000 ₽**. Деньги на него есть. Приложение показывает, что всё в порядке: просрочки не будет.\n\n**Но сколько из этих 5 000 ₽ действительно уменьшит долг?** В условном расчёте ниже — только **2 000 ₽**. Остальные **3 000 ₽** уйдут на проценты. Вы выполнили требование банка, но погасили лишь 2% исходного долга.\n\nЭто история не о «плохих кредитках», а об опасной путанице двух задач: **избежать просрочки** и **избавиться от долга**. Цифра, которую банк просит внести, решает первую задачу. Вторую она сама по себе не гарантирует.\n\n## Когда минимум становится якорем\n\nПредставьте, что в приложении есть две суммы: «к оплате минимум — 5 000 ₽» и «задолженность — 100 000 ₽». Первая выглядит достижимой и почти автоматически превращается в месячный финансовый план. Это возможный механизм **якорения**: явно показанная цифра влияет на то, какую сумму человек считает достаточной.\n\nЕсть и эмпирическая опора, но её границы важны. Британский исследователь Нил Стюарт в статье *The Cost of Anchoring on Credit-Card Minimum Repayments* (2009) изучал влияние указания минимального платежа на выбор суммы погашения. Работа поддерживает гипотезу о психологическом якоре, **но не позволяет объявлять, что все владельцы российских карт ведут себя одинаково**. Данные другой страны и экспериментальные решения не заменяют вашу реальную выписку.\n\n[Оригинальная статья и аннотация в архиве Уорикского университета](https://wrap.warwick.ac.uk/id/eprint/2552/).\n\n## Один долг. Два разных расписания\n\nДопустим, льготный период уже закончился, **новых покупок нет**, комиссии, страхование и штрафы отсутствуют. Банк для этого учебного примера начисляет **3% на долг в начале каждого месяца**, а минимальный платёж равен **5% от долга в начале месяца**, включая уплату процентов. Проценты и платёж рассчитываются раз в месяц, без округления промежуточных сумм. Это **модель**, не тариф банка и не пересчёт рекламной годовой ставки.\n\nПервый месяц:\n\n• начисленные проценты: **100 000 × 3% = 3 000 ₽**;\n• минимальный платёж: **100 000 × 5% = 5 000 ₽**;\n• погашено основного долга: **5 000 − 3 000 = 2 000 ₽**;\n• остаток после платежа: **98 000 ₽**.\n\nЕсли все следующие 12 месяцев платить только такой **уменьшающийся минимум**, после двенадцатого платежа картина будет следующей:\n\n• всего внесено: **около 53 821 ₽**;\n• из них проценты: **около 32 292 ₽**;\n• на погашение первоначального долга ушло **около 21 528 ₽**;\n• осталось должны: **около 78 472 ₽**.\n\nВы перечислили банку более половины исходного долга, но сама задолженность уменьшилась примерно на пятую часть. Это не ошибка: **платежи и погашение основного долга — разные показатели**. Размер минимума при этом постепенно сокращается, создавая ощущение, что кредит становится всё легче.\n\n## А если отправлять 10 000 ₽ вместо минимума?\n\nОставим **тот же учебный долг и те же 3% за месяц**. Вносим **по 10 000 ₽ каждый месяц**, пока долг не закончится. При таких допущениях после 12 платежей останется примерно **656 ₽**. В тринадцатом месяце хватит последнего платежа **около 675 ₽** (включая проценты этого месяца).\n\nИтог: все выплаты составят **около 120 675 ₽**, из них **около 20 675 ₽ процентов**. По сравнению с режимом «платить только минимум» на 12-м месяце здесь требуется больше денег сейчас, зато практически закрыт долг. **Сравнивать только перечисленные суммы за первый год нечестно:** в одном сценарии остаётся 78 472 ₽ долга, в другом — 656 ₽. Сначала сравните остатки задолженности, потом накопленные проценты и нагрузку на бюджет.\n\nРазница в процентах, уплаченных **за первые 12 месяцев**, составляет примерно **11 637 ₽** в пользу фиксированного платежа. Это результат модели, а не обещанная экономия по любой кредитной карте.\n\n## Что действительно означает банковский минимум\n\nВ актуальных разъяснениях Банка России по расчёту показателя долговой нагрузки приведён пример кредитной карты с **минимальным платежом 5% задолженности**. Это пример **условия конкретного договора для расчётов регулятора**, а не обязательный для всех банков размер платежа. И это вообще другой расчёт, чем приведённая выше учебная модель.\n\n[Разъяснения Банка России к Указанию № 6579-У в редакции 2026 года](https://www.cbr.ru/explan/dfs_pdnz/dfs_pdnz_6579-u_7286-u/).\n\nВ настоящем договоре проценты могут начисляться **по дням**, у минимального платежа могут быть **нижняя граница**, отдельный порядок учёта процентов и комиссий, а у льготного периода — условия сохранения и восстановления. Для некоторых операций грейс не действует. Поэтому перенести число 3% из примера в реальную выписку нельзя. И ни одно движение по минимальному платежу не доказывает, что вы сохранили беспроцентный период.\n\n## Как не позволить приложению выбрать план за вас\n\n**Первое.** Откройте выписку и найдите три разных числа: **обязательный минимум**, **сумму для сохранения/восстановления грейса** (если он предусмотрен) и **полную задолженность**. Спросите банк, как начисляются проценты и какая часть очередного платежа пойдёт в основной долг. У разных договоров эти суммы и правила различаются.\n\n**Второе.** Назначьте собственную сумму погашения от бюджета — не ниже обязательного платежа и с учётом резервов на жизнь. Посмотрите по графику, **когда долг станет нулевым и сколько процентов будет уплачено**. Если график не удаётся получить, попросите у банка детальный расчёт по вашей ставке и остаткам. Не оплачивайте лишнее, если это оставит без денег на обязательные расходы и приведёт к новой задолженности.\n\n**Проверка за минуту:** если минимальный платёж завтра уменьшится, вы тоже автоматически уменьшите свой перевод? Если да, вероятно, сумма из приложения уже незаметно стала вашим планом.\n\n**Минимум — это порог соблюдения договора. Финансовый план начинается с даты, когда долг станет нулём.**\n\n**Первоисточники:** [Neil Stewart, *Psychological Science*, 2009 (архив автора)](https://wrap.warwick.ac.uk/id/eprint/2552/) · [Банк России, разъяснения к Указанию № 6579-У (редакция 2026)](https://www.cbr.ru/explan/dfs_pdnz/dfs_pdnz_6579-u_7286-u/).",
       "format": "markdown",
       "production": {
-        "stage": "review",
+        "stage": "reviewed",
         "run_id": "Money Psychology preparation / 2026-11-09 09:00 Europe/Moscow",
         "attempts": 1,
-        "updated_at": "2026-11-09T06:20:47.816Z",
-        "blocker": "Native PNG/JPEG transferred and byte hashes verified; awaiting truly independent release_review from distinct editor/run (11:00 review); writer self-review is not independent.",
+        "updated_at": "2026-11-09T08:04:20.333Z",
+        "blocker": null,
         "image_evidence": {
           "input_prompt": "Премиальная оригинальная обложка к статье Money Psychology | No BS о ловушке минимального платежа кредитной карты. Только статичное изображение, портрет 4:5. Не иллюстрация цифр, а кинематографичная предметная фотосцена в духе современного арт-журнала об экономике: гигантское тяжёлое колесо из чёрного обсидиана с очень многими тонкими насечками, закреплённое в сложной бронзовой механической конструкции; к нему прижат крошечный полированный рычаг-храповик, который способен продвигать колесо лишь на один маленький шаг. Визуальная история об огромном долге, который едва сокращается маленькими обязательными платежами. Механизм должен быть физически убедительным, без сюрреалистических лишних деталей: дорогие материалы, музейная инсталляция, макрофотография, сильные диагонали и выразительная скульптурная форма. Цвет: насыщенный тёмно-индиговый, матовый графит, выверенные акценты в тёплой меди; жёсткий боковой свет, глубокие тени, тончайшие фактуры и отражения. Большое чистое тёмное пространство сверху, главный объект крупный и понятный в маленьком Telegram-превью. НИКАКИХ надписей, цифр, слов, логотипов, банковских карт, денежных знаков, часов, стеклянных домов, еды, весов, диаграмм, интерфейсов, коллажей, шаблонов, водяных знаков. Изображение должно сильно отличаться от прошлых обложек и выглядеть как эксклюзивная студийная постановка.",
           "generation_method": "chatgpt_image_gen",
@@ -1510,6 +1510,183 @@
               "scope": "Russia, regulatory explanation updated 2026-05-08; not universal credit-card terms"
             }
           ]
+        },
+        "release_review": {
+          "version": 1,
+          "decision": "approved",
+          "reviewer_role": "independent_editor",
+          "reviewer_run_id": "Money Psychology preflight / automation turn 3 / 2026-11-09",
+          "writer_run_id": "Money Psychology preparation / 2026-11-09 09:00 Europe/Moscow",
+          "checked_at": "2026-11-09T08:04:20.333Z",
+          "payload_hash": "b8813e9294bd70d4869570ff5f9da29b0750a83bd2190d99a06986eed10f620e",
+          "asset_blob_sha": "17c7783b6ba6af836a5e5e3bf67963feda5700fd",
+          "scores": {
+            "originality": 1,
+            "evidence": 1,
+            "depth": 2,
+            "language": 2,
+            "practical_value": 2,
+            "visual": 2
+          },
+          "assessment": "Independent read of full canonical credit-card article and exact server-returned 1122x1402 JPEG: crisp obsidian ratchet wheel engaged by a small bronze lever conveys slow debt reduction with no labels, misleading values, logos or evident artifacts. Good contrast between contractual minimum and amortization plan; numerically coherent and actionable, but this is a familiar credit-card topic and empirical anchoring support is a 2009 Warwick-hosted author abstract, not Russian borrower evidence or a full methodology audit. The 5% rate in the CBR FAQ is a conditional contract illustration for debt-burden calculation, not a general Russian card rate. A 3%-per-month interest rate, no daily accrual and a shrinking 5% contractual minimum are clearly hypothetical. Distinct independent review in the 2026-11-09 11:00 preflight execution; writer's scores are retained without automatic inflation. No live Telegram render was performed.",
+          "source_checks": [
+            {
+              "kind": "primary_source",
+              "url": "https://wrap.warwick.ac.uk/id/eprint/2552/",
+              "checked_at": "2026-11-09T08:04:20.333Z",
+              "claim": "Neil Stewart (2009), The Cost of Anchoring on Credit-Card Minimum Repayments, Psychological Science 20(1), 39–41; the repository abstract explicitly describes minimum-payment information as a psychological anchor.",
+              "scope": "Warwick primary author archive record and abstract accessed on 2026-11-09, published January 2009. The abstract was directly checked; full experimental design/sample and applicability to Russian users are not established by this check."
+            },
+            {
+              "kind": "primary_source",
+              "url": "https://www.cbr.ru/explan/dfs_pdnz/dfs_pdnz_6579-u_7286-u/",
+              "checked_at": "2026-11-09T08:04:20.333Z",
+              "claim": "CBR explanation #46 gives a 100,000-ruble credit-card limit with contract minimum equal to 5% of debt; depending on the contract's limit-reset rule it yields illustrative regulatory-average payments of 1,500 or 5,000 rubles.",
+              "scope": "Official Bank of Russia FAQ for directive 6579-U as amended 7286-U, item 46 updated 2026-05-08. This is a debt-burden regulatory example, not a tariff applying to all cards and not the article's hypothetical 3%-per-month schedule."
+            }
+          ],
+          "findings": [
+            {
+              "severity": "info",
+              "resolved": true,
+              "description": "The Warwick page confirms the paper and anchoring assertion via the author abstract, but the full methods and Russian external validity were not independently assessed. Article explicitly limits transfer. The 3%-per-month and declining-5%-minimum repayment schedules are teaching assumptions rather than a claimed existing contract."
+            }
+          ],
+          "calculations": [
+            {
+              "label": "Month 1 interest: 3% of 100,000",
+              "operator": "product",
+              "inputs": [
+                100000,
+                0.03
+              ],
+              "expected": 3000,
+              "tolerance": 0.001,
+              "excerpt": "100 000 × 3% = 3 000 ₽"
+            },
+            {
+              "label": "Month 1 minimum: 5% of 100,000",
+              "operator": "product",
+              "inputs": [
+                100000,
+                0.05
+              ],
+              "expected": 5000,
+              "tolerance": 0.001,
+              "excerpt": "100 000 × 5% = 5 000 ₽"
+            },
+            {
+              "label": "Month 1 principal reduction",
+              "operator": "difference",
+              "inputs": [
+                5000,
+                3000
+              ],
+              "expected": 2000,
+              "tolerance": 0.001,
+              "excerpt": "5 000 − 3 000 = 2 000 ₽"
+            },
+            {
+              "label": "Month 1 remaining principal",
+              "operator": "difference",
+              "inputs": [
+                100000,
+                2000
+              ],
+              "expected": 98000,
+              "tolerance": 0.001,
+              "excerpt": "98 000 ₽"
+            },
+            {
+              "label": "Declining minimum, month 12 balance",
+              "operator": "product",
+              "inputs": [
+                100000,
+                0.7847167237347998
+              ],
+              "expected": 78471.67237348,
+              "tolerance": 0.01,
+              "excerpt": "78 472 ₽"
+            },
+            {
+              "label": "Declining minimum, repaid principal after 12 months",
+              "operator": "difference",
+              "inputs": [
+                100000,
+                78471.67237348
+              ],
+              "expected": 21528.32762652,
+              "tolerance": 0.01,
+              "excerpt": "21 528 ₽"
+            },
+            {
+              "label": "Declining minimum, total payments after 12 months",
+              "operator": "sum",
+              "inputs": [
+                32292.49143978,
+                21528.32762652
+              ],
+              "expected": 53820.8190663,
+              "tolerance": 0.01,
+              "excerpt": "53 821 ₽"
+            },
+            {
+              "label": "Fixed 10,000, balance after 12 months",
+              "operator": "difference",
+              "inputs": [
+                142576.08868461792,
+                141920.2956153931
+              ],
+              "expected": 655.793069225,
+              "tolerance": 0.01,
+              "excerpt": "656 ₽"
+            },
+            {
+              "label": "Fixed 10,000, final month 13 payment",
+              "operator": "product",
+              "inputs": [
+                655.793069225,
+                1.03
+              ],
+              "expected": 675.466861302,
+              "tolerance": 0.01,
+              "excerpt": "675 ₽"
+            },
+            {
+              "label": "Fixed 10,000, total payments",
+              "operator": "sum",
+              "inputs": [
+                120000,
+                675.466861302
+              ],
+              "expected": 120675.466861302,
+              "tolerance": 0.01,
+              "excerpt": "120 675 ₽"
+            },
+            {
+              "label": "Fixed 10,000, total interest",
+              "operator": "difference",
+              "inputs": [
+                120675.466861302,
+                100000
+              ],
+              "expected": 20675.466861302,
+              "tolerance": 0.01,
+              "excerpt": "20 675 ₽"
+            },
+            {
+              "label": "12-month interest advantage fixed payment",
+              "operator": "difference",
+              "inputs": [
+                32292.49143978,
+                20655.793069225
+              ],
+              "expected": 11636.698370555,
+              "tolerance": 0.01,
+              "excerpt": "11 637 ₽"
+            }
+          ],
+          "live_telegram_render": "not_tested"
         }
       }
     }
