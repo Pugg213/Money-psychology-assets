@@ -317,7 +317,7 @@
       "format": "markdown",
       "publisher": "Money Psy Telegram MCP",
       "migrated_and_deduplicated": true,
-      "state": "queued",
+      "state": "sending",
       "telegram_publication": null,
       "image_review": "Full JPEG viewed: detailed blue car and long blank paper road express longer loan duration; no numeric or textual promises. Distinct cobalt/ivory studio composition.",
       "editorial_review": {
@@ -467,7 +467,9 @@
         "attempts": 1,
         "updated_at": "2026-11-07T09:47:27.245Z",
         "blocker": null
-      }
+      },
+      "send_attempts": 1,
+      "send_claimed_at": "2026-11-09T09:13:11.134Z"
     },
     {
       "date_moscow": "2026-11-10",
