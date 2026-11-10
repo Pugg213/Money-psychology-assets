@@ -44,6 +44,10 @@ The Bot API does not provide a transaction spanning photo and article. A process
 - Include a usable reader action: the question to ask a lender, the exact budget calculation, the contract term to inspect or a small operational checklist. Vary opening formats, paragraph length, section headings and conclusions to prevent repetitive textbook templates; optimize for phone screens, avoiding gratuitous tables.
 - Editorial ratings are judgments, not laboratory measurements. A weak or blurry image cannot receive visual 2/2 merely because it exists, and a mechanically valid Markdown check does not establish a strong Telegram reading experience. Never change locked or published posts to satisfy aesthetic preferences.
 
+## Avoid AI Writing before editorial release
+
+For new and resumed drafts, use the actual installed Avoid AI Writing plugin for targeted prose revision and before/after preservation verification before final review. Follow [the integration contract](avoid-ai-writing-integration.md) for skill loading, Russian-language limits, truthful execution evidence and the two-pass cap. This is a host-side editorial stage; the server does not execute ChatGPT skills. Existing approved or locked payloads retain their delivery path; no additional automation or publisher is introduced.
+
 ## Cover generation for new editions
 
 - Use ChatGPT's **native image generator (`image_gen`)** for the creative generation of every *new* Money Psychology cover. Do not generate cover artwork with Pillow, programmatic raster drawing, Apixel, SVG, icon compositions, stock images or template/fallback graphics. Technical conversion of a generated image to a JPEG is permitted only if it preserves the generated artwork.

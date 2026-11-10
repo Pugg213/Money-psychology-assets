@@ -3,7 +3,7 @@ name: money-psy-superbot
 description: Manage Money Psychology Telegram channel publishing, feedback and opted-in Telegram Business private chats through authenticated MCP, including a compatibility bridge for cached ChatGPT tools.
 ---
 
-# Money Psy Telegram MCP v2.5.0: Channel + Business
+# Money Psy Telegram MCP: Channel + Business
 
 **App and server:** `@MyGptSparks_bot`, OAuth-authenticated MCP at `https://money-psy-telegram-mcp.vercel.app/mcp`. There are two independent modes: (1) publishing/moderating `@psy_money1`; (2) Telegram Business delegation into selected private chats with user-granted permissions. A Telegram Business connection does not grant access to all chat histories, subscriptions, or conversations. Never expose server-side `TELEGRAM_BOT_TOKEN`, OAuth tokens, private connection IDs to third parties, or private media URLs.
 
@@ -66,3 +66,7 @@ Tools include `get_interaction_status`, `get_reader_feedback`, `suggest_reader_t
 6. Independently verify GitHub CI success, Vercel production READY, the live business connection and each authorized operation. Do not confuse server deployment success with end-to-end message sending. Never invent chats, rights, message content or successful actions. Keep OAuth App binding unchanged across plugin skill updates.
 
 References: https://core.telegram.org/bots/api and `mcp-server/docs/telegram-business.md` in the GitHub repo.
+
+## Required Avoid AI Writing stage
+
+For new or resumed drafts, follow the current [Avoid AI Writing integration contract](https://github.com/Pugg213/Money-psychology-assets/blob/main/docs/avoid-ai-writing-integration.md) before final release. Actually read and apply the installed `avoid-ai-writing:avoid-ai-writing-router`, canonical `avoid-ai-writing` rulebook, `voice-preserving-rewriter` and `preservation-verifier`; a copied blacklist is insufficient. As writer, audit and minimally revise the Russian prose, preserve source facts/numbers/quotes/URLs/tables and substantive uncertainty, then compare the real before/after versions. As independent editor, check that evidence and the exact final text; use detect-only when no change is needed and return material repairs to the writer instead of starting a fresh rewrite. Maximum two rewrite passes including repair. Record truthful, payload-bound `editorial_review.style_review` evidence; distinguish `model_only` from executed scripts. English detector scores do not approve Russian prose or establish authorship. The independent editor checks this within the existing review, without adding another task or self-signing release approval. Preserve already approved queued and all locked/published payloads. The noon publisher performs no rewrite and is not blocked by missing historical style notes. If the actual plugin cannot load for a new draft, preserve the draft and report the specific blocker in the existing task.

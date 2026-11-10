@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "dev-6aec23bbc2fc8191a918fc2c8caef9e0",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "description": "Money Psy Telegram MCP",
   "author": {
     "name": "App developer"

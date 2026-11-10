@@ -22,6 +22,10 @@ From November 9, archive the unchanged generated PNG at `editorial/originals/<un
 
 These are honest provenance attestations and byte checks, not cryptographic proof of the generator used or individual user approval. Preserve any missing historical provenance as unknown. CI/reserve/runtime check archived original existence and hash as well as final JPEG identity.
 
+## Writing quality and preservation
+
+Before releasing a new or resumed draft, execute the installed Avoid AI Writing workflow specified in [avoid-ai-writing-integration.md](avoid-ai-writing-integration.md). Preserve the real before-version, perform a targeted Russian prose revision and compare the final text for protected facts, numbers, sources, tables and substantive caveats. Record actual execution mode and payload-bound style_review. A changed payload needs renewed genuine reviews and matching article/hash updates. Historical approved payloads are exempt; do not add a new publisher-time blocker or another checking automation.
+
 ## Separate final review
 
 The writer's bound `pipeline_review` remains required. From November 8, a distinct final `editorial_review.release_review` is mandatory before `queued` or sending:
