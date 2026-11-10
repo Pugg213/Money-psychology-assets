@@ -29,10 +29,16 @@ export function createPublicationPreflight({source=createEditorialSource(),clock
   }catch(error){fail('snapshot',error);return result;}
   try{validateQueue(queue);pass('canonical_queue');}
   catch(error){fail('canonical_queue',error);return result;}
+  // A missing current issue must not hide the independently inspectable future reserve.
+  try{result.production_plan=productionPlan(queue,ledger,{as_of:day,clock});}
+  catch(error){
+   fail('production_plan',error);
+   result.release_readiness={status:'unknown',reason:String(error?.message||error)};
+   return result;
+  }
   const entries=queue.entries.filter(entry=>entry.date_moscow===day);
   if(entries.length!==1){fail('entry',Error('entry_missing_or_duplicate'));return result;}
   const entry=entries[0];pass('entry');
-  result.production_plan=productionPlan(queue,ledger,{as_of:day,clock});
   Object.assign(result,{title:entry.title,content:entry.content,format:entry.format,
    photo_url:entry.photo_url,photo_caption:entry.photo_caption,publication_state:entry.state,
    payload_hash:payloadHash({photo_url:entry.photo_url,caption:entry.photo_caption,content:entry.content,format:entry.format}),
@@ -41,7 +47,10 @@ export function createPublicationPreflight({source=createEditorialSource(),clock
   try{
    asset=verifyAssetIdentity(entry,ledger);
    result.asset_record=structuredClone(asset);pass('asset_identity');
-  }catch(error){fail('asset_identity',error);}
+  }catch(error){
+   fail('asset_identity',error);
+   result.release_readiness={status:'not_released',reason:String(error?.message||error)};
+  }
   if(asset){
    // Byte inspection must remain available before an editor approves the media.
    try{

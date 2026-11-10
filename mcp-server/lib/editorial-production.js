@@ -9,6 +9,8 @@ export function verifyProductionReadiness(entry,asset,{clock=()=>new Date()}={})
   asset_blob_sha:asset.github_blob_sha,reviewer_run_id:entry.editorial_review.release_review.reviewer_run_id};
 }
 export function productionPlan(queue,ledger,{as_of,clock=()=>new Date()}={}){
+ if(!Array.isArray(queue?.entries))throw Error('invalid_canonical_queue');
+ if(!Array.isArray(ledger?.entries))throw Error('invalid_asset_ledger');
  const today=as_of||new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Moscow',year:'numeric',month:'2-digit',day:'2-digit'}).format(clock());
  if(!/^20\d{2}-\d{2}-\d{2}$/.test(today)||new Date(today).toISOString().slice(0,10)!==today)throw Error('invalid_plan_date');
  const future_dates=[];let reviewed_continuous_days=0;

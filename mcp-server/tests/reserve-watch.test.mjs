@@ -64,3 +64,29 @@ test('reserve command executes and requires the real archived PNG for every coun
   }
  }finally{rmSync(f.root,{recursive:true,force:true});}
 });
+
+test('JSON reserve diagnostics retain the actual earliest draft blocker and byte evidence',()=>{
+ const f=fixture();
+ try{
+  const path=join(f.root,'editorial/rich-telegram-queue.json'),q=JSON.parse(readFileSync(path,'utf8'));
+  const e=q.entries.at(-1);e.state='draft';e.production={stage:'art',run_id:'fixture-writer',attempts:1,
+   updated_at:'2026-11-08T08:00:00Z',blocker:'native_source_transfer_unavailable\nNo uploaded PNG or JPEG'};
+  writeFileSync(path,JSON.stringify(q));
+  const r=spawnSync(process.execPath,[f.script,'--as-of=2026-11-08','--json'],{encoding:'utf8'});
+  assert.equal(r.status,0,r.stderr);const report=JSON.parse(r.stdout);
+  assert.equal(report.complete_future_days,6);assert.equal(report.critical,false);
+  assert.equal(report.target_met,false);assert.equal(report.future_dates.length,7);
+  assert.equal(report.next_work.date_moscow,'2026-11-15');assert.equal(report.next_work.stage,'art');
+  assert.equal(report.next_work.blocker,e.production.blocker);assert.equal(report.next_work.byte_integrity,'not_checked');
+  assert.equal(report.future_dates[0].byte_integrity,'passed');
+  assert.match(r.stderr,/Reserve below seven-day target/);
+ }finally{rmSync(f.root,{recursive:true,force:true});}
+});
+test('reserve rejects article leading whitespace exactly as server preflight does',()=>{
+ const f=fixture();
+ try{
+  const p=join(f.root,'editorial/articles/2026-11-09.md');writeFileSync(p,' '+readFileSync(p,'utf8'));
+  const r=run(f.script);assert.equal(r.status,1);assert.match(r.stdout,/complete_future_days=0\/7/);
+  assert.match(r.stdout,/article_copy_mismatch/);
+ }finally{rmSync(f.root,{recursive:true,force:true});}
+});

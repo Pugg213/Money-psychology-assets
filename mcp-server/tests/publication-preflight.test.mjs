@@ -130,3 +130,24 @@ test('default preflight keeps readiness and byte evidence without duplicating ed
  assert.equal(r.content,undefined);assert.equal(r.full_markdown,undefined);assert.equal(r.canonical_entry,undefined);assert.equal(r.asset_record,undefined);
  assert.ok(r.media_evidence);assert.ok(r.source_commit);assert.ok(JSON.stringify(r).length<9000);
 });
+
+test('missing current edition still returns the current-day reserve plan',async()=>{
+ const f=fixture();f.queue.entries=[];
+ const r=await createPublicationPreflight({source:f.source}).run({date_moscow:day});
+ assert.equal(r.ok,false);assert.equal(r.production_plan?.as_of,day);
+ assert.equal(r.production_plan.future_dates.length,7);
+ assert.ok(r.errors.some(x=>x.error==='entry_missing_or_duplicate'));
+});
+test('missing artwork gives explicit not-released evidence, not an absent release status',async()=>{
+ const f=fixture();f.ledger.entries=[];
+ const r=await createPublicationPreflight({source:f.source}).run({date_moscow:day});
+ assert.equal(r.ok,false);
+ assert.deepEqual(r.release_readiness,{status:'not_released',reason:'missing_or_duplicate_asset'});
+ assert.equal(r.checks.media.status,'blocked');assert.equal(r.media_evidence,undefined);
+});
+test('malformed reserve ledger returns a diagnostic envelope rather than throwing',async()=>{
+ const f=fixture();delete f.ledger.entries;
+ const r=await createPublicationPreflight({source:f.source}).run({date_moscow:day});
+ assert.equal(r.ok,false);assert.equal(r.production_plan,undefined);
+ assert.ok(r.errors.some(x=>x.check==='production_plan'&&x.error==='invalid_asset_ledger'));
+});
