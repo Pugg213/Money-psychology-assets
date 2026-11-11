@@ -644,7 +644,7 @@
       "format": "markdown",
       "publisher": "Money Psy Telegram MCP",
       "migrated_and_deduplicated": true,
-      "state": "queued",
+      "state": "sending",
       "telegram_publication": null,
       "image_review": "Full JPEG viewed: supplier workshop, blank invoices, brass hourglass and natural hand express liquidity/timing choice; no unsupported terms or numbers. Green/amber documentary still life.",
       "editorial_review": {
@@ -789,7 +789,9 @@
         "attempts": 1,
         "updated_at": "2026-11-07T09:47:27.245Z",
         "blocker": null
-      }
+      },
+      "send_attempts": 1,
+      "send_claimed_at": "2026-11-11T09:00:45.673Z"
     },
     {
       "date_moscow": "2026-11-12",
