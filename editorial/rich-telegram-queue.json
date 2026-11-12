@@ -817,7 +817,7 @@
       "format": "markdown",
       "publisher": "Money Psy Telegram MCP",
       "migrated_and_deduplicated": true,
-      "state": "queued",
+      "state": "sending",
       "telegram_publication": null,
       "image_review": "Full JPEG viewed: equal glass chambers, available tap versus locked chamber express accessibility rather than different total balances; no measured data. Turquoise/navy glass composition.",
       "editorial_review": {
@@ -948,7 +948,9 @@
         "attempts": 1,
         "updated_at": "2026-11-07T09:47:27.245Z",
         "blocker": null
-      }
+      },
+      "send_attempts": 1,
+      "send_claimed_at": "2026-11-12T12:00:45.465+03:00"
     },
     {
       "date_moscow": "2026-11-13",
