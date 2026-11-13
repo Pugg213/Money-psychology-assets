@@ -1,0 +1,61 @@
+{
+  "date_moscow": "2026-11-19",
+  "checked_at": "2026-11-13T10:11:10.968Z",
+  "reviewer_run_id": "/root/reserve_editor",
+  "immutable_packet_ref": "/workspace/scratch/95e626c6f777/reserve-writing/2026-11-19.packet.json",
+  "packet_sha256": "b7ae9c6207334e7e938992858b19e7d82192b5c64c285ac6068b0b06ee50d2e7",
+  "payload_hash": "5b13ca322d4c60a75c46500d22b0d022a16fdc68c62b0aa43b1d0754f018cb92",
+  "binding_note": "Точный packet.content сохранён с конечным LF, caption == photo_caption. По запросу интегратора final format='markdown', тогда как writer packet.format='Markdown'; вычисление release hash использует только согласованный lowercase формат. Любое изменение текста/подписи/формата/URL требует новой привязки после действительной проверки.",
+  "pixel_review": {
+    "decision": "approved",
+    "asset_blob_sha": "b996c93f69dc383708093c603d260a0d10d6f69a",
+    "checked_at": "2026-11-13T10:11:10.968Z",
+    "reviewer_run_id": "/root/reserve_editor",
+    "assessment": "Оригинал PNG и финальный JPEG визуально совпадают. Освещённый шов тёмной вазы и проверяющие руки создают конкретный образ контроля качества после изготовления. На 240×300 миниатюре видны предмет, руки, лампа и линия проверки; форма рук правдоподобна, явных дубликатов пальцев или расплывшихся деталей не обнаружено. Связь с ИИ метафорическая и поддерживается подписью; изображение не выдаётся за фотографию эксперимента."
+  },
+  "style_review_check": {
+    "reviewer_run_id": "/root/reserve_editor",
+    "writer_run_id": "/root/reserve_writer / 2026-11-13",
+    "checked_at": "2026-11-13T10:11:10.968Z",
+    "mode": "independent_detect_only",
+    "plugin": "avoid-ai-writing",
+    "rulebook_version": "3.29.0",
+    "payload_hash": "5b13ca322d4c60a75c46500d22b0d022a16fdc68c62b0aa43b1d0754f018cb92",
+    "preservation_status": "PASS",
+    "before_sha256": "de1e067bf77e827335fd3174cb76506ef9bf2c7da8d6bfb41e02ff1140b65310",
+    "after_sha256": "36dfb55daea74c044a81707edbad77b316a593dfd55f46f338afd9d681585612",
+    "writer_passes_checked": 1,
+    "reviewer_rewrites": 0,
+    "semantic_review_mode": "model_only",
+    "semantic_assessment": "Три правки удаляют вводные фразы и сужают заголовок до условий применения. Heading-text warning разрешён ручным сравнением: число/уровни разделов прежние. 5172, 15%, 2025/2026, все минуты и 12,5%, ссылки, дизайн исследования и обозначение редакционной гипотезы сохранены.",
+    "verifier": {
+      "mode": "executed",
+      "command": "node /home/agent/.codex/plugins/cache/openai-curated-remote/avoid-ai-writing/3.29.0/skills/preservation-verifier/scripts/validate.js /workspace/scratch/95e626c6f777/reserve-writing/2026-11-19.before.md /workspace/scratch/95e626c6f777/reserve-writing/2026-11-19.after.md",
+      "exit_code": 0,
+      "result_ref": "/workspace/scratch/95e626c6f777/reserve-review/2026-11-19.independent-validate.txt"
+    },
+    "detector_evidence": "Прочитаны фактические writer detector/edits/verifier records; повторный detector не запускался. Англоязычные показатели и Cyrillic homoglyph/AI_ONLY классификация не использованы для вывода об авторстве или допуска.",
+    "retained_patterns": "Русские грамматические тире, точные финансовые термины и содержательные ограничения оставлены; новизна и ритм оценены по русскому тексту, а не числовой квоте детектора.",
+    "unresolved_errors": []
+  },
+  "asset_bytes_checked": {
+    "original": {
+      "local_path": "/workspace/scratch/95e626c6f777/money-psy/editorial/originals/2026-11-19-imagegen.png",
+      "sha256": "20088c2115514d24a9c924433e2bb29ada03faebb733a6b6fbe5c795b5ab788c",
+      "git_blob_sha": "431258912b797bd902a848ace6d842f655d2e64b",
+      "bytes": 2327167
+    },
+    "jpeg": {
+      "local_path": "/workspace/scratch/95e626c6f777/money-psy/telegram/2026-11/2026-11-19-imagegen.jpg",
+      "sha256": "8ad8277829b8d7bfe2b19ef1ecfe099cd6d31e5aed6b76b6646e0c9f62b20838",
+      "git_blob_sha": "b996c93f69dc383708093c603d260a0d10d6f69a",
+      "bytes": 579872
+    }
+  },
+  "scope_limitations": [
+    "Три оригинала PNG, три точных JPEG и три миниатюры просмотрены непосредственно.",
+    "Сравнение 13 прошлых выпусков выполнено по полному тексту; отдельная полная пиксельная ревизия всех 13 старых обложек в эту проверку не включена.",
+    "Запуск генератора наблюдал root; этот редактор подтверждает локальные файлы и их совпадение с metadata, не независимое криптографическое доказательство происхождения.",
+    "Удалённые bytes/readiness, Telegram preflight ImageContent, Telegram client render и фактическая публикация здесь не проверялись."
+  ]
+}

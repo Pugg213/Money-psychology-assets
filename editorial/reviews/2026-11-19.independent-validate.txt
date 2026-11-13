@@ -1,0 +1,2 @@
+PASS — preservation checks clear
+  warning [heading-text] 1 heading(s) reworded. Expected when fixing Title Case or removing emoji; check nothing else moved.

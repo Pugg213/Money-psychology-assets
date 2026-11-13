@@ -1,0 +1,61 @@
+{
+  "date_moscow": "2026-11-20",
+  "checked_at": "2026-11-13T10:11:10.968Z",
+  "reviewer_run_id": "/root/reserve_editor",
+  "immutable_packet_ref": "/workspace/scratch/95e626c6f777/reserve-writing/2026-11-20.packet.json",
+  "packet_sha256": "e1cadcd4590cf7793e2af2ca8df1af4256d38b0f4970da73ddfcf7462bd38d05",
+  "payload_hash": "8027577347efeed1cae492d01ee86cb1c3f22a6195d6169d4915c21ddb472851",
+  "binding_note": "Точный packet.content сохранён с конечным LF, caption == photo_caption. По запросу интегратора final format='markdown', тогда как writer packet.format='Markdown'; вычисление release hash использует только согласованный lowercase формат. Любое изменение текста/подписи/формата/URL требует новой привязки после действительной проверки.",
+  "pixel_review": {
+    "decision": "approved",
+    "asset_blob_sha": "1c54dfb1d5db80ac03e88c50b3aaa0ecdb0b1c15",
+    "checked_at": "2026-11-13T10:11:10.968Z",
+    "reviewer_run_id": "/root/reserve_editor",
+    "assessment": "Оригинал PNG и финальный JPEG визуально совпадают. Два подвесных прохода сходятся к общей бетонной опоре; общий узел отчётливо виден в полном JPEG и 240×300 миниатюре. Материалы, рельеф и свет проработаны; текст, числа и рекламные марки отсутствуют. Композиция передаёт общую зависимость двух источников. Это художественная метафора, не инженерный чертёж или документальное место; катастрофа и разрушение не показаны."
+  },
+  "style_review_check": {
+    "reviewer_run_id": "/root/reserve_editor",
+    "writer_run_id": "/root/reserve_writer / 2026-11-13",
+    "checked_at": "2026-11-13T10:11:10.968Z",
+    "mode": "independent_detect_only",
+    "plugin": "avoid-ai-writing",
+    "rulebook_version": "3.29.0",
+    "payload_hash": "8027577347efeed1cae492d01ee86cb1c3f22a6195d6169d4915c21ddb472851",
+    "preservation_status": "PASS",
+    "before_sha256": "06fb7a10b5bfebcdc841269b5c1c7116288858462e89e0663f6d6b00e2241eea",
+    "after_sha256": "904dc1d67a54b65e0e3339e20eaf3603aac82a44e52f78442855a71a36a79fe7",
+    "writer_passes_checked": 1,
+    "reviewer_rewrites": 0,
+    "semantic_review_mode": "model_only",
+    "semantic_assessment": "Одна правка делает последнюю фразу конкретнее. Все суммы, доли, различие рыночной потери и бонуса, условность 40%, допущение о других активах, отсутствие гарантии бонуса и границы юрисдикции сохранены.",
+    "verifier": {
+      "mode": "executed",
+      "command": "node /home/agent/.codex/plugins/cache/openai-curated-remote/avoid-ai-writing/3.29.0/skills/preservation-verifier/scripts/validate.js /workspace/scratch/95e626c6f777/reserve-writing/2026-11-20.before.md /workspace/scratch/95e626c6f777/reserve-writing/2026-11-20.after.md",
+      "exit_code": 0,
+      "result_ref": "/workspace/scratch/95e626c6f777/reserve-review/2026-11-20.independent-validate.txt"
+    },
+    "detector_evidence": "Прочитаны фактические writer detector/edits/verifier records; повторный detector не запускался. Англоязычные показатели и Cyrillic homoglyph/AI_ONLY классификация не использованы для вывода об авторстве или допуска.",
+    "retained_patterns": "Русские грамматические тире, точные финансовые термины и содержательные ограничения оставлены; новизна и ритм оценены по русскому тексту, а не числовой квоте детектора.",
+    "unresolved_errors": []
+  },
+  "asset_bytes_checked": {
+    "original": {
+      "local_path": "/workspace/scratch/95e626c6f777/money-psy/editorial/originals/2026-11-20-imagegen.png",
+      "sha256": "f06ead4183e185b8c6f9d9f5bc9e39be0116329bc3c30336b77a3dfaf8b7932f",
+      "git_blob_sha": "2ceb5683198598ddc8965e98a58f97892c87828e",
+      "bytes": 2878157
+    },
+    "jpeg": {
+      "local_path": "/workspace/scratch/95e626c6f777/money-psy/telegram/2026-11/2026-11-20-imagegen.jpg",
+      "sha256": "e33b326e6f24648e9c07397ed75aa08e715ddf43e775f5f11023b393ee4ea893",
+      "git_blob_sha": "1c54dfb1d5db80ac03e88c50b3aaa0ecdb0b1c15",
+      "bytes": 732241
+    }
+  },
+  "scope_limitations": [
+    "Три оригинала PNG, три точных JPEG и три миниатюры просмотрены непосредственно.",
+    "Сравнение 13 прошлых выпусков выполнено по полному тексту; отдельная полная пиксельная ревизия всех 13 старых обложек в эту проверку не включена.",
+    "Запуск генератора наблюдал root; этот редактор подтверждает локальные файлы и их совпадение с metadata, не независимое криптографическое доказательство происхождения.",
+    "Удалённые bytes/readiness, Telegram preflight ImageContent, Telegram client render и фактическая публикация здесь не проверялись."
+  ]
+}

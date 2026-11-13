@@ -438,6 +438,93 @@
       },
       "provenance_note": "Recovered actual checkpoint PNG and JPEG, independently hashed by root transfer bridge. No art substituted or regenerated.",
       "user_approval_evidence": "Editorial release approved by actual independent editor; no individual user art approval claimed."
+    },
+    {
+      "date_moscow": "2026-11-18",
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-18-imagegen.jpg",
+      "github_path": "telegram/2026-11/2026-11-18-imagegen.jpg",
+      "github_blob_sha": "206e5a10df63050ffd13aed19c8a82e264057c61",
+      "github_size_bytes": 638656,
+      "jpeg_sha256": "987c0d4ce2101ee30acaa1b2332c3cf26cc587102a8a69af26c86392b252b4f4",
+      "visual_review": "approved",
+      "original_source_sha": "sha256:c3ed659aa56af149c6a714554e164e9a48c8e3948ee8214acd92236f847ea54e",
+      "generation": {
+        "method": "chatgpt_image_gen",
+        "source_ref": "editorial/originals/2026-11-18-imagegen.png",
+        "source_sha256": "c3ed659aa56af149c6a714554e164e9a48c8e3948ee8214acd92236f847ea54e",
+        "observed_at": "2026-11-13T10:14:34.239Z",
+        "source_run_id": "/root / workspace 95e626c6f777 / 2026-11-13",
+        "source_file_ref": "/workspace/scratch/95e626c6f777/generated_images/exec-3b461b8f-46e7-4832-b22a-c14550f6f6c0.png",
+        "prompt": "Use case: photorealistic-natural. Asset type: unique portrait 4:5 editorial cover for Money Psychology. Article insight: rewarding only speed of closing customer-support cases can move unfinished work back to the customer; optimizing one measured target can harm unmeasured quality. Create an original cinematic studio photograph of a real-looking sculptural installation: a graceful polished stainless-steel conveyor folds back on itself in a broad U, with a handful of identical small ochre parcels moving from the near outgoing end back toward the receiving end. A single bright vermilion parcel catches attention at the turn. No belts through impossible geometry: clean physically coherent rollers, sturdy supports, tactile matte paper. Gallery-like pale gray concrete space, dramatic long late-afternoon diagonal shadows, restrained ochre, silver and red palette, high-end contemporary magazine photography. Composition from a high oblique camera, strong sweeping curve and open breathing room; immediately readable on a small phone screen. No people, writing, letters, numbers, labels, logos, charts, UI, money, watermarks. This is a visual metaphor, not a data diagram. Distinct from glass houses, boxes with keys/chains, debt wheels, shopping baskets and financial scales.",
+        "evidence_note": "Root invoked native imagegen and inspected the generated file during this session. observed_at records this archive observation, not an exact generation timestamp. Tool did not return a generation ID; none is invented. Original PNG archived unchanged; RGB JPEG conversion only, quality95, subsampling0, no resize/crop."
+      },
+      "pixel_review": {
+        "decision": "approved",
+        "asset_blob_sha": "206e5a10df63050ffd13aed19c8a82e264057c61",
+        "checked_at": "2026-11-13T10:11:10.968Z",
+        "reviewer_run_id": "/root/reserve_editor",
+        "assessment": "Оригинал PNG и финальный JPEG визуально совпадают по сюжету, кадру и деталям. U-образный роликовый конвейер, несколько посылок и красный акцент остаются различимыми на 240×300 миниатюре. Свет, металлическая фактура и контур чистые; видимых критических артефактов, текста и ложных чисел нет. Поворот потока уместен как метафора возврата работы; он не является диаграммой замкнутого процесса. Подпись объясняет связь с поддержкой, не обещает буквального изображения её статистики."
+      },
+      "provenance_note": "Actual native tool original and final JPEG were uploaded as GitHub blobs; returned Git SHAs matched local bytes. Independent reviewer inspected both and mobile thumbnail.",
+      "user_approval_evidence": "Independent editorial approval under authorized automatic pipeline; no individual user art approval claimed."
+    },
+    {
+      "date_moscow": "2026-11-19",
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-19-imagegen.jpg",
+      "github_path": "telegram/2026-11/2026-11-19-imagegen.jpg",
+      "github_blob_sha": "b996c93f69dc383708093c603d260a0d10d6f69a",
+      "github_size_bytes": 579872,
+      "jpeg_sha256": "8ad8277829b8d7bfe2b19ef1ecfe099cd6d31e5aed6b76b6646e0c9f62b20838",
+      "visual_review": "approved",
+      "original_source_sha": "sha256:20088c2115514d24a9c924433e2bb29ada03faebb733a6b6fbe5c795b5ab788c",
+      "generation": {
+        "method": "chatgpt_image_gen",
+        "source_ref": "editorial/originals/2026-11-19-imagegen.png",
+        "source_sha256": "20088c2115514d24a9c924433e2bb29ada03faebb733a6b6fbe5c795b5ab788c",
+        "observed_at": "2026-11-13T10:14:34.239Z",
+        "source_run_id": "/root / workspace 95e626c6f777 / 2026-11-13",
+        "source_file_ref": "/workspace/scratch/95e626c6f777/generated_images/exec-f8170a86-e44a-4879-9989-ce5e4847963e.png",
+        "prompt": "Use case: photorealistic-natural. Asset type: premium unique 4:5 portrait cover for Money Psychology article on AI productivity and the need to measure checking and rework in the full process. Show one dark-blue ceramic vessel with a thin luminous rough seam, on a spacious professional ceramic craftsman's workbench. At the edge of the image a pair of realistically proportioned hands gently inspect the seam under a large suspended circular inspection lamp; hands anatomically correct, only this single craft action. Emphasize attentive inspection, not a fantasy autonomous machine. Beautiful tactile studio editorial photograph: matte blue glaze, raw terracotta, warm worn wood, soft cool daylight with a precise warm pool of inspection light, shallow but sufficient depth of field. Vertical composition, main object large and clear, natural visual tension between attractive finished appearance and small unfinished seam, no repair exaggeration. No robot faces, brains, neon, screens, text, letters, numbers, logos, currency, watermark, diagrams, collage. Scene is an editorial metaphor for quality verification, not a literal claim about ceramic AI.",
+        "evidence_note": "Root invoked native imagegen and inspected the generated file during this session. observed_at records this archive observation, not an exact generation timestamp. Tool did not return a generation ID; none is invented. Original PNG archived unchanged; RGB JPEG conversion only, quality95, subsampling0, no resize/crop."
+      },
+      "pixel_review": {
+        "decision": "approved",
+        "asset_blob_sha": "b996c93f69dc383708093c603d260a0d10d6f69a",
+        "checked_at": "2026-11-13T10:11:10.968Z",
+        "reviewer_run_id": "/root/reserve_editor",
+        "assessment": "Оригинал PNG и финальный JPEG визуально совпадают. Освещённый шов тёмной вазы и проверяющие руки создают конкретный образ контроля качества после изготовления. На 240×300 миниатюре видны предмет, руки, лампа и линия проверки; форма рук правдоподобна, явных дубликатов пальцев или расплывшихся деталей не обнаружено. Связь с ИИ метафорическая и поддерживается подписью; изображение не выдаётся за фотографию эксперимента."
+      },
+      "provenance_note": "Actual native tool original and final JPEG were uploaded as GitHub blobs; returned Git SHAs matched local bytes. Independent reviewer inspected both and mobile thumbnail.",
+      "user_approval_evidence": "Independent editorial approval under authorized automatic pipeline; no individual user art approval claimed."
+    },
+    {
+      "date_moscow": "2026-11-20",
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-20-imagegen.jpg",
+      "github_path": "telegram/2026-11/2026-11-20-imagegen.jpg",
+      "github_blob_sha": "1c54dfb1d5db80ac03e88c50b3aaa0ecdb0b1c15",
+      "github_size_bytes": 732241,
+      "jpeg_sha256": "e33b326e6f24648e9c07397ed75aa08e715ddf43e775f5f11023b393ee4ea893",
+      "visual_review": "approved",
+      "original_source_sha": "sha256:f06ead4183e185b8c6f9d9f5bc9e39be0116329bc3c30336b77a3dfaf8b7932f",
+      "generation": {
+        "method": "chatgpt_image_gen",
+        "source_ref": "editorial/originals/2026-11-20-imagegen.png",
+        "source_sha256": "f06ead4183e185b8c6f9d9f5bc9e39be0116329bc3c30336b77a3dfaf8b7932f",
+        "observed_at": "2026-11-13T10:14:34.239Z",
+        "source_run_id": "/root / workspace 95e626c6f777 / 2026-11-13",
+        "source_file_ref": "/workspace/scratch/95e626c6f777/generated_images/exec-0dd86d05-9c5b-4f3b-b254-ccfec381007a.png",
+        "prompt": "Use case: photorealistic-natural. Asset type: original premium portrait 4:5 financial editorial magazine cover, Money Psychology. Article insight: job income and shares of your employer can both depend on one company; two labels on wealth are not two independent risks. Create a poetic physically credible fine-art photograph: two elegant suspension footbridges made of dark timber and thin steel cables, departing into different directions but visibly supported by the SAME single massive weathered concrete anchorage in the foreground. Human-free coastal mist landscape, low subdued green-gray sea, overcast northern light with a subtle sun break highlighting cables, cinematic architectural photography, exceptional detail in materials, restrained palette of fog pearl, slate, muted pine, rust. Camera high enough that shared anchorage and the diverging two spans are immediately legible; no impossible floating cables. Portrait composition with depth and quiet negative space. No text, letters, logos, currency, data graphics, charts, people, building skyline, screens, watermarks, split panels. This is conceptual architectural imagery, not structural engineering documentation.",
+        "evidence_note": "Root invoked native imagegen and inspected the generated file during this session. observed_at records this archive observation, not an exact generation timestamp. Tool did not return a generation ID; none is invented. Original PNG archived unchanged; RGB JPEG conversion only, quality95, subsampling0, no resize/crop."
+      },
+      "pixel_review": {
+        "decision": "approved",
+        "asset_blob_sha": "1c54dfb1d5db80ac03e88c50b3aaa0ecdb0b1c15",
+        "checked_at": "2026-11-13T10:11:10.968Z",
+        "reviewer_run_id": "/root/reserve_editor",
+        "assessment": "Оригинал PNG и финальный JPEG визуально совпадают. Два подвесных прохода сходятся к общей бетонной опоре; общий узел отчётливо виден в полном JPEG и 240×300 миниатюре. Материалы, рельеф и свет проработаны; текст, числа и рекламные марки отсутствуют. Композиция передаёт общую зависимость двух источников. Это художественная метафора, не инженерный чертёж или документальное место; катастрофа и разрушение не показаны."
+      },
+      "provenance_note": "Actual native tool original and final JPEG were uploaded as GitHub blobs; returned Git SHAs matched local bytes. Independent reviewer inspected both and mobile thumbnail.",
+      "user_approval_evidence": "Independent editorial approval under authorized automatic pipeline; no individual user art approval claimed."
     }
   ]
 }

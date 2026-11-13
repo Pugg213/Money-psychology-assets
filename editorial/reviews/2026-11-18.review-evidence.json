@@ -1,0 +1,61 @@
+{
+  "date_moscow": "2026-11-18",
+  "checked_at": "2026-11-13T10:11:10.968Z",
+  "reviewer_run_id": "/root/reserve_editor",
+  "immutable_packet_ref": "/workspace/scratch/95e626c6f777/reserve-writing/2026-11-18.packet.json",
+  "packet_sha256": "eb4c177ee97e0dbde75e0bb8b6974c236a169af15675ad55253b8921f766b12e",
+  "payload_hash": "c6489c6ba8678dc92e710cc830d335fd7c94c2e208c492ad9d345d64f30636c6",
+  "binding_note": "Точный packet.content сохранён с конечным LF, caption == photo_caption. По запросу интегратора final format='markdown', тогда как writer packet.format='Markdown'; вычисление release hash использует только согласованный lowercase формат. Любое изменение текста/подписи/формата/URL требует новой привязки после действительной проверки.",
+  "pixel_review": {
+    "decision": "approved",
+    "asset_blob_sha": "206e5a10df63050ffd13aed19c8a82e264057c61",
+    "checked_at": "2026-11-13T10:11:10.968Z",
+    "reviewer_run_id": "/root/reserve_editor",
+    "assessment": "Оригинал PNG и финальный JPEG визуально совпадают по сюжету, кадру и деталям. U-образный роликовый конвейер, несколько посылок и красный акцент остаются различимыми на 240×300 миниатюре. Свет, металлическая фактура и контур чистые; видимых критических артефактов, текста и ложных чисел нет. Поворот потока уместен как метафора возврата работы; он не является диаграммой замкнутого процесса. Подпись объясняет связь с поддержкой, не обещает буквального изображения её статистики."
+  },
+  "style_review_check": {
+    "reviewer_run_id": "/root/reserve_editor",
+    "writer_run_id": "/root/reserve_writer / 2026-11-13",
+    "checked_at": "2026-11-13T10:11:10.968Z",
+    "mode": "independent_detect_only",
+    "plugin": "avoid-ai-writing",
+    "rulebook_version": "3.29.0",
+    "payload_hash": "c6489c6ba8678dc92e710cc830d335fd7c94c2e208c492ad9d345d64f30636c6",
+    "preservation_status": "PASS",
+    "before_sha256": "4c19064e36d6b6a1675c074c0f81473fe26ac477b1de349f333d828aa1a917b3",
+    "after_sha256": "81124870429d53c59ee3e734d7e16c0afe9bfed43cab4c70cf9f644fb95298b1",
+    "writer_passes_checked": 1,
+    "reviewer_rewrites": 0,
+    "semantic_review_mode": "model_only",
+    "semantic_assessment": "Три правки убирают пустое усиление и исправляют согласование. Учебная сцена, 100 обращений, 8/5 минут, 5/25 возвратов, 20 минут, 900 рублей/час, расходы и оговорки полностью сохранены. Отрицание универсальной причинности содержательно и оставлено.",
+    "verifier": {
+      "mode": "executed",
+      "command": "node /home/agent/.codex/plugins/cache/openai-curated-remote/avoid-ai-writing/3.29.0/skills/preservation-verifier/scripts/validate.js /workspace/scratch/95e626c6f777/reserve-writing/2026-11-18.before.md /workspace/scratch/95e626c6f777/reserve-writing/2026-11-18.after.md",
+      "exit_code": 0,
+      "result_ref": "/workspace/scratch/95e626c6f777/reserve-review/2026-11-18.independent-validate.txt"
+    },
+    "detector_evidence": "Прочитаны фактические writer detector/edits/verifier records; повторный detector не запускался. Англоязычные показатели и Cyrillic homoglyph/AI_ONLY классификация не использованы для вывода об авторстве или допуска.",
+    "retained_patterns": "Русские грамматические тире, точные финансовые термины и содержательные ограничения оставлены; новизна и ритм оценены по русскому тексту, а не числовой квоте детектора.",
+    "unresolved_errors": []
+  },
+  "asset_bytes_checked": {
+    "original": {
+      "local_path": "/workspace/scratch/95e626c6f777/money-psy/editorial/originals/2026-11-18-imagegen.png",
+      "sha256": "c3ed659aa56af149c6a714554e164e9a48c8e3948ee8214acd92236f847ea54e",
+      "git_blob_sha": "431d6cd7abe93aa4660da8b35905ed4efcd326d6",
+      "bytes": 2610479
+    },
+    "jpeg": {
+      "local_path": "/workspace/scratch/95e626c6f777/money-psy/telegram/2026-11/2026-11-18-imagegen.jpg",
+      "sha256": "987c0d4ce2101ee30acaa1b2332c3cf26cc587102a8a69af26c86392b252b4f4",
+      "git_blob_sha": "206e5a10df63050ffd13aed19c8a82e264057c61",
+      "bytes": 638656
+    }
+  },
+  "scope_limitations": [
+    "Три оригинала PNG, три точных JPEG и три миниатюры просмотрены непосредственно.",
+    "Сравнение 13 прошлых выпусков выполнено по полному тексту; отдельная полная пиксельная ревизия всех 13 старых обложек в эту проверку не включена.",
+    "Запуск генератора наблюдал root; этот редактор подтверждает локальные файлы и их совпадение с metadata, не независимое криптографическое доказательство происхождения.",
+    "Удалённые bytes/readiness, Telegram preflight ImageContent, Telegram client render и фактическая публикация здесь не проверялись."
+  ]
+}

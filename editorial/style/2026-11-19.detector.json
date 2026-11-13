@@ -1,0 +1,55 @@
+{
+  "score": 4,
+  "label": "Minimal AI signals",
+  "issues": [
+    {
+      "type": "normalization-flag",
+      "text": "0 zero-width + 2576 homoglyph swaps",
+      "severity": "critical",
+      "suggestion": "Text contains invisible/lookalike chars typical of AI-humanizer bypass tools. Re-type from your own keyboard."
+    },
+    {
+      "type": "em-dash",
+      "text": "1 em dashes in 669 words",
+      "severity": "medium",
+      "suggestion": "Replace with commas, periods, or rewrite"
+    },
+    {
+      "type": "low-ttr",
+      "text": "Vocabulary diversity 27.3% (333 unique / 1221 tokens)",
+      "severity": "low",
+      "suggestion": "Text reuses a narrow word set. Vary nouns and verbs deliberately, or check if the topic genuinely warrants the repetition."
+    }
+  ],
+  "stats": {
+    "wordCount": 669,
+    "tier1Count": 0,
+    "tier2Count": 0,
+    "tier2Clusters": 0,
+    "tier3Count": 0,
+    "tier3Flags": 0,
+    "patternCount": 3,
+    "contextMode": "general",
+    "contextModeFallback": null,
+    "sourceMode": "plain",
+    "maskedFrontmatter": 0,
+    "maskedHtmlComments": 0,
+    "normalization": {
+      "zeroWidth": 0,
+      "homoglyph": 2576,
+      "roleplay": 0
+    },
+    "quotedLines": 0,
+    "unmappedHighlights": 1,
+    "denseAIVocab": false,
+    "tier1Distinct": 0
+  },
+  "document_classification": "AI_ONLY",
+  "class_probabilities": {
+    "human": 0.733,
+    "mixed": 0.095,
+    "ai": 0.172
+  },
+  "confidence_category": "high",
+  "highlight_sentence_for_ai": []
+}
