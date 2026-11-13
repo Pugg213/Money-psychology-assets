@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "decision": "approved",
+  "reviewer_role": "independent_editor",
+  "reviewer_run_id": "/root/editorial_review",
+  "writer_run_id": "/root/editorial_writer / 2026-11-13",
+  "checked_at": "2026-11-13T09:36:59.993Z",
+  "payload_hash": "0df51c49c906fc91909d62a5b873c02e74afcda40be74fb0f8fb32b7043a90be",
+  "asset_blob_sha": "9b091bfb7c01d923aa04dfefb97b3ef9f62218f1",
+  "scores": {
+    "originality": 1,
+    "evidence": 2,
+    "depth": 2,
+    "language": 2,
+    "practical_value": 2,
+    "visual": 1
+  },
+  "assessment": "10/12 independent judgment. Useful non-obvious distinction: legal inherited-value cap does not immunize each personal account, while illiquid property counts in the cap. Arithmetic, Russian legal scope, actual-acceptance and independent-obligation caveats preserved. Inheritance is distinct from12 preceding queue subjects but hook retains common numeric contrast: originality1. Strong clear article with practical documents and two-heir case, though long for phone reading. Crisp exact JPEG and240x300 thumbnail inspected: key/chain inheritance metaphor remains readable; chain crosses box edge so no literal contained-debt claim accepted, visual1. No copy repairs required. This is local exact-byte pixel review; persisted MCP preflight ImageContent and archive/readback remain root integration checks, not claimed here. Additional independently opened supporting statute text: Consultant article1175 is a non-governmental legal-database reproduction, retained under supporting_source_checks rather than relabeled primary.",
+  "source_checks": [
+    {
+      "kind": "primary_source",
+      "url": "https://www.vsrf.ru/documents/all/8296",
+      "checked_at": "2026-11-13T09:36:59.993Z",
+      "claim": "Independently opened official Plenum9: p58 obligations surviving death; p60 accepted-inheritance solidarity, actual acceptance and value cap; p61 market value at opening, p38 general acceptance period.",
+      "scope": "Russian jurisdiction; cited passages only, not a certification that every historical provision of this page remains current. Bare vsrf.ru failed but www worked. No individualized advice."
+    },
+    {
+      "kind": "primary_source",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/7455683/",
+      "checked_at": "2026-11-13T09:36:59.993Z",
+      "claim": "Author abstract supports preference reversal under different framing including hypothetical and real monetary outcomes; bibliographic date1981-01-30 confirmed.",
+      "scope": "Abstract only; no study of Russian heirs or estimate of this scenario’s effect. Text explicitly labels application editorial interpretation."
+    }
+  ],
+  "findings": [
+    {
+      "severity": "info",
+      "message": "No blocking semantic or stylistic defects. Numeric-contrast hook resembles adjacent editions but topic and decision mechanism differ."
+    },
+    {
+      "severity": "info",
+      "message": "Actual before/after diff shows targeted reduction of bold/filler and action labels, with facts, caveats, URLs and headings retained. Independently executed existing bundled validate.js: PASS; manual Russian semantic preservation PASS. English detector Cyrillic findings do not establish authorship or publication quality."
+    },
+    {
+      "severity": "info",
+      "message": "Image depicts a chain crossing rim; do not describe it as fully contained. Reviewed metaphor does not assert legal numerical facts."
+    }
+  ],
+  "calculations": [
+    {
+      "label": "Непокрытая часть долга",
+      "operator": "difference",
+      "inputs": [
+        3600000,
+        2400000
+      ],
+      "expected": 1200000,
+      "tolerance": 0,
+      "excerpt": "долг 3 600 000 ₽ минус предел ответственности 2 400 000 ₽ = 1 200 000 ₽"
+    },
+    {
+      "label": "Предел на каждого в равных долях",
+      "operator": "ratio",
+      "inputs": [
+        2400000,
+        2
+      ],
+      "expected": 1200000,
+      "tolerance": 0,
+      "excerpt": "имущество стоимостью 2 400 000 ₽ перешло двоим в равных стоимостных долях — по 1 200 000 ₽"
+    }
+  ],
+  "supporting_source_checks": [
+    {
+      "kind": "statute_text_copy",
+      "url": "https://www.consultant.ru/document/cons_doc_LAW_34154/b893c4afcd52c1d6ae960ff4fb38a0c10a167521/",
+      "checked_at": "2026-11-13T09:36:59.993Z",
+      "claim": "Independently opened reproduced article1175 confirms joint liability and each heir’s inherited-value ceiling.",
+      "scope": "Legal database copy, not official publication. General six-month timing corroborated via opened official court source; Garant link was not independently opened."
+    }
+  ]
+}

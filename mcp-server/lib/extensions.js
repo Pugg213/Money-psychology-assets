@@ -327,7 +327,7 @@ export async function executeTool(name,args={},clientFetch=fetch){
  validateToolArgs(definition,args);
  const api=(method,params,confirmed)=>tg(method,params,confirmed,clientFetch);
  switch(name){
-  case 'get_capabilities':return {version:'2.6.1',channel:CHANNEL,methods,
+  case 'get_capabilities':return {version:'2.6.2',channel:CHANNEL,methods,
     method_policy:{read: 'Bot/profile reads and configured-chat reads only; no arbitrary histories',publish:'Configured-chat mutations',
      manage:'Configured-chat or bot-setting mutations; confirmation required for high-impact management',special:'Disabled generic methods; Business operations use guarded dedicated tools',
      disabled_reason:{getBusinessConnection:'Use owner-checked business_connection_info',sendChecklist:'Business-only method is not available in the channel gateway',

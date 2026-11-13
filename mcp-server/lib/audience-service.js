@@ -71,11 +71,39 @@ export function createAudienceService({telegramApi=botRequest,store=null,botToke
     note:'No message bodies, other chat IDs, or Business connection tokens are returned.'};
   }catch{return {state:'storage_unavailable',note:'Business connection status could not be verified.'};}
  }
+ async function discussionDiagnostic(chat,web){
+  const diagnostic={linked:!!chat.linked_chat_id,bot_membership:'unknown',privacy_enabled:null,
+   all_group_messages_available:null,delivery_verified:false,
+   webhook_message_updates_enabled:web.url===endpoint&&(!Array.isArray(web.allowed_updates)||!web.allowed_updates.length||web.allowed_updates.includes('message')),
+   note:'Read-only configuration check. Actual webhook delivery is not verified; privacy mode may prevent nested comments from reaching the bot.'};
+  if(!chat.linked_chat_id)return {...diagnostic,state:'no_linked_group'};
+  try{
+   const me=await telegramApi('getMe');
+   if(!Number.isSafeInteger(me?.id))throw Error('bot_identity_unverified');
+   diagnostic.privacy_enabled=typeof me.can_read_all_group_messages==='boolean'?!me.can_read_all_group_messages:null;
+   const member=await telegramApi('getChatMember',{chat_id:chat.linked_chat_id,user_id:me.id});
+   if(member?.user?.id!==me.id||!['creator','administrator','member','restricted','left','kicked'].includes(member.status))
+    throw Error('bot_membership_unverified');
+   diagnostic.bot_membership=member.status;
+   const present=['creator','administrator','member'].includes(member.status)||member.status==='restricted'&&member.is_member===true;
+   diagnostic.all_group_messages_available=!present?false:['creator','administrator'].includes(member.status)?true:
+    typeof me.can_read_all_group_messages==='boolean'?me.can_read_all_group_messages:null;
+   diagnostic.state=!present?'bot_not_member':!diagnostic.webhook_message_updates_enabled?'message_updates_disabled':
+    diagnostic.all_group_messages_available?'configured_delivery_unverified':'privacy_limited_or_unknown';
+   return diagnostic;
+  }catch{return {...diagnostic,state:'verification_incomplete'};}
+ }
  async function status(){
   const [web,chat,business]=await Promise.all([
    telegramApi('getWebhookInfo'),telegramApi('getChat',{chat_id:CHANNEL}),businessDiagnostic()
   ]);
-  return {webhook_installed:web.url===endpoint,existing_webhook:web.url||null,
+  const discussion=await discussionDiagnostic(chat,web);
+  let maintenance={state:'historical_evidence_unavailable',latest_receipt:null};
+  if(typeof audienceStore.recentMaintenance==='function'){
+   try{maintenance=await audienceStore.recentMaintenance();}
+   catch{maintenance={state:'storage_unavailable',latest_receipt:null};}
+  }
+  return {daily_maintenance_diagnostic:maintenance,discussion_delivery_diagnostic:discussion,webhook_installed:web.url===endpoint,existing_webhook:web.url||null,
    safe_to_enable:!web.url||web.url===endpoint,
    pending_updates:web.pending_update_count??null,
    discussion_group_linked:!!chat.linked_chat_id,
@@ -118,7 +146,25 @@ export function createAudienceService({telegramApi=botRequest,store=null,botToke
  }
  async function handle(update){
   const ctx=await context();
+  const m=update?.message;
+  if(m&&String(m.chat?.id)===String(ctx.discussionId)&&typeof audienceStore.discussionPost==='function'){
+   // Only durable, channel/group-scoped associations can authorize a nested reply.
+   const ids=[m.message_thread_id,m.reply_to_message?.message_id].filter(x=>Number.isSafeInteger(x)&&x>0);
+   const posts=[];
+   for(const id of new Set(ids)){
+    const post=await audienceStore.discussionPost(ctx.channelId,ctx.discussionId,id);
+    if(post!==null)posts.push(post);
+   }
+   if(new Set(posts).size>1)return {accepted:true,ignored:true};
+   ctx.discussionPostMessageId=posts[0]??null;
+  }
   const event=normalizeEvent(update,ctx);
+  if(event?.type==='discussion_comment'&&typeof audienceStore.rememberDiscussionMessage==='function'){
+   for(const messageId of new Set([event.discussion_root_id,event.message_id].filter(x=>Number.isSafeInteger(x)&&x>0))){
+    if(Number.isSafeInteger(event.post_message_id)&&event.post_message_id>0)
+     await audienceStore.rememberDiscussionMessage({...ctx,messageId,postMessageId:event.post_message_id});
+   }
+  }
   if(!event)return {accepted:true,ignored:true};
   // No Telegram message is sent to the channel; all callbacks use ephemeral answers.
   const stored=await audienceStore.record(event);

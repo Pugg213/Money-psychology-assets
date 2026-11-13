@@ -16,3 +16,14 @@ test('a failed OAuth cleanup does not lose the subscriber snapshot or expose sto
  assert.equal(r.statusCode,200);assert.equal(r.payload.recorded,true);assert.equal(r.payload.oauth_retention.retry_next_run,true);
  assert.ok(!JSON.stringify(r.payload).includes('private-storage-secret'));
 });
+test('daily records Moscow day and separate cleanup failures in private maintenance evidence',async()=>{
+ let receipt;const r=resp();await daily(request(key),r,{...opts,now:new Date('2026-11-05T22:10:00Z'),store:{...opts.store,
+ async purgeBefore(){throw Error('private-blob-secret');},async recordMaintenance(value){receipt=value;return {stored:true};}}});
+ assert.equal(r.statusCode,200);assert.equal(r.payload.maintenance_receipt_persisted,true);
+ assert.equal(receipt.date_moscow,'2026-11-06');assert.equal(receipt.snapshot,'stored');
+ assert.equal(receipt.retention.error,'retention_cleanup_failed');assert.ok(!JSON.stringify(receipt).includes('private-blob-secret'));
+});
+test('failed receipt persistence does not erase successful daily snapshot outcome',async()=>{
+ const r=resp();await daily(request(key),r,{...opts,store:{...opts.store,async recordMaintenance(){throw Error('private');}}});
+ assert.equal(r.statusCode,200);assert.equal(r.payload.recorded,true);assert.equal(r.payload.maintenance_receipt_persisted,false);
+});

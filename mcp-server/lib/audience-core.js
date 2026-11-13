@@ -53,7 +53,7 @@ export function summarizeComment(input){
  const is_question=/\?|？|(?:^|\s)(?:почему|как|зачем|что|можно|сколько|какой|где)(?:\s|$)/i.test(redacted);
  return {text:redacted,is_question,topics,classification:'heuristic_not_ai'};
 }
-export function normalizeEvent(update,{channelId,discussionId,secret}){
+export function normalizeEvent(update,{channelId,discussionId,secret,discussionPostMessageId=null}){
  if(!update||!Number.isSafeInteger(update.update_id)||update.update_id<0||!secret)return null;
  const id=update.update_id,observed_at=new Date().toISOString();
  const c=update.callback_query;
@@ -69,10 +69,17 @@ export function normalizeEvent(update,{channelId,discussionId,secret}){
   const origin=f?.forward_origin;
   const sourceVerified=origin?.type==='channel'&&String(origin.chat?.id)===String(channelId)||
    !origin&&String(f?.forward_from_chat?.id)===String(channelId);
-  if(!f||!sourceVerified)return null;
+  if(!f||f.chat&&String(f.chat.id)!==String(discussionId))return null;
+  // Foreign forward evidence must not be overridden by a known thread.
+  if((origin||f.forward_from_chat)&&!sourceVerified)return null;
+  const post=sourceVerified?(origin?.message_id??f.forward_from_message_id):discussionPostMessageId;
+  // All available evidence must agree before storing a new message association.
+  if(sourceVerified&&discussionPostMessageId!==null&&post!==discussionPostMessageId)return null;
+  if(!sourceVerified&&(!Number.isSafeInteger(post)||post<1))return null;
   const txt=summarizeComment(m.text||m.caption||'');
   if(!txt.text)return null;
-  return {type:'discussion_comment',update_id:id,post_message_id:origin?.message_id??f.forward_from_message_id??null,
+  return {type:'discussion_comment',update_id:id,post_message_id:post??null,
+    ...(sourceVerified&&Number.isSafeInteger(f.message_id)&&f.message_id>0?{discussion_root_id:f.message_id}:{}),
     message_id:m.message_id,actor_hash:pseudonym(m.from.id,secret),...txt,observed_at};
  }
  const ch=update.channel_post;

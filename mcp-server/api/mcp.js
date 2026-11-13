@@ -37,7 +37,7 @@ function checkToken(req){
 }
 function respond(req,res,payload,code=200){
  if(req.modernMcp&&payload.result)payload.result={...payload.result,resultType:'complete',
-  _meta:{...payload.result._meta,'io.modelcontextprotocol/serverInfo':{name:'money-psy-telegram',version:'2.6.1'}}};
+  _meta:{...payload.result._meta,'io.modelcontextprotocol/serverInfo':{name:'money-psy-telegram',version:'2.6.2'}}};
  res.statusCode=code;
  res.setHeader('Cache-Control','no-store');
  res.setHeader('X-Content-Type-Options','nosniff');
@@ -158,11 +158,11 @@ export default async function handler(req,res,{businessExecutor=executeBusinessT
    message:'Modern MCP uses per-request metadata; initialize is available for legacy versions'}},404);
   const requested=payload.params?.protocolVersion;
   return respond(req,res,{jsonrpc:'2.0',id:payload.id,result:{protocolVersion:VERSIONS.includes(requested)&&requested!=='2026-07-28'?requested:'2025-11-25',
-   serverInfo:{name:'money-psy-telegram',version:'2.6.1'},capabilities:{tools:{}},
+   serverInfo:{name:'money-psy-telegram',version:'2.6.2'},capabilities:{tools:{}},
    instructions:'Manage the configured Telegram channel and explicitly connected Business chats; mutations execute immediately. Daily publication uses the canonical queue and durable once-only guard.'}});
  }
  if(payload.method==='server/discover')return respond(req,res,{jsonrpc:'2.0',id:payload.id,
-  result:{supportedVersions:VERSIONS,serverInfo:{name:'money-psy-telegram',version:'2.6.1'},capabilities:{tools:{}},ttlMs:0,cacheScope:'private'}});
+  result:{supportedVersions:VERSIONS,serverInfo:{name:'money-psy-telegram',version:'2.6.2'},capabilities:{tools:{}},ttlMs:0,cacheScope:'private'}});
  if(payload.method==='ping')return respond(req,res,{jsonrpc:'2.0',id:payload.id,result:{}});
  if(payload?.method==='tools/list'){
   return respond(req,res,{jsonrpc:'2.0',id:payload.id,result:{tools:allTools,...(req.modernMcp?{ttlMs:0,cacheScope:'private'}:{})}});
@@ -191,7 +191,7 @@ export default async function handler(req,res,{businessExecutor=executeBusinessT
     :isAudienceTool(name)?await audienceExecutor(name,argumentsObject)
     :isCoreTool(name)?await coreExecutor(name,argumentsObject)
     :await extensionExecutor(name,argumentsObject);
-   if(name==='get_capabilities')result={...result,version:'2.6.1',typed_tools:allTools.map(x=>x.name),
+   if(name==='get_capabilities')result={...result,version:'2.6.2',typed_tools:allTools.map(x=>x.name),
     typed_tool_count:allTools.length,editorial_preflight:{tool:'preflight_publication',compatibility:{tool:'bot_api_call',method:'preflight_publication'},verified_image_content:true,semantic_approval:'separate_independent_review'},mcp_implementation:'local_all_tools_v1',oauth_implementation:'local_oauth_v1'};
    const {image_content,...textResult}=result||{};
    return respond(req,res,{jsonrpc:'2.0',id:payload.id,result:{content:[{type:'text',text:JSON.stringify(textResult)},

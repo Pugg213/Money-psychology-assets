@@ -407,6 +407,37 @@
       },
       "provenance_note": "Verified original native PNG sha256 and computed git blob SHA on local bytes; confirmed connected GitHub create_blob returned matching Git SHA for both source PNG and derived JPEG after bounded base64 chunks. Same dimensions, RGB technical conversion only.",
       "user_approval_evidence": "Editorial pixel approval, not individual user approval."
+    },
+    {
+      "date_moscow": "2026-11-17",
+      "media_url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/main/telegram/2026-11/2026-11-17-imagegen.jpg",
+      "github_path": "telegram/2026-11/2026-11-17-imagegen.jpg",
+      "github_blob_sha": "9b091bfb7c01d923aa04dfefb97b3ef9f62218f1",
+      "github_size_bytes": 358343,
+      "jpeg_sha256": "78ca5e079d14c90d6b994fb5421c7ea5e534348d76a6810e14fe62a5c7599035",
+      "visual_review": "approved",
+      "original_source_sha": "sha256:aa2ae64c6651c4e87be96cf12c1912188604f109439ec68d879e2b4b19fb3f9f",
+      "generation": {
+        "method": "chatgpt_image_gen",
+        "source_ref": "editorial/originals/2026-11-17-imagegen.png",
+        "source_sha256": "aa2ae64c6651c4e87be96cf12c1912188604f109439ec68d879e2b4b19fb3f9f",
+        "observed_at": "2026-11-10T06:11:53.228Z",
+        "source_run_id": "Money Psychology preparation / 2026-11-10 / automation turn 4",
+        "source_file_ref": "file_000000002b84823080046b8a4e61f9f4",
+        "generation_id": "5f24910f-5087-48e4-b367-b48b99ee07dd",
+        "prompt": "Use case: photorealistic original premium financial magazine cover, 2026-11-17 Money Psychology | No BS. Article theme: Russian heirs inherit property valued at 2.4m RUB but deceased had debts of 3.6m; under Russian law inherited-debt liability has a value cap. The artwork is an expressive metaphor for an inherited asset and a burden that is bounded, NOT a literal legal illustration, and depicts no amounts. Portrait 4:5. A single exquisite antique walnut keepsake box on a luminous sand-colored travertine slab, lid open, containing a solitary timeworn brass house key and a heavy coil of matte black forged-iron chain. The very last iron link pushes against but remains firmly INSIDE the elegant copper-inlaid threshold around the box rim: an unmistakable visual boundary of responsibility. Sculptural, cinematic professional editorial still-life photography; quiet psychological tension between treasured inheritance and unwanted debt. Minimal physically plausible composition, crisp craftsmanship, rich timber grain, tactile black iron, subtle copper, cream mineral surfaces, restrained burgundy ambient shadow, directional warm early-day sunlight, deep dimensionality. Clear image legible in small mobile preview, generous negative space at top; materially and compositionally distinct from recent covers (glass houses, water reservoirs, groceries on a scale, giant ratchet wheel, car and ribbon). No text, letters, numbers, currency symbols, logos, watermarks, graphs, UI, stock elements, collages, cartoon, template, paintings or people. Only one image.",
+        "evidence_note": "Prompt and prompt_saved_at2026-11-10T06:10:18.517Z retained by original checkpoint. Recovery did not regenerate. observed_at is saved observation, not an invented exact generation timestamp.",
+        "recovery_run_id": "/root/editorial_writer / 2026-11-13"
+      },
+      "pixel_review": {
+        "decision": "approved",
+        "asset_blob_sha": "9b091bfb7c01d923aa04dfefb97b3ef9f62218f1",
+        "checked_at": "2026-11-13T09:36:59.993Z",
+        "reviewer_run_id": "/root/editorial_review",
+        "assessment": "Independent editor inspected exact final JPEG and thumbnail. 10/12 independent judgment. Useful non-obvious distinction: legal inherited-value cap does not immunize each personal account, while illiquid property counts in the cap. Arithmetic, Russian legal scope, actual-acceptance and independent-obligation caveats preserved. Inheritance is distinct from12 preceding queue subjects but hook retains common numeric contrast: originality1. Strong clear article with practical documents and two-heir case, though long for phone reading. Crisp exact JPEG and240x300 thumbnail inspected: key/chain inheritance metaphor remains readable; chain crosses box edge so no literal contained-debt claim accepted, visual1. No copy repairs required. This is local exact-byte pixel review; persisted MCP preflight ImageContent and archive/readback remain root integration checks, not claimed here."
+      },
+      "provenance_note": "Recovered actual checkpoint PNG and JPEG, independently hashed by root transfer bridge. No art substituted or regenerated.",
+      "user_approval_evidence": "Editorial release approved by actual independent editor; no individual user art approval claimed."
     }
   ]
 }

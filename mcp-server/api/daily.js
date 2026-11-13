@@ -34,7 +34,16 @@ export default async function handler(req,res,{
    try{oauth_retention={enabled:true,...await(oauthState||createOAuthState()).purgeExpired({now:Math.floor(now.getTime()/1000),limit:100})};}
    catch{oauth_retention={enabled:true,error:'oauth_retention_failed',retry_next_run:true};}
   }
-  return res.status(200).json({ok:true,member_count,recorded:recorded.stored===true,
+  let maintenance_receipt_persisted=false;
+  try{
+   if(typeof store.recordMaintenance==='function'){
+    const receipt={date_moscow:new Date(now.getTime()+3*3600000).toISOString().slice(0,10),
+     observed_at:now.toISOString(),snapshot:recorded.stored===true?'stored':recorded.duplicate===true?'duplicate':'unconfirmed',
+     retention,business_retention,oauth_retention};
+    maintenance_receipt_persisted=(await store.recordMaintenance(receipt))?.stored===true;
+   }
+  }catch{/* Snapshot and cleanup outcomes remain valid if the evidence write fails. */}
+  return res.status(200).json({ok:true,maintenance_receipt_persisted,member_count,recorded:recorded.stored===true,
    duplicate:recorded.duplicate===true,retention,business_retention,oauth_retention,not_post_views:true});
  }catch(err){
   return res.status(503).json({ok:false,error:'snapshot_failed'});

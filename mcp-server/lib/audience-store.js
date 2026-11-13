@@ -23,6 +23,54 @@ async function defaultSdk(){
 export function createAudienceStore(adapter=null){
  async function sdk(){return adapter||await defaultSdk();}
  return {
+  async recordMaintenance(receipt){
+   if(!/^20\d{2}-\d\d-\d\d$/.test(receipt?.date_moscow||'')||
+    !Number.isFinite(Date.parse(receipt.observed_at)))throw Error('invalid_maintenance_receipt');
+   const body=JSON.stringify(receipt);
+   if(body.length>2000)throw Error('maintenance_receipt_too_large');
+   await(await sdk()).put('maintenance/daily/'+receipt.date_moscow+'.json',body,
+    {access:'private',addRandomSuffix:false,allowOverwrite:true,contentType:'application/json'});
+   return {stored:true};
+  },
+  async recentMaintenance({now=new Date()}={}){
+   const api=await sdk();
+   // Seven known date keys; no unbounded list, no assumption about older history.
+   for(let ago=0;ago<7;ago++){
+    const day=new Date(now.getTime()+3*3600000-ago*86400000).toISOString().slice(0,10);
+    const item=await api.get('maintenance/daily/'+day+'.json',{access:'private',useCache:false});
+    if(!item)continue;
+    if(item.statusCode!==200||!item.stream)throw Error('maintenance_receipt_unavailable');
+    const body=await new Response(item.stream).text();
+    if(body.length>2000)throw Error('maintenance_receipt_invalid');
+    const receipt=JSON.parse(body);
+    if(receipt?.date_moscow!==day||!Number.isFinite(Date.parse(receipt.observed_at)))throw Error('maintenance_receipt_invalid');
+    return {state:'receipt_available',latest_receipt:receipt,lookback_days:7,
+     note:'Evidence for a past authorized daily handler run only; does not prove future scheduled execution.'};
+   }
+   return {state:'no_recent_receipt',latest_receipt:null,lookback_days:7,historical_evidence_available:false};
+  },
+  async rememberDiscussionMessage({channelId,discussionId,messageId,postMessageId}){
+   const path=discussionPath(channelId,discussionId,messageId);
+   if(!Number.isSafeInteger(postMessageId)||postMessageId<1)throw Error('invalid_discussion_post');
+   const api=await sdk();
+   try{await api.put(path,JSON.stringify({channel_id:channelId,discussion_id:discussionId,message_id:messageId,post_message_id:postMessageId}),
+    {access:'private',addRandomSuffix:false,allowOverwrite:false,contentType:'application/json'});}
+   catch(error){if(!isDuplicate(error)&&!/BlobPreconditionFailed|\b412\b/i.test(String(error?.name)+' '+String(error?.message)))throw error;
+    const prior=await this.discussionPost(channelId,discussionId,messageId);
+    if(prior!==postMessageId)throw Error('discussion_mapping_conflict');}
+  },
+  async discussionPost(channelId,discussionId,messageId){
+   const path=discussionPath(channelId,discussionId,messageId),api=await sdk();
+   const item=await api.get(path,{access:'private',useCache:false});
+   if(!item)return null;
+   if(item.statusCode!==200||!item.stream)throw Error('discussion_mapping_unavailable');
+   const body=await new Response(item.stream).text();
+   if(body.length>1000)throw Error('discussion_mapping_invalid');
+   const row=JSON.parse(body);
+   if(row.channel_id!==channelId||row.discussion_id!==discussionId||row.message_id!==messageId||
+    !Number.isSafeInteger(row.post_message_id)||row.post_message_id<1)throw Error('discussion_mapping_invalid');
+   return row.post_message_id;
+  },
   async record(event){
    const path=pathFor(event);
    const api=await sdk();
@@ -92,3 +140,9 @@ export function createAudienceStore(adapter=null){
  };
 }
 export const privateStoreKey=pathFor;
+
+function discussionPath(channelId,discussionId,messageId){
+ if(!Number.isSafeInteger(channelId)||channelId===0||!Number.isSafeInteger(discussionId)||discussionId===0||
+  !Number.isSafeInteger(messageId)||messageId<1)throw Error('invalid_discussion_identity');
+ return 'discussion/v1/'+channelId+'/'+discussionId+'/'+messageId+'.json';
+}
