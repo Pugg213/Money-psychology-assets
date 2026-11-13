@@ -976,7 +976,7 @@
       "format": "markdown",
       "publisher": "Money Psy Telegram MCP",
       "migrated_and_deduplicated": true,
-      "state": "queued",
+      "state": "sending",
       "telegram_publication": null,
       "image_review": "Full JPEG viewed: sphere on grooved default route and deliberate brass switch express inertia; conceptual sculpture rather than a real interface or investment guarantee. Pink/cobalt composition.",
       "editorial_review": {
@@ -1110,7 +1110,9 @@
         "attempts": 1,
         "updated_at": "2026-11-07T09:47:27.245Z",
         "blocker": null
-      }
+      },
+      "send_attempts": 1,
+      "send_claimed_at": "2026-11-13T09:00:57.318Z"
     },
     {
       "date_moscow": "2026-11-14",
