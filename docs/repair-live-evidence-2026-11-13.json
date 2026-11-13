@@ -1,0 +1,455 @@
+{
+  "observed_at": "2026-11-13T10:21:04.010Z",
+  "scope": "Read-only production verification; no new Telegram sends. Evidence recorded before the follow-up test-fixture/docs commit.",
+  "server": {
+    "version": "2.6.2",
+    "typed_tool_count": 61,
+    "deployment_id": "dpl_BhVNo5ykUAaoQfwzv74qhMwTpDoM",
+    "source_commit": "a96182d4b4cd3fb1af9b49cb77aba0ad06575c31",
+    "canonical_url": "https://money-psy-telegram-mcp.vercel.app"
+  },
+  "plugin": {
+    "version": "2.5.2",
+    "release_id": "pluginrel_6af6de2762948191b9e1e746e4ed5d2e",
+    "url": "https://chatgpt.com/plugins/plugin_asdk_app_6aec23bbc2fc8191a918fc2c8caef9e0",
+    "app_binding_preserved": true
+  },
+  "content_commit": "04d5c9e79450fbfe8119bb3c5ff12a7dc7a04a93",
+  "readback": {
+    "changed_files": 36,
+    "hash_mismatches": 0,
+    "unrelated_changes": 0
+  },
+  "continuous_reviewed_future_days": 7,
+  "preflights": [
+    {
+      "date_moscow": "2026-11-14",
+      "source_commit": "04d5c9e79450fbfe8119bb3c5ff12a7dc7a04a93",
+      "ok": true,
+      "checks": {
+        "semantic_review": "not_performed",
+        "pixel_review": "not_performed",
+        "date": {
+          "status": "passed"
+        },
+        "snapshot": {
+          "status": "passed"
+        },
+        "canonical_queue": {
+          "status": "passed"
+        },
+        "entry": {
+          "status": "passed"
+        },
+        "asset_identity": {
+          "status": "passed"
+        },
+        "recorded_editorial_binding": {
+          "status": "passed"
+        },
+        "media": {
+          "status": "passed"
+        },
+        "article_copy": {
+          "status": "passed"
+        }
+      },
+      "errors": [],
+      "payload_hash": "f87564507b9ce9e16bf4be436fe4a0cb580d83a559a2a5da058e16c9123b18a9",
+      "release_readiness": {
+        "status": "reviewed",
+        "payload_hash": "f87564507b9ce9e16bf4be436fe4a0cb580d83a559a2a5da058e16c9123b18a9",
+        "asset_blob_sha": "83a9651677f80f667dc8e2c02a333047dbdcac54",
+        "reviewer_run_id": "/root/review_editorial"
+      },
+      "media_evidence": {
+        "url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/04d5c9e79450fbfe8119bb3c5ff12a7dc7a04a93/telegram/2026-11/2026-11-14-imagegen-v2.jpg",
+        "github_blob_sha": "83a9651677f80f667dc8e2c02a333047dbdcac54",
+        "jpeg_sha256": "59019b205142b095919090d3bd100c6f55717f3c4be3cabdb9ecface695e1e7e",
+        "source_evidence": {
+          "source_ref": "editorial/originals/2026-11-14-imagegen.png",
+          "source_sha256": "e06c7f992a32e313a24a7f5d792cc01b5b47891e7ecbea2bb5f3daf34fe41430",
+          "size_bytes": 2153761
+        },
+        "size_bytes": 433471,
+        "width": 1122,
+        "height": 1402
+      },
+      "returned_image_inspected_by_root": false
+    },
+    {
+      "date_moscow": "2026-11-15",
+      "source_commit": "04d5c9e79450fbfe8119bb3c5ff12a7dc7a04a93",
+      "ok": true,
+      "checks": {
+        "semantic_review": "not_performed",
+        "pixel_review": "not_performed",
+        "date": {
+          "status": "passed"
+        },
+        "snapshot": {
+          "status": "passed"
+        },
+        "canonical_queue": {
+          "status": "passed"
+        },
+        "entry": {
+          "status": "passed"
+        },
+        "asset_identity": {
+          "status": "passed"
+        },
+        "recorded_editorial_binding": {
+          "status": "passed"
+        },
+        "media": {
+          "status": "passed"
+        },
+        "article_copy": {
+          "status": "passed"
+        }
+      },
+      "errors": [],
+      "payload_hash": "ac881f224f9eb3961f9ea81ab30906205a43cfd30477793185a84443839c70f3",
+      "release_readiness": {
+        "status": "reviewed",
+        "payload_hash": "ac881f224f9eb3961f9ea81ab30906205a43cfd30477793185a84443839c70f3",
+        "asset_blob_sha": "129a223564bf3b28d8ae77ac75f38113cb5a3c03",
+        "reviewer_run_id": "/root/review_nov15"
+      },
+      "media_evidence": {
+        "url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/04d5c9e79450fbfe8119bb3c5ff12a7dc7a04a93/telegram/2026-11/2026-11-15-imagegen.jpg",
+        "github_blob_sha": "129a223564bf3b28d8ae77ac75f38113cb5a3c03",
+        "jpeg_sha256": "d59fa5893d4c232230cc12b7035ddf1c7c49d4081b2fc046555e2c77016638d0",
+        "source_evidence": {
+          "source_ref": "editorial/originals/2026-11-15-imagegen.png",
+          "source_sha256": "fc8a0936c5f656727f1270d808d6faf5eae30fe977145eefc2774c2126e5ecb6",
+          "size_bytes": 2196499
+        },
+        "size_bytes": 306804,
+        "width": 1122,
+        "height": 1402
+      },
+      "returned_image_inspected_by_root": false
+    },
+    {
+      "date_moscow": "2026-11-16",
+      "source_commit": "04d5c9e79450fbfe8119bb3c5ff12a7dc7a04a93",
+      "ok": true,
+      "checks": {
+        "semantic_review": "not_performed",
+        "pixel_review": "not_performed",
+        "date": {
+          "status": "passed"
+        },
+        "snapshot": {
+          "status": "passed"
+        },
+        "canonical_queue": {
+          "status": "passed"
+        },
+        "entry": {
+          "status": "passed"
+        },
+        "asset_identity": {
+          "status": "passed"
+        },
+        "recorded_editorial_binding": {
+          "status": "passed"
+        },
+        "media": {
+          "status": "passed"
+        },
+        "article_copy": {
+          "status": "passed"
+        }
+      },
+      "errors": [],
+      "payload_hash": "b8813e9294bd70d4869570ff5f9da29b0750a83bd2190d99a06986eed10f620e",
+      "release_readiness": {
+        "status": "reviewed",
+        "payload_hash": "b8813e9294bd70d4869570ff5f9da29b0750a83bd2190d99a06986eed10f620e",
+        "asset_blob_sha": "17c7783b6ba6af836a5e5e3bf67963feda5700fd",
+        "reviewer_run_id": "Money Psychology preflight / automation turn 3 / 2026-11-09"
+      },
+      "media_evidence": {
+        "url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/04d5c9e79450fbfe8119bb3c5ff12a7dc7a04a93/telegram/2026-11/2026-11-16-imagegen.jpg",
+        "github_blob_sha": "17c7783b6ba6af836a5e5e3bf67963feda5700fd",
+        "jpeg_sha256": "40128272ff6cc227d9f0aaf01777e04d355aedfd33e16a7b2ba6d21a979cec5b",
+        "source_evidence": {
+          "source_ref": "editorial/originals/2026-11-16-imagegen.png",
+          "source_sha256": "7d905076ff8eae08e9c4d044b45c26b5ba18eae1c8c21f607b0fe228b165d9aa",
+          "size_bytes": 2182384
+        },
+        "size_bytes": 361634,
+        "width": 1122,
+        "height": 1402
+      },
+      "returned_image_inspected_by_root": false
+    },
+    {
+      "date_moscow": "2026-11-17",
+      "source_commit": "04d5c9e79450fbfe8119bb3c5ff12a7dc7a04a93",
+      "ok": true,
+      "checks": {
+        "semantic_review": "not_performed",
+        "pixel_review": "not_performed",
+        "date": {
+          "status": "passed"
+        },
+        "snapshot": {
+          "status": "passed"
+        },
+        "canonical_queue": {
+          "status": "passed"
+        },
+        "entry": {
+          "status": "passed"
+        },
+        "asset_identity": {
+          "status": "passed"
+        },
+        "recorded_editorial_binding": {
+          "status": "passed"
+        },
+        "media": {
+          "status": "passed"
+        },
+        "article_copy": {
+          "status": "passed"
+        }
+      },
+      "errors": [],
+      "payload_hash": "0df51c49c906fc91909d62a5b873c02e74afcda40be74fb0f8fb32b7043a90be",
+      "release_readiness": {
+        "status": "reviewed",
+        "payload_hash": "0df51c49c906fc91909d62a5b873c02e74afcda40be74fb0f8fb32b7043a90be",
+        "asset_blob_sha": "9b091bfb7c01d923aa04dfefb97b3ef9f62218f1",
+        "reviewer_run_id": "/root/editorial_review"
+      },
+      "media_evidence": {
+        "url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/04d5c9e79450fbfe8119bb3c5ff12a7dc7a04a93/telegram/2026-11/2026-11-17-imagegen.jpg",
+        "github_blob_sha": "9b091bfb7c01d923aa04dfefb97b3ef9f62218f1",
+        "jpeg_sha256": "78ca5e079d14c90d6b994fb5421c7ea5e534348d76a6810e14fe62a5c7599035",
+        "source_evidence": {
+          "source_ref": "editorial/originals/2026-11-17-imagegen.png",
+          "source_sha256": "aa2ae64c6651c4e87be96cf12c1912188604f109439ec68d879e2b4b19fb3f9f",
+          "size_bytes": 2383565
+        },
+        "size_bytes": 358343,
+        "width": 1122,
+        "height": 1402
+      },
+      "returned_image_inspected_by_root": false
+    },
+    {
+      "date_moscow": "2026-11-18",
+      "source_commit": "04d5c9e79450fbfe8119bb3c5ff12a7dc7a04a93",
+      "ok": true,
+      "checks": {
+        "semantic_review": "not_performed",
+        "pixel_review": "not_performed",
+        "date": {
+          "status": "passed"
+        },
+        "snapshot": {
+          "status": "passed"
+        },
+        "canonical_queue": {
+          "status": "passed"
+        },
+        "entry": {
+          "status": "passed"
+        },
+        "asset_identity": {
+          "status": "passed"
+        },
+        "recorded_editorial_binding": {
+          "status": "passed"
+        },
+        "media": {
+          "status": "passed"
+        },
+        "article_copy": {
+          "status": "passed"
+        }
+      },
+      "errors": [],
+      "payload_hash": "c6489c6ba8678dc92e710cc830d335fd7c94c2e208c492ad9d345d64f30636c6",
+      "release_readiness": {
+        "status": "reviewed",
+        "payload_hash": "c6489c6ba8678dc92e710cc830d335fd7c94c2e208c492ad9d345d64f30636c6",
+        "asset_blob_sha": "206e5a10df63050ffd13aed19c8a82e264057c61",
+        "reviewer_run_id": "/root/reserve_editor"
+      },
+      "media_evidence": {
+        "url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/04d5c9e79450fbfe8119bb3c5ff12a7dc7a04a93/telegram/2026-11/2026-11-18-imagegen.jpg",
+        "github_blob_sha": "206e5a10df63050ffd13aed19c8a82e264057c61",
+        "jpeg_sha256": "987c0d4ce2101ee30acaa1b2332c3cf26cc587102a8a69af26c86392b252b4f4",
+        "source_evidence": {
+          "source_ref": "editorial/originals/2026-11-18-imagegen.png",
+          "source_sha256": "c3ed659aa56af149c6a714554e164e9a48c8e3948ee8214acd92236f847ea54e",
+          "size_bytes": 2610479
+        },
+        "size_bytes": 638656,
+        "width": 1122,
+        "height": 1402
+      },
+      "returned_image_inspected_by_root": true
+    },
+    {
+      "date_moscow": "2026-11-19",
+      "source_commit": "04d5c9e79450fbfe8119bb3c5ff12a7dc7a04a93",
+      "ok": true,
+      "checks": {
+        "semantic_review": "not_performed",
+        "pixel_review": "not_performed",
+        "date": {
+          "status": "passed"
+        },
+        "snapshot": {
+          "status": "passed"
+        },
+        "canonical_queue": {
+          "status": "passed"
+        },
+        "entry": {
+          "status": "passed"
+        },
+        "asset_identity": {
+          "status": "passed"
+        },
+        "recorded_editorial_binding": {
+          "status": "passed"
+        },
+        "media": {
+          "status": "passed"
+        },
+        "article_copy": {
+          "status": "passed"
+        }
+      },
+      "errors": [],
+      "payload_hash": "5b13ca322d4c60a75c46500d22b0d022a16fdc68c62b0aa43b1d0754f018cb92",
+      "release_readiness": {
+        "status": "reviewed",
+        "payload_hash": "5b13ca322d4c60a75c46500d22b0d022a16fdc68c62b0aa43b1d0754f018cb92",
+        "asset_blob_sha": "b996c93f69dc383708093c603d260a0d10d6f69a",
+        "reviewer_run_id": "/root/reserve_editor"
+      },
+      "media_evidence": {
+        "url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/04d5c9e79450fbfe8119bb3c5ff12a7dc7a04a93/telegram/2026-11/2026-11-19-imagegen.jpg",
+        "github_blob_sha": "b996c93f69dc383708093c603d260a0d10d6f69a",
+        "jpeg_sha256": "8ad8277829b8d7bfe2b19ef1ecfe099cd6d31e5aed6b76b6646e0c9f62b20838",
+        "source_evidence": {
+          "source_ref": "editorial/originals/2026-11-19-imagegen.png",
+          "source_sha256": "20088c2115514d24a9c924433e2bb29ada03faebb733a6b6fbe5c795b5ab788c",
+          "size_bytes": 2327167
+        },
+        "size_bytes": 579872,
+        "width": 1122,
+        "height": 1402
+      },
+      "returned_image_inspected_by_root": true
+    },
+    {
+      "date_moscow": "2026-11-20",
+      "source_commit": "04d5c9e79450fbfe8119bb3c5ff12a7dc7a04a93",
+      "ok": true,
+      "checks": {
+        "semantic_review": "not_performed",
+        "pixel_review": "not_performed",
+        "date": {
+          "status": "passed"
+        },
+        "snapshot": {
+          "status": "passed"
+        },
+        "canonical_queue": {
+          "status": "passed"
+        },
+        "entry": {
+          "status": "passed"
+        },
+        "asset_identity": {
+          "status": "passed"
+        },
+        "recorded_editorial_binding": {
+          "status": "passed"
+        },
+        "media": {
+          "status": "passed"
+        },
+        "article_copy": {
+          "status": "passed"
+        }
+      },
+      "errors": [],
+      "payload_hash": "8027577347efeed1cae492d01ee86cb1c3f22a6195d6169d4915c21ddb472851",
+      "release_readiness": {
+        "status": "reviewed",
+        "payload_hash": "8027577347efeed1cae492d01ee86cb1c3f22a6195d6169d4915c21ddb472851",
+        "asset_blob_sha": "1c54dfb1d5db80ac03e88c50b3aaa0ecdb0b1c15",
+        "reviewer_run_id": "/root/reserve_editor"
+      },
+      "media_evidence": {
+        "url": "https://raw.githubusercontent.com/Pugg213/Money-psychology-assets/04d5c9e79450fbfe8119bb3c5ff12a7dc7a04a93/telegram/2026-11/2026-11-20-imagegen.jpg",
+        "github_blob_sha": "1c54dfb1d5db80ac03e88c50b3aaa0ecdb0b1c15",
+        "jpeg_sha256": "e33b326e6f24648e9c07397ed75aa08e715ddf43e775f5f11023b393ee4ea893",
+        "source_evidence": {
+          "source_ref": "editorial/originals/2026-11-20-imagegen.png",
+          "source_sha256": "f06ead4183e185b8c6f9d9f5bc9e39be0116329bc3c30336b77a3dfaf8b7932f",
+          "size_bytes": 2878157
+        },
+        "size_bytes": 732241,
+        "width": 1122,
+        "height": 1402
+      },
+      "returned_image_inspected_by_root": true
+    }
+  ],
+  "interaction": {
+    "webhook_installed": true,
+    "pending_updates": 0,
+    "storage_configured": true,
+    "reader_events_enabled": true,
+    "discussion_delivery_diagnostic": {
+      "linked": true,
+      "bot_membership": "left",
+      "privacy_enabled": true,
+      "all_group_messages_available": false,
+      "delivery_verified": false,
+      "webhook_message_updates_enabled": true,
+      "note": "Read-only configuration check. Actual webhook delivery is not verified; privacy mode may prevent nested comments from reaching the bot.",
+      "state": "bot_not_member"
+    },
+    "daily_maintenance_diagnostic": {
+      "state": "no_recent_receipt",
+      "latest_receipt": null,
+      "lookback_days": 7,
+      "historical_evidence_available": false
+    }
+  },
+  "ci": {
+    "repair_run": {
+      "id": 43406508354,
+      "conclusion": "success"
+    },
+    "content_run": {
+      "id": 43408055678,
+      "conclusion": "failure",
+      "successful_jobs": [
+        "asset-integrity",
+        "reserve-watch"
+      ],
+      "failure": "production-state test appended a hardcoded November20 draft to the actual queue, colliding with the newly completed real edition; reproduced locally. Follow-up isolates test fixture from editorial data."
+    }
+  },
+  "limitations": [
+    "Bot is not a member of the linked discussion group. Owner must add @MyGptSparks_bot there as administrator; observe a real incoming comment after membership is restored.",
+    "Next unattended writer cycle after reenable has not been observed.",
+    "Local mocked race tests do not establish all live cross-object concurrency/crash behavior.",
+    "Preflight verifies bytes and existing review bindings. It is not a new semantic review, Telegram send or client-render check.",
+    "No daily maintenance receipt was found within the seven-day diagnostic lookback; no historical failure inferred."
+  ]
+}
