@@ -1138,7 +1138,7 @@
       "format": "markdown",
       "publisher": "Money Psy Telegram MCP",
       "migrated_and_deduplicated": true,
-      "state": "queued",
+      "state": "sending",
       "telegram_publication": null,
       "image_review": "Full JPEG viewed: different grocery mixes on a balance express differing expenditure weights; no official data or claimed precise inflation measurement. Burgundy, brass and tactile food still life.",
       "editorial_review": {
@@ -1253,7 +1253,9 @@
         "attempts": 1,
         "updated_at": "2026-11-07T09:47:27.245Z",
         "blocker": null
-      }
+      },
+      "send_attempts": 1,
+      "send_claimed_at": "2026-11-14T09:01:41.984Z"
     },
     {
       "date_moscow": "2026-11-15",
@@ -2527,7 +2529,7 @@
               900
             ],
             "expected": 13500,
-            "tolerance": 1e-06,
+            "tolerance": 0.000001,
             "excerpt": "расходы выросли с 13 500 ₽ до 15 000 ₽"
           },
           {
@@ -2539,7 +2541,7 @@
               900
             ],
             "expected": 15000,
-            "tolerance": 1e-06,
+            "tolerance": 0.000001,
             "excerpt": "расходы выросли с 13 500 ₽ до 15 000 ₽"
           },
           {
@@ -3428,5 +3430,6 @@
           "feedback_scope": "По MCP 3 useful, 0 комментариев, 0 вопросов; это не мера охвата, спроса или удовлетворённости."
         }
       }
-    }  ]
+    }
+  ]
 }
